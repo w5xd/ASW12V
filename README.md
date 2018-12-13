@@ -17,5 +17,9 @@ in groups of four channels that all share a common power and ground.
 All the input and output power and ground circuits are optically isolate
 from the USB power and ground.
 
+The enclosures presented here are in two different configurations. This one
+has 24 channel control:
 <p align='center'><img src='Picture24Channel.jpg' alt='Picture24Channel.jpg'/></p>
+
+The other enclosure is half as wide and controls 12 channels.
 

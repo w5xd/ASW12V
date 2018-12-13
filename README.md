@@ -17,3 +17,5 @@ in groups of four channels that all share a common power and ground.
 All the input and output power and ground circuits are optically isolate
 from the USB power and ground.
 
+<p align='center'><img src='Picture24Channel.jpg' alt='Picture24Channel.jpg'/></p>
+

@@ -1,5 +1,6 @@
 # ASW12V
-Remote controllable multi-channel 12VDC switch
+Remote controllable multi-channel DC switch
+ASW12V: antenna switch for 12V
 
 My shack has a number of 12VDC controlled circuits for antennas. Their
 normal usage is to be controlled by rotary switches at the operating position. 
@@ -15,3 +16,4 @@ The power and ground are optically isolated on both input and output side
 in groups of four channels that all share a common power and ground.
 All the input and output power and ground circuits are optically isolate
 from the USB power and ground.
+

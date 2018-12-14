@@ -51,7 +51,10 @@ An example program is published <a href='W5XD-antennas'>here</a>. It is specific
 
 Enclosures
 
-This repository publishes designs for enclosures for each of two configurations: a 12 channel device (with 1 PCB) or a 24 channel device (with 2 PCBs.) The 3D designs were done with <a href='solidworks.com'>SolidWorks</a>. The 3D printable parts are publised in the <a href="STL/">STL</a> directory. The orientation of the STL models should not be taken as a recommendation for
+This repository publishes designs for enclosures for each of two configurations: a 12 channel device (with 1 PCB) or a 24 channel device (with 2 PCBs.) The 3D designs were done with <a href='solidworks.com'>SolidWorks</a>. The 3D printable parts are publised in the <a href="STL/">STL</a> directory. Unfamiliar with 3D design and printing? Don't be bashful about clicking the <a href="STL/">STL</a> link and the enclosure models. 
+
+
+The orientation of the STL models should not be taken as a recommendation for
 how they should be printed on any particular 3D printer. I use a <a href='http://prusa3d.com'>prusa3d</a> printer and rotate the
 lettering down for the enclosure tops, and, for the bottoms, the flat side down.
  

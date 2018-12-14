@@ -35,7 +35,7 @@ Install <i>only</i>
         Check alignment again. Then solder all 16 pads.
     </li>
     <li>the two .33uF power supply bypass capacitors. The PCB has holes but the parts list
-    specifies an <code>0805</code> sized SMT part. It can be soldered across the holed pads. </li>
+    specifies an <code>0805</code> sized SMT part. It can be soldered across the holed pads. Or substitute a through-hole part.</li>
     <li> a male header at J1.</li>
 </ol>
 Also install male headers on your Pro Micro and then
@@ -98,6 +98,10 @@ The fastest bank is the right. The slowest bank
 is left. The fastest pin is 1. The slowest pin is 4
 The HIGH output is Vcc for the Pro Micro you are using:
 either 3.3V or 5.0 V.
+
+Now you can populate the parts on the rest of the board.
+
+The GND and VCC jumpers on the PCB are most easily installed from the <a href='ASW12V-bottom.pdf'>bottom</a>.
 
 
    

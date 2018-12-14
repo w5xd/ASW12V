@@ -27,13 +27,14 @@ Here is the 24 channel version:</p>
 The longest dimension is about 8in (21cm). The short dimension is about 4in (10cm). The other 12 channel enclosure is half as wide (4" x 4" or 10cm x 10cm).
 
 Power and Ground
-The PCB layout has three sections each with four input/output channels and with grounds and
+
+<p>The PCB layout has three sections each with four input/output channels and with grounds and
 VCC isolated to that section. The power and ground circuit is this:
 <a href='ASW12V-circuit3.pdf'>ASW12V-circuit3.pdf</a>. 
 There are a lot of options on the PCB for exactly what Ground and VCC connections get connected internal
 to the device. You can successfully use this device with NONE of these jumpers in place. But in that
 case you might have to add jumpers on the terminal blocks between their VCC and GND pins.
-The PCB has jumpers that can internally connect:
+The PCB has jumpers that can internally connect:</p>
 <ol>
 <li>the VCC pin to the VCC on the adjacent section.
 <li>the OUTPUT GND pin to the OUTPUT Gnd pin of the adjacent section.
@@ -47,20 +48,22 @@ The PCB has jumpers that can internally connect:
  for a total of 3A to the VCC and GND connectors on that terminal block.
  
 Construction
-A parts list and a PCB layout are published <a href='construction.md'>here</a>.
+
+<p>A parts list and a PCB layout are published <a href='construction.md'>here</a>.</p>
 
 Controlling the ASW12V
-An example program is published <a href='W5XD-antennas'>here</a>. The example
-is specific to the antennas to be controlled at W5XD. It doesn't put much on the screen. as not much is required at W5XD.
+
+<p>An example program is published <a href='W5XD-antennas'>here</a>. The example
+is specific to the antennas to be controlled at W5XD. It doesn't put much on the screen. as not much is required at W5XD.</p>
 
 <img src='w5xd-antennas-1.png' alt='w5xd-antennas-1.png'/>
 
 Enclosures
 
-This repository publishes designs for enclosures for each of two configurations: a 12 channel device (with 1 PCB) or a 24 channel device (with 2 PCBs.) The 3D designs were done with <a href='solidworks.com'>SolidWorks</a>. The
-Soldworks models are in the CAD folder. The 3D printable parts are published in the <a href="STL/">STL</a> directory. Unfamiliar with 3D design and printing? Don't be bashful about clicking the <a href="STL/">STL</a> link and the enclosure models. 
+<p>This repository publishes designs for enclosures for each of two configurations: a 12 channel device (with 1 PCB) or a 24 channel device (with 2 PCBs.) The 3D designs were done with <a href='solidworks.com'>SolidWorks</a>. The
+Soldworks models are in the CAD folder. The 3D printable parts are published in the <a href="STL/">STL</a> directory. Unfamiliar with 3D design and printing? Don't be bashful about clicking the <a href="STL/">STL</a> link and the enclosure models. </p>
 
-The orientation of the STL models should not be taken as a recommendation for
+<p>The orientation of the STL models should not be taken as a recommendation for
 the printed orientation on any particular 3D printer. I use a <a href='http://prusa3d.com'>prusa3d</a> printer and rotate the
-lettering down for the enclosure tops, and, for the bottoms, the flat side down.
+lettering down for the enclosure tops, and, for the bottoms, the flat side down.</p>
  

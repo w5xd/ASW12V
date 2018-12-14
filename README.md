@@ -27,6 +27,7 @@ Here is the 24 channel version:</p>
 The longest dimension is about 8in (21cm). The short dimension is about 4in (10cm).
 The other 12 channel enclosure is half as wide (4" x 4" or 10cm x 10cm).
 
+
 Power and Ground
 
 The PCB layout has three sections each with four input/output channels and with grounds and

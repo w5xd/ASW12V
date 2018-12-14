@@ -61,17 +61,15 @@ Also install male headers on your Pro Micro and then
 
 <h3>Digital Input Test</h3>
 Install only the 3 banks of 10K resistors on the input
-        shift registers. They are labeled 1, 2, 3, and 4 on the each
+        shift registers. They are labeled 1, 2, 3, and 4 on each
         of the 3 banks. These are the ones just above the input
         optoisolators. Install the ODD numbered ones first, solder
         and trim the leads. Then install the EVEN numbered ones.
         The circuit board clearances are minimal and installing
         in this order makes it easier to avoid solder bridges.
     
-
-    
 Type the <code>i</code> command while using a test lead to
-        short these adjacent pins of the input optoisolators:
+short these adjacent pins of the input optoisolators:
         <ul>
             <li>16 to 15 (gives a "1" in the corresponding <code>i</code> command)</li>
             <li>14 to 13 (gives a "2"...)</li>
@@ -81,7 +79,6 @@ Type the <code>i</code> command while using a test lead to
         There are 12 input signals to verify.
         Do <b><i>not</i></b> install any more parts until this test works.
     
-
 <h3>Digital Output Test</h3>
    
 Install the 3 banks of 3.3K resistors on the output

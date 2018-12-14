@@ -32,13 +32,16 @@ Power and Ground
 The PCB layout has three sections each with four input/output channels and with grounds and
 VCC isolated to that section. The power and ground circuit is this:
 <a href='ASW12V-circuit3.pdf'>ASW12V-circuit3.pdf</a>. The PCB has jumpers that can optionally connect:
-<ul>
+<ol>
 <li>the VCC pin to the VCC on the adjacent section.
+<li>the OUTPUT GND pin to the OUTPUT Gnd pin of the adjacent section.
 <li>the INPUT Gnd pin to the OUTPUT Gnd pin of the section.
 <li>the INPUT GND pin to the INPUT Gnd pin of the adjacent section.
-<li>the OUTPUT GND pin to the OUTPUT Gnd pin of the adjacent section.
- </ul>
+ </ol>
  The positions of the jumpers are hand-outlined on this <a href='ASW12V-bottom.pdf'>bottom view of the PCB silkscreen</a>. 
- The jumpers are most easily installed (and removed) on the bottom side of the PCB.
+ The jumpers are most easily installed (and removed) on the bottom side of the PCB. The jumpers corresponding to (1) and (2) are at the top of the picture, the ones for (4), the INPUT to INPUT, are at the bottom and the ones for (3) are between.
+ 
+Construction
+A parts list and a PCB layout are published <a href='construction.md'>here</a>.
  
  

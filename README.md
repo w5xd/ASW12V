@@ -32,8 +32,12 @@ The longest dimension is about 8in (21cm). The short dimension is about 4in (10c
 VCC isolated to that section. The power and ground circuit is this:
 <a href='ASW12V-circuit3.pdf'>ASW12V-circuit3.pdf</a>. 
 There are a lot of options on the PCB for exactly what Ground and VCC connections get connected internal
-to the device. You can successfully use this device with NONE of these jumpers in place. But in that
-case you might have to add jumpers on the terminal blocks between their VCC and GND pins.
+to the device. 
+ 
+You can successfully use this device with NONE of these jumpers in place. But consider how you want to use it.
+In my own case, the same 12VDC supply powers all my antenna relays, so I can safely tie all the Gnd and VCC
+terminals together. Your shack may differ.
+
 The PCB has jumpers that can internally connect:</p>
 <ol>
 <li>the VCC pin to the VCC on the adjacent section.

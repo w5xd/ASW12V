@@ -45,6 +45,7 @@ Construction
 A parts list and a PCB layout are published <a href='construction.md'>here</a>.
 
 Controlling the ASW12V
-An example program is published <a href='W5XD-antennas'>here</a>. It is specific to the antennas to be controlled at W5XD. It doesn't put much on the screen.
+An example program is published <a href='W5XD-antennas'>here</a>. It is specific to the antennas to be controlled at W5XD. It doesn't put much on the screen. as not much is required at W5XD.
+
 <img src='w5xd-antennas-1.png' alt='w5xd-antennas-1.png'/>
  

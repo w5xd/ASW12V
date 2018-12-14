@@ -24,12 +24,9 @@ from the USB power and ground, which is only used by the controller.</p>
 <p>
 Here is the 24 channel version:</p>
 <p align='center'><img height="50%" src='Picture24Channel.jpg' alt='Picture24Channel.jpg'/></p>
-The longest dimension is about 8in (21cm). The short dimension is about 4in (10cm).
-The other 12 channel enclosure is half as wide (4" x 4" or 10cm x 10cm).
-
+The longest dimension is about 8in (21cm). The short dimension is about 4in (10cm). The other 12 channel enclosure is half as wide (4" x 4" or 10cm x 10cm).
 
 Power and Ground
-
 The PCB layout has three sections each with four input/output channels and with grounds and
 VCC isolated to that section. The power and ground circuit is this:
 <a href='ASW12V-circuit3.pdf'>ASW12V-circuit3.pdf</a>. 
@@ -61,7 +58,7 @@ is specific to the antennas to be controlled at W5XD. It doesn't put much on the
 Enclosures
 
 This repository publishes designs for enclosures for each of two configurations: a 12 channel device (with 1 PCB) or a 24 channel device (with 2 PCBs.) The 3D designs were done with <a href='solidworks.com'>SolidWorks</a>. The
-Soldworks modules are in the CAD folder. The 3D printable parts are publised in the <a href="STL/">STL</a> directory. Unfamiliar with 3D design and printing? Don't be bashful about clicking the <a href="STL/">STL</a> link and the enclosure models. 
+Soldworks models are in the CAD folder. The 3D printable parts are published in the <a href="STL/">STL</a> directory. Unfamiliar with 3D design and printing? Don't be bashful about clicking the <a href="STL/">STL</a> link and the enclosure models. 
 
 The orientation of the STL models should not be taken as a recommendation for
 the printed orientation on any particular 3D printer. I use a <a href='http://prusa3d.com'>prusa3d</a> printer and rotate the

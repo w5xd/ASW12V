@@ -7,33 +7,38 @@
 ** an array of output screw terminals of the same size.
 **
 ** The architecture is to be able to insert this device
-** in a 12V DC switching circuit such that 
-** the manual switch at our inputs controls the 
-** devices at our outputs by asserting 12V DC on 
+** in a low voltage DC switching circuit such that 
+** manual switching of DC at our inputs controls the 
+** devices at our outputs by asserting supply voltage DC on 
 ** those outputs in various combinations. The circuit 
 ** isolates its DC supply and ground from our Arduino
 ** power, which is on USB power. The SMA4021 PNP output
 ** devices can switch up 60V DC,
 ** have built-in flyback diodes for inductive loads. The
-** Circuit board traces are the current handling limit,
-** which is about 1.5A.
+** Circuit board traces on the OUTPUT side of the PCB
+** are capable of handling 3A. The INPUT side has 
+** narrower traces.
 **
-** Starting up, we assume we're operating stand alone, which
+** At code startup, we assume we're operating stand alone, which
 ** means copying our inputs (circuit diagram U3 and U4)
-** to our outputs (U1 and U2). We are U5 on the circuit diagram.
+** to our outputs (U1 and U2). "We" are the Arduino at 
+** U5 on the circuit diagram.
 ** We only use the 3 SPI pins, two separate strobe
-** pins to load the input registers (U3, U4) or assert the
-** the outputs (U1 and U2), and VCC and ground. The board
+** pins, one to load the input registers (U3, U4) and
+** one to assert the
+** the outputs (U1 and U2). VCC and ground are the remaining
+** connections. The board
 ** performs essentially the same with either the 3.3V
 ** Pro Micro or the 5.0V version.
 **
 ** The board is arranged for daisy chaining. That means 
 ** we might have another U1/U2 and U3/U4 on a second circuit
 ** board cabled to our J2 and their J1. The daisy chaining
-** can continue. This firmware needs to know how many boards
+** can continue to more boards.
+** This firmware needs to know how many boards
 ** are out there on the daisy chain. We do that by insisting:
 ** a) that the final board on the daisy chain (even if
-** we're the only board) has its I/O pins jumpered 
+** we're the only board) has its J2 I/O pins jumpered 
 ** together. That allows us to shift data out and detect
 ** when it comes back.
 ** b) in order to put a limit on how much work we must do
@@ -46,66 +51,7 @@
 **
 ** loop() also monitors the serial input for commands.
 ** One set of commands is designed for self test.
-** The self test commands are CRITICAL. Do NOT ignore
-** them. They MUST be used during board construction.
-** The PCB is NOT designed for easy maintenance. It has
-** very tight clearances and, once all the big parts
-** are installed, it is essentially impossible to 
-** service the small once. If lightning damages this
-** board, do not expect to service it. Throw it away
-** and build another. 
 **
-** Construction self tests.
-** Install ONLY 
-**   (a) the four surface mount shift registers
-**          on the board along with  
-**   (b) the two .33uF power supply bypass capacitors and 
-**   (c) a male header at J1. 
-**
-** Also install male headers on your Pro Micro and then
-** use 
-** (a) 7 jumpers to temporarily wire it to the PCB
-** (b) jumper the I to O pins at J2. I use a solder wire
-** for the I to O, which can later be cut in the middle
-** to jumper to the next board, if there is one.
-**
-** SHIFT REGISTER DIGITAL TEST
-** 1. Test that the "d" command correctly tells you there is
-** is one board in the daisy chain.
-** 2. Test the "n" command. Ignore the results from Sent 1, 2 and 3
-** but confirm that Sent 4 Got 0, Sent 5 Got 1 and counting up 
-** from there.
-** 
-** Do NOT install any more parts until the above two tests work.
-**
-** DIGITAL INPUT TEST
-** Now install ONLY the 3 banks of 10K resistors on the input
-** shift registers. They are labeled 1, 2, 3, and 4 on the each
-** of the 3 banks. These are the ones just above the input
-** optoisolators. Install the ODD numbered ones first, solder
-** and trim the leads. Then install the EVEN numbered ones.
-** The circuit board clearances are minimal and installing
-** in this order makes it easier to avoid solder bridges.
-**
-** Now type the "i" command while using a test lead to
-** short these pins of the input optoisolators:
-**  16 to 15 (gives a "1" in the corresponding "i" command)
-**  14 to 13 (gives a "2"...)
-**  12 to 11 (gives a "4"...)
-**  10 to 9 (gives "8").
-** There are 12 input signals to verify.
-** Do NOT install any more parts until this test works.
-** 
-** DIGITAL OUTPUT TEST
-** Install the 3 banks of 3.3K resistors on the output
-** shift registers. They are labeled 1,2,3, and 4, and are
-** the ones just below the output optoisolators.
-**
-** Use the "n" command to make the outputs count up.
-** The fastest bank is the right. The slowest bank
-** is left. The fasted pin is 1. The slowest pin is 4
-** The HIGH output is Vcc for the Pro Micro you are using:
-** either 3.3V or 5.0 V.
 */
 
 struct ShiftRegister_t {
@@ -389,11 +335,11 @@ void loop()
             // m <board-number> <L|M|R><value><mask> [repeat]
             //   The <L|M|R><value><mask> can be repeated multiple times on the same line                
             // where:
-            // m is the character m
-            // <board-number> is a single digit signifying which daisy-chained board in the range 1-9
-            // <L|M|R> is one of the characters L,M or R
-            // value is a single hex digit 0-9 a-f or A-F
-            // mask is a single hex digit 0-9 a-f or A-F
+            //   m is the character m
+            //   <board-number> is a single digit signifying which daisy-chained board in the range 1-9
+            //   <L|M|R> is one of the characters L,M or R
+            //   value is a single hex digit 0-9 a-f or A-F
+            //   mask is a single hex digit 0-9 a-f or A-F
             // The spaces after m and n are required. There are no other spaces
             static bool MaskInitialized;
             static int WhichBoard=-1;
@@ -422,9 +368,9 @@ void loop()
             if ((char)incoming == (char)'\r')
             {
                 // The m command...
-                // ... sets up runtime masks to force a given output either on or off
-                // regardless of input. By default, each output is driven by its 
-                // corresponding input.
+                // ... sets up runtime masks that, at loop() time, force a given
+		// output either on or off regardless of input. By default, 
+		// each output is driven by its corresponding input.
                 static const char usage[] = "usage: m <board-number> <L|M|R><value><mask> [repeat]";
                 if (MaskParseState == MASK_PARSE_BAD)
                 {

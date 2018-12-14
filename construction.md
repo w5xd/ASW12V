@@ -19,7 +19,7 @@ The PCB layout is tight and is not designed for easy maintenance. The
         board, do not expect to service it. Expect to throw it away
         and build another.
     
-    Install <i>only</i>
+Install <i>only</i>
     <ol type="a">
         <li>
             the four surface mount shift registers at U1, U2, U3, and U4. To solder an SMT 16 pin IC, start by

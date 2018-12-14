@@ -1,8 +1,5 @@
-<html>
-<head>
-<title>ASW12V</title>
-</head>
-<body>
+ASW12V
+
 <p>
 Remote controllable multi-channel DC switch<br/>
 ASW12V: antenna switch for 12V
@@ -30,5 +27,4 @@ has 24 channel control:</p>
 <p align='center'><img height="50%" src='Picture24Channel.jpg' alt='Picture24Channel.jpg'/></p>
 
 The other enclosure is half as wide and controls 12 channels.
-</body>
-</html>
+

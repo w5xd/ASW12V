@@ -1,10 +1,4 @@
-﻿<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title>ASW12V Construction</title>
-</head>
-<body>
+﻿ASW12V Construction
     <h3>Parts lists</h3>
     The parts of the device can all&mdash;except the PCB&mdash; be obtained at digikey: <a href="partslist.pdf">partslist.pdf</a>.
     Or here is a link to the equivalent digikey shared shopping cart:
@@ -51,7 +45,7 @@
     </ol>
     <h3>Shift Register Digital Test</h3>
     You need a serial port terminal program connected to
-    the Arduino's serial port for the following tests. I recommend
+    the Arduino&#8217;s serial port for the following tests. I recommend
     <a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html">putty.exe</a>.
     Click its "Serial" button in its upper right to put it in serial port terminal mode.
     <ol>
@@ -106,5 +100,3 @@
         The HIGH output is Vcc for the Pro Micro you are using:
         either 3.3V or 5.0 V.
     </p>
-</body>
-</html>

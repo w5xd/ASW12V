@@ -43,5 +43,7 @@ VCC isolated to that section. The power and ground circuit is this:
  
 Construction
 A parts list and a PCB layout are published <a href='construction.md'>here</a>.
- 
+
+Controlling the ASW12V
+An example program is published <a href='W5XD-antennas'>here</a>. It is specific to the antennas to be controlled at W5XD.
  

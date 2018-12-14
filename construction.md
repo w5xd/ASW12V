@@ -101,7 +101,7 @@ either 3.3V or 5.0 V.
 
 Now you can populate the parts on the rest of the board.
 
-The GND and VCC jumpers on the PCB are most easily installed from the <a href='ASW12V-bottom.pdf'>bottom</a>.
+The GND and VCC jumpers on the PCB, if needed, are most easily installed from the <a href='ASW12V-bottom.pdf'>bottom</a>.
 
 
    

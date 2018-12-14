@@ -10,18 +10,15 @@
     are for PCB Revision 2 (not revision 3 as in ASW12V.rrb.) Rev 2 has narrower V+ and GND traces on its
     OUTPUT jack and is therefore limited to 1A among its outputs.
     The Revision 3 of the PCB is limited to 3A among its outputs.
-
     Program a Arduino Pro Micro with the sketch published in <a href="sketch//ASW12V">sketch/ASW12V/</a>.
     <h3>Construction Recommendations</h3>
-    
-        The PCB layout is tight and is not designed for easy maintenance. The
+The PCB layout is tight and is not designed for easy maintenance. The
         very tight clearances mean that once all the big parts
         are installed, it is essentially impossible to
         service the small ones. If, for example, lightning damages this
         board, do not expect to service it. Expect to throw it away
         and build another.
-   
-
+    
     Install <i>only</i>
     <ol type="a">
         <li>
@@ -33,7 +30,7 @@
         specifies an <code>0805</code> sized SMT part. It can be soldered across the holed pads. </li>
         <li> a male header at J1.</li>
     </ol>
-    Also install male headers on your Pro Micro and then
+Also install male headers on your Pro Micro and then
     use
     <ol type="a">
         <li> 7 jumpers to temporarily wire it to the PCB</li>
@@ -62,9 +59,8 @@
     </ol>
     <p>Do <b><i>not</i></b> install any more parts until the above two tests succeed.</p>
 
-    <h3>Digital Input Test</h3>
-    
-        Iinstall only the 3 banks of 10K resistors on the input
+<h3>Digital Input Test</h3>
+Install only the 3 banks of 10K resistors on the input
         shift registers. They are labeled 1, 2, 3, and 4 on the each
         of the 3 banks. These are the ones just above the input
         optoisolators. Install the ODD numbered ones first, solder
@@ -74,7 +70,7 @@
     
 
     
-        Type the <code>i</code> command while using a test lead to
+Type the <code>i</code> command while using a test lead to
         short these adjacent pins of the input optoisolators:
         <ul>
             <li>16 to 15 (gives a "1" in the corresponding <code>i</code> command)</li>
@@ -86,15 +82,15 @@
         Do <b><i>not</i></b> install any more parts until this test works.
     
 
-    <h3>Digital Output Test</h3>
+<h3>Digital Output Test</h3>
    
-        Install the 3 banks of 3.3K resistors on the output
+Install the 3 banks of 3.3K resistors on the output
         shift registers. They are labeled 1,2,3, and 4, and are
         the ones just below the output optoisolators.
    
 
     
-        Use the <code>n</code> command to make the outputs count up.
+Use the <code>n</code> command to make the outputs count up.
         The fastest bank is the right. The slowest bank
         is left. The fastest pin is 1. The slowest pin is 4
         The HIGH output is Vcc for the Pro Micro you are using:

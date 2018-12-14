@@ -31,7 +31,11 @@ The other enclosure is half as wide and controls 12 channels.
 Power and Ground
 The PCB layout has three sections each with four input/output channels and with grounds and
 VCC isolated to that section. The power and ground circuit is this:
-<a href='ASW12V-circuit3.pdf'>ASW12V-circuit3.pdf</a>. The PCB has jumpers that can optionally connect:
+<a href='ASW12V-circuit3.pdf'>ASW12V-circuit3.pdf</a>. 
+There are a lot of options on the PCB for exactly what Ground and VCC connections get connected internal
+to the device. You can successfully use this device with NONE of these jumpers in place. But in that
+case you might have to add jumpers among the duplicated VCC and GND pins on the terminal blocks.
+The PCB has jumpers that can internally connect:
 <ol>
 <li>the VCC pin to the VCC on the adjacent section.
 <li>the OUTPUT GND pin to the OUTPUT Gnd pin of the adjacent section.

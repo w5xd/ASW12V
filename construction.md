@@ -10,9 +10,9 @@
     are for PCB Revision 2 (not revision 3 as in ASW12V.rrb.) Rev 2 has narrower V+ and GND traces on its
     OUTPUT jack and is therefore limited to 1A among its outputs.
     The Revision 3 of the PCB is limited to 3A among its outputs.
-    Program a Arduino Pro Micro with the sketch published in <a href="sketch//ASW12V">sketch/ASW12V/</a>.
+    Program an Arduino Pro Micro with the sketch published in <a href="sketch//ASW12V">sketch/ASW12V/</a>.
     <h3>Construction Recommendations</h3>
-The PCB layout is tight and is not designed for easy maintenance. The
+The PCB layout is tight which does not make for easy maintenance. The
         very tight clearances mean that once all the big parts
         are installed, it is essentially impossible to
         service the small ones. If, for example, lightning damages this

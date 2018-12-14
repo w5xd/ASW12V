@@ -10,7 +10,7 @@ I am sitting at the operating position, they are
  controlled by rotary switches there. 
 When connected to the station remotely using WriteLog, I need a way to 
 control the switches from the shack PC. This device is a USB controlled
-solid-state multi-channel DC switch that controls up to 30VDC
+solid-state multi-channel DC switch that controls up to 60VDC
 at up to 3A. In the absence of control commands over its USB input,
 its output channels follow its input channels. 5VDC on the micro
 USB plug is required to power the embedded microprocessor for it
@@ -28,3 +28,17 @@ has 24 channel control:</p>
 
 The other enclosure is half as wide and controls 12 channels.
 
+Power and Ground
+The PCB layout has three sections each with four input/output channels and with grounds and
+VCC isolated to that section. The power and ground circuit is this:
+<a href='ASW12V-circuit3.pdf'>ASW12V-circuit3.pdf</a>. The PCB has jumpers that can optionally connect:
+<ul>
+<li>the VCC pin to the VCC on the adjacent section.
+<li>the INPUT Gnd pin to the OUTPUT Gnd pin of the section.
+<li>the INPUT GND pin to the INPUT Gnd pin of the adjacent section.
+<li>the OUTPUT GND pin to the OUTPUT Gnd pin of the adjacent section.
+ </ul>
+ The positions of the jumpers are hand-outlined on this <a href='ASW12V-bottom.pdf'>bottom view of the PCB silkscreen</a>. 
+ The jumpers are most easily installed (and removed) on the bottom side of the PCB.
+ 
+ 

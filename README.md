@@ -28,6 +28,7 @@ The longest dimension is about 8in (21cm). The short dimension is about 4in (10c
 The other 12 channel enclosure is half as wide (4" x 4" or 10cm x 10cm).
 
 Power and Ground
+
 The PCB layout has three sections each with four input/output channels and with grounds and
 VCC isolated to that section. The power and ground circuit is this:
 <a href='ASW12V-circuit3.pdf'>ASW12V-circuit3.pdf</a>. 

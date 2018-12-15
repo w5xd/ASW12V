@@ -1,6 +1,6 @@
 ﻿ASW12V Construction
     <h3>Parts lists</h3>
-    The parts of the device can all&mdash;except the PCB&mdash; be obtained at digikey: <a href="partslist.pdf">partslist.pdf</a>.
+    The parts of the device can all&mdash;except the PCB and enclosure&mdash; be obtained at digikey: <a href="partslist.pdf">partslist.pdf</a>.
     Or here is a link to the equivalent digikey shared shopping cart:
     <a href="https://www.digikey.com/short/pc7jpw">https://www.digikey.com/short/pc7jpw</a>.
 

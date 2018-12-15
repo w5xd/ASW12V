@@ -13,7 +13,7 @@ control the switches from the shack PC. This device is a USB controlled
 solid state multi-channel DC switch.The output transistors are rated to 60VDC
 at up to 3A. In the absence of control commands over its USB input,
 its output channels follow its input channels. 5VDC on the micro
-USB plug is required to power the embedded microprocessor for it
+USB plug is required to power the embedded microprocessor for it to
 follow its inputs.
 </p>
 

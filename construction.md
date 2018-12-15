@@ -19,7 +19,7 @@ The PCB layout is tight which does not make for easy maintenance. The
         board, do not expect to service it. Expect to throw it away
         and build another.
     
-Install <i>only</i>
+Install <i>only</i> these parts and stop:
 <ol type="a">
     <li>
         the four surface mount shift registers at U1, U2, U3, and U4. To solder an SMT 16 pin IC, start by
@@ -40,6 +40,8 @@ use
         to jumper to the next board, if there is one.
     </li>
 </ol>
+Your board should look like this, minus the 10K resistors I have already placed:
+<img src='TestConfiguration.jpg' alt='TestConfiguration.jpg' />
 <h3>Shift Register Digital Test</h3>
 You need a serial port terminal program connected to
 the Arduino&#8217;s serial port for the following tests. I recommend

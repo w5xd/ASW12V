@@ -4,12 +4,6 @@
     Or here is a link to the equivalent digikey shared shopping cart:
     <a href="https://www.digikey.com/short/pc7jpw">https://www.digikey.com/short/pc7jpw</a>.
 
-The enclosure is documented in the <a href="CAD/">CAD</a> and <a href='STL/'>STL</a> folders.
-The mounting posts have channels that fit #4 machine nuts. Square nuts are easier to
-place, but hex nuts work as well. In either case, clean out the 3D printing debris before
-pushing a nut in the channel. And put a small piece of tape over the opening after the nut
-is placed because gravity is going to try to remove it.
-    
 The printed circuit board is a four layer part. It is not commercially available.
     It was laid out with <a href="http://expresspcb.com">expresspcb</a> from the
     file ASW12V.rrb. Or you may use the gerber
@@ -106,5 +100,10 @@ Now you can populate the parts on the rest of the board.
 
 The GND and VCC jumpers on the PCB, if needed, are most easily installed from the <a href='ASW12V-bottom.pdf'>bottom</a>.
 
+<h3>Enclosure</h3>
 
-   
+The enclosure is documented in the <a href="CAD/">CAD</a> and <a href='STL/'>STL</a> folders.
+The mounting posts have channels that fit #4 machine nuts. Square nuts are easier to
+place, but hex nuts work as well. In either case, clean out the 3D printing debris before
+pushing a nut in the channel. And put a small piece of tape over the opening after the nut
+is placed because gravity is going to try to remove it.  

@@ -71,7 +71,8 @@ Click its "Serial" button in its upper right to put it in serial port terminal m
 
 <h3>Digital Input Test</h3>
 Install only the 3 banks of 10K resistors on the input
-shift registers. They are labeled 1, 2, 3, and 4 on each
+shift registers. Now your board will match the photo above.
+They are labeled 1, 2, 3, and 4 on each
 of the 3 banks. These are the ones just above the input
 optoisolators. Install the ODD numbered ones first, solder
 and trim the leads. Then install the EVEN numbered ones.

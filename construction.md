@@ -3,14 +3,22 @@
     The parts of the device can all&mdash;except the PCB&mdash; be obtained at digikey: <a href="partslist.pdf">partslist.pdf</a>.
     Or here is a link to the equivalent digikey shared shopping cart:
     <a href="https://www.digikey.com/short/pc7jpw">https://www.digikey.com/short/pc7jpw</a>.
-    The printed circuit board is a four layer part. It is <b>not</b> commercially available.
+
+The enclosure is documented in the <a href="CAD/">CAD</a> and <a href='STL/'>STL</a> folders.
+The mounting posts have channels that fit #4 machine nuts. Square nuts are easier to
+place, but hex nuts work as well. In either case, clean out the 3D printing debris before
+pushing a nut in the channel. And put a small piece of tape over the opening after the nut
+is placed because gravity is going to try to remove it.
+    
+The printed circuit board is a four layer part. It is not commercially available.
     It was laid out with <a href="http://expresspcb.com">expresspcb</a> from the
     file ASW12V.rrb. Or you may use the gerber
     files in the <a href="gerber">gerber</a> folder. As of this writing the gerber files
     are for PCB Revision 2 (not revision 3 as in ASW12V.rrb.) Rev 2 has narrower V+ and GND traces on its
     OUTPUT jack and is therefore limited to 1A among its outputs.
     The Revision 3 of the PCB is limited to 3A among its outputs.
-    Program an Arduino Pro Micro with the sketch published in <a href="sketch//ASW12V">sketch/ASW12V/</a>.
+ 
+ Program an Arduino Pro Micro with the sketch published in <a href="sketch//ASW12V">sketch/ASW12V/</a>.
     <h3>Construction Recommendations</h3>
 The PCB layout is tight which does not make for easy maintenance. The
         very tight clearances mean that once all the big parts
@@ -27,7 +35,7 @@ Install <i>only</i> these parts and stop:
         Check alignment again. Then solder all 16 pads.
     </li>
     <li>the two .33uF power supply bypass capacitors. The PCB has holes but the parts list
-    specifies an <code>0805</code> sized SMT part. It can be soldered across the holed pads. </li>
+    specifies an <code>0805</code> sized SMT part. It can be soldered across the holed pads. Or substitute a through-hole part.</li>
     <li> a male header at J1.</li>
 </ol>
 Also install male headers on your Pro Micro and then
@@ -92,4 +100,10 @@ The fastest bank is the right. The slowest bank
 is left. The fastest pin is 1. The slowest pin is 4
 The HIGH output is Vcc for the Pro Micro you are using:
 either 3.3V or 5.0 V.
+
+Now you can populate the parts on the rest of the board.
+
+The GND and VCC jumpers on the PCB, if needed, are most easily installed from the <a href='ASW12V-bottom.pdf'>bottom</a>.
+
+
    

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("W5XD-antennas")]
+[assembly: AssemblyTitle("W5XD_antennas_shortcuts")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("W5XD-antennas")]
+[assembly: AssemblyProduct("W5XD_antennas_shortcuts")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,5 +20,4 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("b4d14d41-62fd-4a7f-bb5d-57b0ca8ce5f7")]
-
+[assembly: Guid("143bc1fc-c7cf-4e24-a930-132f74ab6c34")]

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.Collections.Generic;
 /*
 MIT License
 
@@ -33,8 +34,10 @@ namespace W5XD_antennas
      */
     public partial class W5XD_antennas : Form
     {
-        public W5XD_antennas()
+        private System.Threading.ManualResetEvent m_formLoaded;
+        public W5XD_antennas(System.Threading.ManualResetEvent formLoaded = null)
         {
+            m_formLoaded = formLoaded;
             InitializeComponent();
         }
 
@@ -43,6 +46,17 @@ namespace W5XD_antennas
             m_Setup = new SerialPortHandler(this);
             radioButtonL_SW.Checked = true;
             radioButtonR_SW.Checked = true;
+            m_primaryRadioButtons.Add(radioButtonL_SW);
+            m_primaryRadioButtons.Add(radioButtonL_NW);
+            m_primaryRadioButtons.Add(radioButtonL_NE);
+            m_primaryRadioButtons.Add(radioButtonL_SE);
+
+            m_secondaryRadioButtons.Add(radioButtonR_SW);
+            m_secondaryRadioButtons.Add(radioButtonR_NW);
+            m_secondaryRadioButtons.Add(radioButtonR_NE);
+            m_secondaryRadioButtons.Add(radioButtonR_SE);
+            if (null != m_formLoaded)
+                m_formLoaded.Set();
         }
 
         private SerialPortHandler m_Setup;
@@ -56,6 +70,50 @@ namespace W5XD_antennas
 
         int PrimaryIndex = 0;
         int SecondaryIndex = 0;
+
+        private List<RadioButton> m_primaryRadioButtons = new List<RadioButton>();
+        private List<RadioButton> m_secondaryRadioButtons = new List<RadioButton>();
+
+        const int PrimaryClockwise = 0;
+        const int PrimaryCounterClockwise = 1;
+        const int SecondaryClockwise = 2;
+        const int SecondaryCounterClockwise = 3;
+
+        public void DoShortcut(int which)
+        {
+            RadioButton toCheck = null;
+            int idx;
+            switch (which)
+            {
+                case PrimaryClockwise:
+                    idx = PrimaryIndex + 1;
+                    if (idx >= m_primaryRadioButtons.Count)
+                        idx = 0;
+                    toCheck = m_primaryRadioButtons[idx];
+                    break;
+                case PrimaryCounterClockwise:
+                    idx = PrimaryIndex - 1;
+                    if (idx < 0)
+                        idx = m_primaryRadioButtons.Count - 1;
+                    toCheck = m_primaryRadioButtons[idx];
+                    break;
+                case SecondaryClockwise:
+                    idx = SecondaryIndex + 1;
+                    if (idx >= m_secondaryRadioButtons.Count)
+                        idx = 0;
+                    toCheck = m_secondaryRadioButtons[idx];
+                    break;
+                case SecondaryCounterClockwise:
+                    idx = SecondaryIndex - 1;
+                    if (idx < 0)
+                        idx = m_secondaryRadioButtons.Count - 1;
+                    toCheck = m_secondaryRadioButtons[idx];
+                    break;
+            }
+            if ((toCheck != null) && toCheck.Enabled)
+                toCheck.Checked = true;
+        }
+
 
         // 2D array mapping the on-screen buttons to the strings to send to the ASW12V when that button is clicked.
         // The beverages account for 8 of the 12 channels on the device, and they are the Right and Middle (R and M in this array)
@@ -76,8 +134,6 @@ namespace W5XD_antennas
         // The R1F means:
         // The R section is to be forced to value 1, and for all four of its bits (the "F")
         // 
-        // 
-        //
         // With the ASW12V in "manual" mode (i.e. passing its inputs straight to its outputs)
         // Move the operator position switches to their various positions and click the "Read inputs"
         // on the AWS12V Setup page of this program. Here are the results:
@@ -89,8 +145,8 @@ namespace W5XD_antennas
         //             19 C0          2A C0           4C C0          88 C0     //SE
         // 
         // The "C0" just shows the fact that the L inputs don't change when I move the beverage
-        // switches. The inputs are all on R and M, so the output commands in the table are all R and M
-        // and nothing for L.
+        // switches. The beverage switch inputs are all on R and M, so the output commands in 
+        // the table are all R and M. Nothing for L.
         // 
         // Inspecting the results of the inputs and the corresponding commands above, you
         // can see (eventually, if you look long enough) that this program uses its on-screen
@@ -111,7 +167,8 @@ namespace W5XD_antennas
             if (PrimaryIndex == SecondaryIndex)
             {
                 bool save = m_holdChanges;
-                m_holdChanges = true;
+                // while we're setting the button states here, stop our notification routine actions
+                m_holdChanges = true; 
                 if (SecondaryPriority)
                 {
                     PrimaryIndex += 1;
@@ -199,14 +256,10 @@ namespace W5XD_antennas
 
         private void EnableDisableRadios(bool enable)
         {
-            radioButtonL_SW.Enabled = enable;
-            radioButtonL_NW.Enabled = enable;
-            radioButtonL_NE.Enabled = enable;
-            radioButtonL_SE.Enabled = enable;
-            radioButtonR_SW.Enabled = enable;
-            radioButtonR_NW.Enabled = enable;
-            radioButtonR_NE.Enabled = enable;
-            radioButtonR_SE.Enabled = enable;
+            foreach (var b in m_primaryRadioButtons)
+                b.Enabled = enable;
+            foreach (var b in m_secondaryRadioButtons)
+                b.Enabled = enable;
         }
 
         private void W5XD_antennas_FormClosed(object sender, FormClosedEventArgs e)

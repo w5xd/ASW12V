@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace W5XD_antennas
 {
-    /*Choose a serial port.
+    /* Choose a serial port.
      * printout what commands are being sent.
      * provide a couple of diagnostic functions.
      */
@@ -26,8 +26,7 @@ namespace W5XD_antennas
         private System.IO.Ports.SerialPort m_SerialPort;
 
         private void SetupForm_Load(object sender, EventArgs e)
-        {
-        }
+        { }
 
         private void comboBoxSerialPorts_SelectedIndexChanged(object sender, EventArgs e)
         {

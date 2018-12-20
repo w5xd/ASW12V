@@ -16,7 +16,7 @@ namespace W5XD_antennas
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new W5XD_antennas());
+            Application.Run(new W5XD_beverages());
         }
     }
 }

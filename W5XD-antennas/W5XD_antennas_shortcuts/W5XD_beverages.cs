@@ -32,18 +32,20 @@ namespace W5XD_antennas
      * be able to use it for anything more than an example of how to
      * use .NET to control an ASW12V. 
      */
-    public partial class W5XD_antennas : Form
+    public partial class W5XD_beverages : Form
     {
         private System.Threading.ManualResetEvent m_formLoaded;
-        public W5XD_antennas(System.Threading.ManualResetEvent formLoaded = null)
+        public W5XD_beverages(System.Threading.ManualResetEvent formLoaded = null)
         {
             m_formLoaded = formLoaded;
             InitializeComponent();
         }
 
+
         private void W5XD_antennas_Load(object sender, EventArgs e)
         {
-            m_Setup = new SerialPortHandler(this);
+            if ((null == m_Setup) || (m_Setup.IsDisposed))
+                m_Setup = new SerialPortHandler(this);
             radioButtonL_SW.Checked = true;
             radioButtonR_SW.Checked = true;
             m_primaryRadioButtons.Add(radioButtonL_SW);
@@ -59,8 +61,9 @@ namespace W5XD_antennas
                 m_formLoaded.Set();
         }
 
+        public SerialPortHandler serialPortHandler { get { return m_Setup; } set { m_Setup = value; } }
         private SerialPortHandler m_Setup;
-       
+
         private void buttonSetup_Click(object sender, EventArgs e)
         {
             if (m_Setup.IsDisposed)
@@ -114,11 +117,10 @@ namespace W5XD_antennas
                 toCheck.Checked = true;
         }
 
-
         // 2D array mapping the on-screen buttons to the strings to send to the ASW12V when that button is clicked.
         // The beverages account for 8 of the 12 channels on the device, and they are the Right and Middle (R and M in this array)
         //                                                  PRI:  SW             NW              NE             SE                 //SEC
-        string[][] commandTable = new string[][] {  new string[]{ "m 1 R1F M1F", "m 1 R2F M3F" , "m 1 R4F M5F", "m 1 R8F M9F"},    //SW
+        private string[][] commandTable = new string[][] {  new string[]{ "m 1 R1F M1F", "m 1 R2F M3F" , "m 1 R4F M5F", "m 1 R8F M9F"},    //SW
                                                     new string[]{ "m 1 R1F M3F", "m 1 R2F M2F" , "m 1 R4F M6F", "m 1 R8F MAF"},    //NW
                                                     new string[]{ "m 1 R1F M5F", "m 1 R2F M6F" , "m 1 R4F M4F", "m 1 R8F MCF"},    //NE
                                                     new string[]{ "m 1 R1F M9F", "m 1 R2F MAF" , "m 1 R4F MCF", "m 1 R8F M8F"},    //SE
@@ -168,7 +170,7 @@ namespace W5XD_antennas
             {
                 bool save = m_holdChanges;
                 // while we're setting the button states here, stop our notification routine actions
-                m_holdChanges = true; 
+                m_holdChanges = true;
                 if (SecondaryPriority)
                 {
                     PrimaryIndex += 1;
@@ -227,7 +229,7 @@ namespace W5XD_antennas
                 PrimaryIndex = whButton.TabIndex;
                 IfSecondaryMatches(false);
                 if (!checkBoxManual.Checked)
-                    m_Setup.Command(commandTable[SecondaryIndex][PrimaryIndex]+"\r");
+                    m_Setup.Command(commandTable[SecondaryIndex][PrimaryIndex] + "\r");
             }
         }
 
@@ -241,9 +243,11 @@ namespace W5XD_antennas
                 SecondaryIndex = whButton.TabIndex;
                 IfSecondaryMatches(true);
                 if (!checkBoxManual.Checked)
-                    m_Setup.Command(commandTable[SecondaryIndex][PrimaryIndex]+"\r");
+                    m_Setup.Command(commandTable[SecondaryIndex][PrimaryIndex] + "\r");
             }
         }
+
+        public bool ManualControl { get { return checkBoxManual.Checked; } }
 
         private void checkBoxManual_CheckedChanged(object sender, EventArgs e)
         {
@@ -252,6 +256,8 @@ namespace W5XD_antennas
             else
                 m_Setup.Command(commandTable[SecondaryIndex][PrimaryIndex] + "\r");
             EnableDisableRadios(!checkBoxManual.Checked);
+            if (m_ratPakForm != null && !m_ratPakForm.IsDisposed)
+                m_ratPakForm.ManualControl = ManualControl;
         }
 
         private void EnableDisableRadios(bool enable)
@@ -281,5 +287,19 @@ namespace W5XD_antennas
                 "m 1 L11\r" : "m 1 L01\r";
             m_Setup.Command(s);
         }
+
+        private void buttonRatpak_Click(object sender, EventArgs e)
+        {
+            if ((m_ratPakForm == null) || m_ratPakForm.IsDisposed)
+            {
+                m_ratPakForm = new TwoByRatPak();
+                m_ratPakForm.Show();
+            }
+            else if (m_ratPakForm.WindowState == FormWindowState.Minimized)
+                m_ratPakForm.WindowState = FormWindowState.Normal;
+            m_ratPakForm.serialPortHandler = m_Setup;
+        }
+        private TwoByRatPak m_ratPakForm;
+        public TwoByRatPak ratPakForm { set { m_ratPakForm = value; } }
     }
 }

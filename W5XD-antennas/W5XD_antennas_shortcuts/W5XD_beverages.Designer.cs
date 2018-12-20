@@ -1,6 +1,6 @@
 ﻿namespace W5XD_antennas
 {
-    partial class W5XD_antennas
+    partial class W5XD_beverages
     {
         /// <summary>
         /// Required designer variable.
@@ -41,6 +41,7 @@
             this.buttonSetup = new System.Windows.Forms.Button();
             this.checkBoxManual = new System.Windows.Forms.CheckBox();
             this.checkBoxLoopTunerPower = new System.Windows.Forms.CheckBox();
+            this.buttonRatpak = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -175,9 +176,9 @@
             // 
             // buttonSetup
             // 
-            this.buttonSetup.Location = new System.Drawing.Point(12, 124);
+            this.buttonSetup.Location = new System.Drawing.Point(1, 127);
             this.buttonSetup.Name = "buttonSetup";
-            this.buttonSetup.Size = new System.Drawing.Size(75, 23);
+            this.buttonSetup.Size = new System.Drawing.Size(59, 23);
             this.buttonSetup.TabIndex = 2;
             this.buttonSetup.Text = "Setup...";
             this.buttonSetup.UseVisualStyleBackColor = true;
@@ -188,7 +189,7 @@
             this.checkBoxManual.AutoSize = true;
             this.checkBoxManual.Checked = true;
             this.checkBoxManual.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxManual.Location = new System.Drawing.Point(109, 127);
+            this.checkBoxManual.Location = new System.Drawing.Point(123, 130);
             this.checkBoxManual.Name = "checkBoxManual";
             this.checkBoxManual.Size = new System.Drawing.Size(61, 17);
             this.checkBoxManual.TabIndex = 3;
@@ -199,7 +200,7 @@
             // checkBoxLoopTunerPower
             // 
             this.checkBoxLoopTunerPower.AutoSize = true;
-            this.checkBoxLoopTunerPower.Location = new System.Drawing.Point(179, 127);
+            this.checkBoxLoopTunerPower.Location = new System.Drawing.Point(189, 130);
             this.checkBoxLoopTunerPower.Name = "checkBoxLoopTunerPower";
             this.checkBoxLoopTunerPower.Size = new System.Drawing.Size(109, 17);
             this.checkBoxLoopTunerPower.TabIndex = 4;
@@ -207,11 +208,22 @@
             this.checkBoxLoopTunerPower.UseVisualStyleBackColor = true;
             this.checkBoxLoopTunerPower.CheckedChanged += new System.EventHandler(this.checkBoxLoopTunerPower_CheckedChanged);
             // 
-            // W5XD_antennas
+            // buttonRatpak
+            // 
+            this.buttonRatpak.Location = new System.Drawing.Point(64, 127);
+            this.buttonRatpak.Name = "buttonRatpak";
+            this.buttonRatpak.Size = new System.Drawing.Size(53, 23);
+            this.buttonRatpak.TabIndex = 5;
+            this.buttonRatpak.Text = "RatPak";
+            this.buttonRatpak.UseVisualStyleBackColor = true;
+            this.buttonRatpak.Click += new System.EventHandler(this.buttonRatpak_Click);
+            // 
+            // W5XD_beverages
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(300, 151);
+            this.Controls.Add(this.buttonRatpak);
             this.Controls.Add(this.checkBoxLoopTunerPower);
             this.Controls.Add(this.checkBoxManual);
             this.Controls.Add(this.buttonSetup);
@@ -219,7 +231,7 @@
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.Name = "W5XD_antennas";
+            this.Name = "W5XD_beverages";
             this.Text = "W5XD Beverages";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.W5XD_antennas_FormClosed);
             this.Load += new System.EventHandler(this.W5XD_antennas_Load);
@@ -246,5 +258,6 @@
         private System.Windows.Forms.Button buttonSetup;
         private System.Windows.Forms.CheckBox checkBoxManual;
         private System.Windows.Forms.CheckBox checkBoxLoopTunerPower;
+        private System.Windows.Forms.Button buttonRatpak;
     }
 }

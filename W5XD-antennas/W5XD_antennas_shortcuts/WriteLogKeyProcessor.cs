@@ -78,7 +78,7 @@ namespace W5XD_antennas_shortcuts
             m_running = true;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            W5XD_antennas.W5XD_antennas form = new W5XD_antennas.W5XD_antennas(e);
+            W5XD_antennas.W5XD_beverages form = new W5XD_antennas.W5XD_beverages(e);
             // calls from WriteLog are on the wrong thread. Use BeginInvoke to 
             // cross-thread them.
             m_closeThread = () => {

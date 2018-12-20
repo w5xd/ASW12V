@@ -298,6 +298,7 @@ namespace W5XD_antennas
             else if (m_ratPakForm.WindowState == FormWindowState.Minimized)
                 m_ratPakForm.WindowState = FormWindowState.Normal;
             m_ratPakForm.serialPortHandler = m_Setup;
+            m_ratPakForm.ManualControl = ManualControl;
         }
         private TwoByRatPak m_ratPakForm;
         public TwoByRatPak ratPakForm { set { m_ratPakForm = value; } }

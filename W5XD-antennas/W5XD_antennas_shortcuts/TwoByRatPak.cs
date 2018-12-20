@@ -25,19 +25,19 @@ namespace W5XD_antennas
         {
             set
             {
-                buttonL10m.Enabled = value;
-                buttonL15m.Enabled = value;
-                buttonL20m.Enabled = value;
-                buttonL40m.Enabled = value;
-                buttonL80_160m.Enabled = value;
-                buttonL80_15m.Enabled = value;
+                buttonL10m.Enabled = !value;
+                buttonL15m.Enabled = !value;
+                buttonL20m.Enabled = !value;
+                buttonL40m.Enabled = !value;
+                buttonL80_160m.Enabled = !value;
+                buttonL80_15m.Enabled = !value;
 
-                buttonR10m.Enabled = value;
-                buttonR15m.Enabled = value;
-                buttonR20m.Enabled = value;
-                buttonR40m.Enabled = value;
-                buttonR80_160m.Enabled = value;
-                buttonR80_15m.Enabled = value;
+                buttonR10m.Enabled = !value;
+                buttonR15m.Enabled = !value;
+                buttonR20m.Enabled = !value;
+                buttonR40m.Enabled = !value;
+                buttonR80_160m.Enabled = !value;
+                buttonR80_15m.Enabled = !value;
             }
         }
 

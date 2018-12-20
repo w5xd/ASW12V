@@ -63,6 +63,7 @@
             // 
             // buttonL80_15m
             // 
+            this.buttonL80_15m.Enabled = false;
             this.buttonL80_15m.Location = new System.Drawing.Point(300, 19);
             this.buttonL80_15m.Name = "buttonL80_15m";
             this.buttonL80_15m.Size = new System.Drawing.Size(55, 43);
@@ -73,6 +74,7 @@
             // 
             // buttonL80_160m
             // 
+            this.buttonL80_160m.Enabled = false;
             this.buttonL80_160m.Location = new System.Drawing.Point(232, 19);
             this.buttonL80_160m.Name = "buttonL80_160m";
             this.buttonL80_160m.Size = new System.Drawing.Size(64, 43);
@@ -83,6 +85,7 @@
             // 
             // buttonL40m
             // 
+            this.buttonL40m.Enabled = false;
             this.buttonL40m.Location = new System.Drawing.Point(171, 19);
             this.buttonL40m.Name = "buttonL40m";
             this.buttonL40m.Size = new System.Drawing.Size(57, 43);
@@ -93,6 +96,7 @@
             // 
             // buttonL20m
             // 
+            this.buttonL20m.Enabled = false;
             this.buttonL20m.Location = new System.Drawing.Point(116, 19);
             this.buttonL20m.Name = "buttonL20m";
             this.buttonL20m.Size = new System.Drawing.Size(51, 43);
@@ -103,6 +107,7 @@
             // 
             // buttonL15m
             // 
+            this.buttonL15m.Enabled = false;
             this.buttonL15m.Location = new System.Drawing.Point(61, 19);
             this.buttonL15m.Name = "buttonL15m";
             this.buttonL15m.Size = new System.Drawing.Size(51, 43);
@@ -113,6 +118,7 @@
             // 
             // buttonL10m
             // 
+            this.buttonL10m.Enabled = false;
             this.buttonL10m.Location = new System.Drawing.Point(6, 19);
             this.buttonL10m.Name = "buttonL10m";
             this.buttonL10m.Size = new System.Drawing.Size(51, 43);
@@ -138,6 +144,7 @@
             // 
             // buttonR80_15m
             // 
+            this.buttonR80_15m.Enabled = false;
             this.buttonR80_15m.Location = new System.Drawing.Point(300, 19);
             this.buttonR80_15m.Name = "buttonR80_15m";
             this.buttonR80_15m.Size = new System.Drawing.Size(55, 43);
@@ -148,6 +155,7 @@
             // 
             // buttonR80_160m
             // 
+            this.buttonR80_160m.Enabled = false;
             this.buttonR80_160m.Location = new System.Drawing.Point(232, 19);
             this.buttonR80_160m.Name = "buttonR80_160m";
             this.buttonR80_160m.Size = new System.Drawing.Size(64, 43);
@@ -158,6 +166,7 @@
             // 
             // buttonR40m
             // 
+            this.buttonR40m.Enabled = false;
             this.buttonR40m.Location = new System.Drawing.Point(171, 19);
             this.buttonR40m.Name = "buttonR40m";
             this.buttonR40m.Size = new System.Drawing.Size(57, 43);
@@ -168,6 +177,7 @@
             // 
             // buttonR20m
             // 
+            this.buttonR20m.Enabled = false;
             this.buttonR20m.Location = new System.Drawing.Point(116, 19);
             this.buttonR20m.Name = "buttonR20m";
             this.buttonR20m.Size = new System.Drawing.Size(51, 43);
@@ -178,6 +188,7 @@
             // 
             // buttonR15m
             // 
+            this.buttonR15m.Enabled = false;
             this.buttonR15m.Location = new System.Drawing.Point(61, 19);
             this.buttonR15m.Name = "buttonR15m";
             this.buttonR15m.Size = new System.Drawing.Size(51, 43);
@@ -188,6 +199,7 @@
             // 
             // buttonR10m
             // 
+            this.buttonR10m.Enabled = false;
             this.buttonR10m.Location = new System.Drawing.Point(6, 19);
             this.buttonR10m.Name = "buttonR10m";
             this.buttonR10m.Size = new System.Drawing.Size(51, 43);

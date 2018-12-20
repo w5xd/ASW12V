@@ -1,7 +1,5 @@
 #include <SPI.h>
 
-#define DEBUG_DEFAULT_MODE 0
-
 /* Arduino sketch for the ASW12V remote control switch box
 ** The hardware is an array of input screw terminals and 
 ** an array of output screw terminals of the same size.
@@ -89,7 +87,8 @@ namespace {
     // here are the SPI parameters for the 74hc597 AND 74HC594
     const SPISettings SPISetup(1000000, MSBFIRST, SPI_MODE0);
 
-    ShiftRegister_t InputRegisters[MAX_BOARDS_DAISY_CHAINED];
+    ShiftRegister_t ShiftRegisters[MAX_BOARDS_DAISY_CHAINED];
+    ShiftRegister_t AsOutput[MAX_BOARDS_DAISY_CHAINED];
     ShiftRegister_t MaskForceOn[MAX_BOARDS_DAISY_CHAINED];
     ShiftRegister_t MaskForceOff[MAX_BOARDS_DAISY_CHAINED];
 
@@ -157,38 +156,22 @@ namespace {
     {
         if (DaisyChainLength <= 0)
             return;
-#if DEBUG_DEFAULT_MODE
-        static long lastTime;
-        long now = millis();
-        if (now - lastTime < 1000)
-            return;
-        lastTime = now;
-#endif
+
         LatchInputs(); 
         SPI.beginTransaction(SPISetup);
         int i = 0;
         // read the inputs
         for (; i < DaisyChainLength; i += 1)
         {   // ~ input opto's invert
-            int j = i;
-            InputRegisters[i].RightAndMiddleRegister = ~SPI.transfer(0);
-            InputRegisters[i++].LeftRegister = ~SPI.transfer(0);
-#if DEBUG_DEFAULT_MODE
-            Serial.print("read R&M: ");
-            Serial.print((int)InputRegisters[j].RightAndMiddleRegister, HEX);
-            Serial.print(" Left: ");
-            Serial.println((int)InputRegisters[j].LeftRegister, HEX);
-#endif
+            ShiftRegisters[i].RightAndMiddleRegister = ~SPI.transfer(0);
+            ShiftRegisters[i].LeftRegister = ~SPI.transfer(0);
         }
         i -= 1;
         // write them out. Order reversed per their wiring.
-        if (printOutOnce)
-            Serial.print("Out: ");
-        bool firstTime = true;
-        for (; i > 0; i -= 1)
+        for (; i >= 0; i -= 1)
         {   // outputs do not invert
-            uint8_t LeftRegister = InputRegisters[--i].LeftRegister;
-            uint8_t RightAndMiddleRegister = InputRegisters[i].RightAndMiddleRegister;
+            uint8_t LeftRegister = ShiftRegisters[i].LeftRegister;
+            uint8_t RightAndMiddleRegister = ShiftRegisters[i].RightAndMiddleRegister;
             if (HonorMasks)
             {
                 LeftRegister |= MaskForceOn[i].LeftRegister;
@@ -196,29 +179,29 @@ namespace {
                 LeftRegister &= ~MaskForceOff[i].LeftRegister;
                 RightAndMiddleRegister &= ~MaskForceOff[i].RightAndMiddleRegister;
             }
-#if DEBUG_DEFAULT_MODE
-            Serial.print("writing Left: ");
-            Serial.print((int)LeftRegister, HEX);
-            Serial.print(" r&m: ");
-            Serial.println((int)RightAndMiddleRegister);
-#endif
+            AsOutput[i].LeftRegister = LeftRegister;
+            AsOutput[i].RightAndMiddleRegister = RightAndMiddleRegister;
             SPI.transfer(LeftRegister);
             SPI.transfer(RightAndMiddleRegister);
-            if (printOutOnce)
-            {
-                if (firstTime)
-                    Serial.print(" ");
-                Serial.print((int)RightAndMiddleRegister, HEX);
-                Serial.print(" ");
-                Serial.print((int) LeftRegister, HEX);
-            }
-            firstTime = false;
         }
-        if (printOutOnce)
-            Serial.println();
-        printOutOnce = false;
         SPI.endTransaction();
         LatchOutputs();
+        if (printOutOnce)
+        {
+            Serial.print("Out:  ");
+            for (i=0; i < DaisyChainLength; i += 1)
+            {
+                    if (i != 0)
+                        Serial.print(" ");
+                    Serial.print((int)AsOutput[i].LeftRegister, HEX);
+                    Serial.print(" ");
+                    if (AsOutput[i].RightAndMiddleRegister < 16)
+                        Serial.print("0");
+                    Serial.print((int) AsOutput[i].RightAndMiddleRegister, HEX);
+            }
+            Serial.println();
+        }
+        printOutOnce = false;
     }
 }
 
@@ -309,13 +292,15 @@ void loop()
                 SPI.beginTransaction(SPISetup);
                 for (int i = 0; i < DaisyChainLength; i++)
                 { // ~ opto pullups invert
-                    unsigned char received1 = ~SPI.transfer(0);
-                    unsigned char received2 = ~SPI.transfer(0);
+                    unsigned char receivedRM = ~SPI.transfer(0);
+                    unsigned char receivedL = ~SPI.transfer(0);
                     if (i != 0)
                         Serial.print(" ");
-                    Serial.print((int)received1, HEX);
+                    Serial.print((int)receivedL, HEX);
                     Serial.print(" ");
-                    Serial.print((int) received2, HEX);
+                    if (receivedRM < 16)
+                        Serial.print("0");
+                    Serial.print((int) receivedRM, HEX);
                 }
                 SPI.endTransaction();
                 Serial.println();

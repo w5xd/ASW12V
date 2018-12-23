@@ -14,7 +14,7 @@ namespace W5XD_antennas
      * printout what commands are being sent.
      * provide a couple of diagnostic functions.
      */
-    public partial class SerialPortHandler : Form
+    public partial class SerialPortHandler : Form, RemotableSerial
     {
         private Control m_Invoker;
         public SerialPortHandler(Control invoker)
@@ -94,5 +94,6 @@ namespace W5XD_antennas
             foreach (string s in System.IO.Ports.SerialPort.GetPortNames())
                 comboBoxSerialPorts.Items.Add(s);
         }
+
     }
 }

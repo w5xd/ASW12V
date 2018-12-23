@@ -27,25 +27,34 @@ SOFTWARE.
 
 namespace W5XD_antennas
 {
+
+     public delegate W5XD_antennas.RemotableSerial GetSerial(Form f);
+
     /* This application drives an ASW12V on a serial port.
-     * It is VERY specific to the W5XD antenna farm, so do not expect to
-     * be able to use it for anything more than an example of how to
-     * use .NET to control an ASW12V. 
+     * It is very specific to the W5XD antenna farm, so do not expect to
+     * be able to use it for anything more than an example of how to use .NET to control 
+     * an ASW12V. 
      */
     public partial class W5XD_beverages : Form
     {
         private System.Threading.ManualResetEvent m_formLoaded;
-        public W5XD_beverages(System.Threading.ManualResetEvent formLoaded = null)
+        private GetSerial m_gs;
+        public W5XD_beverages(GetSerial gs, System.Threading.ManualResetEvent formLoaded = null)
         {
             m_formLoaded = formLoaded;
+            m_gs = gs;
             InitializeComponent();
         }
 
+        public void Command(String s)
+        {
+            m_Setup.Command(s);
+        }
 
         private void W5XD_antennas_Load(object sender, EventArgs e)
         {
             if ((null == m_Setup) || (m_Setup.IsDisposed))
-                m_Setup = new SerialPortHandler(this);
+                m_Setup = m_gs(this);
             radioButtonL_SW.Checked = true;
             radioButtonR_SW.Checked = true;
             m_primaryRadioButtons.Add(radioButtonL_SW);
@@ -61,13 +70,13 @@ namespace W5XD_antennas
                 m_formLoaded.Set();
         }
 
-        public SerialPortHandler serialPortHandler { get { return m_Setup; } set { m_Setup = value; } }
-        private SerialPortHandler m_Setup;
+        public W5XD_antennas.RemotableSerial serialPortHandler { get { return m_Setup; } set { m_Setup = value; } }
+        private W5XD_antennas.RemotableSerial m_Setup;
 
         private void buttonSetup_Click(object sender, EventArgs e)
         {
             if (m_Setup.IsDisposed)
-                m_Setup = new SerialPortHandler(this);
+                m_Setup = m_gs(this);
             m_Setup.Show();
         }
 
@@ -272,6 +281,7 @@ namespace W5XD_antennas
         {
             // go back to full manual
             m_Setup.Command("c");
+            m_Setup.Dispose();
         }
 
         private void checkBoxLoopTunerPower_CheckedChanged(object sender, EventArgs e)
@@ -302,5 +312,6 @@ namespace W5XD_antennas
         }
         private TwoByRatPak m_ratPakForm;
         public TwoByRatPak ratPakForm { set { m_ratPakForm = value; } }
+       
     }
 }

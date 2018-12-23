@@ -12,14 +12,18 @@ namespace W5XD_antennas
 {
     public partial class TwoByRatPak : Form
     {
-        public SerialPortHandler serialPortHandler { get { return m_Setup; } set { m_Setup = value; } }
-        private SerialPortHandler m_Setup;
+        // the device to control is this one:
+        // https://www.arraysolutions.com/antennas-switching/sixpak-so
+        // It has two SO239's each going to a rig and
+        //        six SO239's each going to a separate antenna.
+
+        public W5XD_antennas.RemotableSerial serialPortHandler { get { return m_Setup; } set { m_Setup = value; } }
+        private W5XD_antennas.RemotableSerial m_Setup;
 
         public TwoByRatPak()
         {
             InitializeComponent();
         }
-
 
         public bool ManualControl
         {

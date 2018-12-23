@@ -33,6 +33,9 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="RemoteControlShortcuts">
+      <HintPath>..\..\..\..\Program Files (x86)\WriteLog\Programs\RemoteControlShortcuts.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -58,6 +61,7 @@
     <Compile Include="..\Version.cs">
       <Link>Properties\Version.cs</Link>
     </Compile>
+    <Compile Include="RemotableSerial.cs" />
     <Compile Include="SerialPortHandler.cs">
       <SubType>Form</SubType>
     </Compile>

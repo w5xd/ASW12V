@@ -12,7 +12,7 @@ The printed circuit board is a four layer part. It is not commercially available
     OUTPUT jack and is therefore limited to 1A among its outputs.
     The Revision 3 of the PCB is limited to 3A among its outputs.
  
- Program an Arduino Pro Micro with the sketch published in <a href="sketch//ASW12V">sketch/ASW12V/</a>.
+ Program an Arduino Pro Micro with the sketch published in <a href="sketch//ASW12V">sketch/ASW12V/</a>. Both the 5V and 3.3V versions of the Pro Micro work equally well. 
     <h3>Construction Recommendations</h3>
 The PCB layout is tight which does not make for easy maintenance. The
         very tight clearances mean that once all the big parts

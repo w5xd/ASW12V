@@ -44,13 +44,11 @@ two ASW12V boxes. But in my shack, both control cables are routed through
 just one ASW12V. And its the 24 channel version. The beverage
 and tuner power switching are all routed to the same terminal blocks
 and all controlled using one virtual COM port.
-
-
-The diagram shows that power and ground are connected on the INPUT side of the ASW12V.
-If your load exceeds about one Ampere (of the three Ampere maximum rating) then
+<br/>
+<p>The diagram shows that power and ground are connected on the INPUT side of the ASW12V.
+If your load exceeds about 1A (of the 3A maximum rating) then
 wire the heavier power and ground leads to the power source on the OUTPUT side of the
-ASW12V to avoid overloading the internal (and smaller) INPUT to OUTPUT power and ground jumper traces.
-
+ASW12V to avoid overloading the internal (and smaller) INPUT to OUTPUT power and ground jumper traces.</p>
 
 To use within WriteLog, place a copy of the W5XD_antennas_shortcuts.dll in WriteLog's Program directory,
 and make a new entry in WriteLog.ini. WriteLog can then access the beverage switching from

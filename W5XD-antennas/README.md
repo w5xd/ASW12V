@@ -53,8 +53,10 @@ ASW12V to avoid overloading the internal (and smaller) INPUT to OUTPUT power and
 To use within WriteLog, place a copy of the W5XD_antennas_shortcuts.dll in WriteLog's Program directory,
 and make a new entry in WriteLog.ini. WriteLog can then access the beverage switching from
 keyboard shortcuts. The INI entry looks like this:
+<pre><code>
 [ExternalShortcuts]
-W5XD_antenna_shortcuts.WriteLogKeyProcessor=W5XD_antennas_shortcuts
+W5XD_antenna_shortcuts.WriteLogKeyProcessor=W5XD_antennas_shortcuts</code>
+</pre>
 WriteLog doesn't need the .exe file. Only the .dll need be installed in WriteLog's Program folder.
 
 
@@ -63,5 +65,5 @@ WriteLog as of its version 12.36 supports keyboard shortcut processing split acr
 the control-site to the remote-site. This project shows how to accomplish that
 in its .NET source code. The Writelog.ini setting at the remote site is as above, but at the control site,
 you need this entry instead:
-W5XD_antennas_shortcuts.WriteLogKeyProcessorControlSite=W5XD_antenna_shortcuts
+<br/><code>W5XD_antennas_shortcuts.WriteLogKeyProcessorControlSite=W5XD_antenna_shortcuts</code>
  

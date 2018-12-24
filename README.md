@@ -61,7 +61,7 @@ A powered USB connection to the microUSB connector is required. At boot up, the 
 side as a pass through&mdash;a signal on an input pin results in V+ applied to corresponding OUTPUT pin on
 the opposite side of the box.
 <p>When plugged in to a computer, the fdichip chip drivers for its USB port automatically are installed (on most
- operating systems) and create a virtual serial port. An example program to write useful serial commands is published <a href='W5XD-antennas'>here</a>. The example
+ operating systems) and create a virtual serial port. An example program to write useful serial commands is published <a href='W5XD-antennas'>here on github</a>. The example
 is specific to the antennas to be controlled at W5XD. It doesn't put much on the screen. as not much is required at W5XD.</p>
 
 <img src='w5xd-antennas-1.png' alt='w5xd-antennas-1.png'/>

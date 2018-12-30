@@ -149,6 +149,10 @@ namespace W5XD_antennas_shortcuts
 #endif
         }
 
+        public void OnDisconnectRemote()
+        {
+        }
+
 #endregion
     }
 

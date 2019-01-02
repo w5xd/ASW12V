@@ -5,12 +5,10 @@
     <a href="https://www.digikey.com/short/pc7jpw">https://www.digikey.com/short/pc7jpw</a>.
 
 The printed circuit board is a four layer part. It is not commercially available.
-    It was laid out with <a href="http://expresspcb.com">expresspcb</a> from the
-    file ASW12V.rrb. Or you may use the gerber
-    files in the <a href="gerber">gerber</a> folder. As of this writing the gerber files
-    are for PCB Revision 2 (not revision 3 as in ASW12V.rrb.) Rev 2 has narrower V+ and GND traces on its
-    OUTPUT jack and is therefore limited to 1A among its outputs.
-    The Revision 3 of the PCB is limited to 3A among its outputs.
+It was laid out with <a href="http://expresspcb.com">expresspcb</a> from the
+file ASW12V.rrb. Or you may use the gerber
+files in the <a href="gerber">gerber</a> folder. Revision 3 of the PCB is limited to 3A among its outputs.
+Earlier revisions have lower limits.
  
  Program an Arduino Pro Micro with the sketch published in <a href="sketch//ASW12V">sketch/ASW12V/</a>. Both the 5V and 3.3V versions of the Pro Micro work equally well. 
     <h3>Construction Recommendations</h3>

@@ -1,5 +1,3 @@
- We have also attached are your gerber and drill files compressed into a single .ZIP file.
-
 The gerber files are formatted as RS - 274 - X files.The drill file includes the hole size definitions. The diameters listed refer to the finished hole sizes after plating, not the drill size.
 
 Each file can be identify by its extension:
@@ -14,4 +12,4 @@ Each file can be identify by its extension:
 .BSM or .SMB = bottom solder mask layer
 .GBP = bottom paste layer
 .DRI = drill file
-.OLN = board outline
+.OLN = board outline 

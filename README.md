@@ -77,7 +77,7 @@ is specific to the antennas to be controlled at W5XD. It doesn't put much on the
 <img src='w5xd-antennas-1.png' alt='w5xd-antennas-1.png'/>
 <p>Control the main transmit antenna, one of 6 to each of two radios:</p>
 <img src='w5xd-antennas-RatPak.png' alt='w5xd-antennas-RatPak.png'/>
-
+<p>All the buttons on the two windows above can be programmed as keyboard shortcuts in WriteLog.</p>
 Enclosures
 
 <p>This repository publishes designs for enclosures for each of two configurations: a 12 channel device (with 1 PCB) or a 24 channel device (with 2 PCBs.) The 3D designs were done with <a href='solidworks.com'>SolidWorks</a>. The

@@ -63,8 +63,10 @@ the opposite side of the box.
 <p>When plugged in to a computer, the fdichip chip drivers for its USB port automatically are installed (on most
  operating systems) and create a virtual serial port. An example program to write useful serial commands is published <a href='W5XD-antennas'>here on github</a>. The example
 is specific to the antennas to be controlled at W5XD. It doesn't put much on the screen. as not much is required at W5XD.</p>
-
+<p>Control the beverages, one to the RX antenna on each of two radios:</p>
 <img src='w5xd-antennas-1.png' alt='w5xd-antennas-1.png'/>
+<p>Control the main transmit antenna, one of 6 to each of two radios:</p>
+<img src='w5xd-antennas-RatPak.png' alt='w5xd-antennas-RatPak.png'/>
 
 Enclosures
 

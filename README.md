@@ -17,6 +17,14 @@ USB plug is required to power the embedded microprocessor for it to
 follow its inputs.
 </p>
 
+<p>This device is controlled by ASCII command strings sent over
+its USB virtual serial port. WriteLog is not required to operate it,
+ although a WriteLog plugin is posted <a href='W5XD-antennas'>here</a> showing 
+ how to embed
+antenna switching commands destined for this hardware
+within WriteLog. The example has on-screen controls corresponding
+to the antennas at W5XD. Full source code is posted.</p>
+
 <p>The power and ground are optically isolated on both input and output side
 in groups of four channels. Each group of four has its power and ground.
 All the input and output power and ground circuits are optically isolated
@@ -29,7 +37,9 @@ The longest dimension is about 8in (21cm). The short dimension is about 4in (10c
 <p>Power and Ground</p>
 
 <p>The PCB layout has three sections each with four input/output channels and with grounds and
-VCC isolated to that section. The power and ground circuit is this:
+VCC isolated to that section. In the photo above, all the G and 12V connections are, by default,
+ isolated from each other. The PCB has solder jumpers to enable interconnects among them. See below.
+ The power and ground circuit is this:
 <a href='ASW12V-circuit3.pdf'>ASW12V-circuit3.pdf</a>. 
 There are a lot of options on the PCB for exactly what Ground and VCC connections get connected internal
 to the device. 

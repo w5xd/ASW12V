@@ -2,13 +2,23 @@
     <h3>Parts lists</h3>
     The parts of the device can all&mdash;except the PCB and enclosure&mdash; be obtained at digikey: <a href="partslist.pdf">partslist.pdf</a>.
     Or here is a link to the equivalent digikey shared shopping cart:
-    <a href="https://www.digikey.com/short/pc7jpw">https://www.digikey.com/short/pc7jpw</a>.
+    <a href="https://www.digikey.com/short/p9fr3t">https://www.digikey.com/short/p9fr3t</a>.
+
+<p>The digikey references above do <b>not</b> include the necessary screw terminals or connectors. The PCB design accommodates 
+either of these:</p>
+<ul>
+<li><a href='https://www.digikey.com/product-detail/en/1935200/277-1581-ND/568618/?itemSeq=277063756'>Phoenix Contact 1935200 </a>
+<li><a href='https://www.digikey.com/product-detail/en/te-connectivity-amp-connectors/1744048-6/A116470-ND/4730099'>TE Connectivity AMP Connectors part 1744048-6</a>
+<li><a href='https://www.digikey.com/product-detail/en/te-connectivity-amp-connectors/2-1744036-6/A144553-ND/5438998'>mating housing</a>
+<li><a href='https://www.digikey.com/product-detail/en/te-connectivity-amp-connectors/1123721-2/A100446CT-ND/2233212'>crimp pins</a>
+<ul>
+Separate enclosure STL files are published depending on your choice of part.
 
 The printed circuit board is a four layer part. It is not commercially available.
-It was laid out with <a href="http://expresspcb.com">expresspcb</a> from the
+It was designed with <a href="http://expresspcb.com">expresspcb</a> from the
 file ASW12V.rrb. Or you may use the gerber
 files in the <a href="gerber">gerber</a> folder. Revision 3 of the PCB is limited to 3A among its outputs.
-Earlier revisions have lower limits.
+Earlier revisions have lower limits. The same Revision 3 PCB accommodates either of the above interconnects.
  
  Program an Arduino Pro Micro with the sketch published in <a href="sketch//ASW12V">sketch/ASW12V/</a>. Both the 5V and 3.3V versions of the Pro Micro work equally well. 
     <h3>Construction Recommendations</h3>
@@ -28,20 +38,22 @@ Install <i>only</i> these parts and stop:
     </li>
     <li>the two .33uF power supply bypass capacitors. The PCB has holes but the parts list
     specifies an <code>0805</code> sized SMT part. It can be soldered across the holed pads. Or substitute a through-hole part.</li>
-    <li> a male header at J1.</li>
+    <li> a male header at J1. Mechanical clearances require a vertical header at this position for the first (or only) 12 channels,
+         and a right angle header for all slave channels.</li>
 </ol>
 Also install male headers on your Pro Micro and then
 use
 <ol type="a">
-    <li> 7 jumpers to temporarily wire it to the PCB</li>
+    <li> 7 jumpers to temporarily wire it to the PCB. I used these from <a href='http://www.sparkfun.com/products/10898'>sparkfun</a>.</li>
     <li>
-        jumper the I to O pins at J2. I use a solder wire
-        for the I to O, which can later be cut in the middle
-        to jumper to the next board, if there is one.
+        jumper the I to O pins at J2. A wire may be used for the last board in the chain, but a right angle female header
+	should be installed for all others, and a jumper installed.
     </li>
 </ol>
-Your board should look like this, minus the 10K resistors I have already placed:
+Your board might look like this, minus the resistors I have already placed:
 <img src='TestConfiguration.jpg' alt='TestConfiguration.jpg' />
+The board in this photo is destined to be board number 1 (it has a vertical header installed at J1 on the right)
+in an enclosure of two boards (it has a right angle connector installed at J2 on the left.)
 <h3>Shift Register Digital Test</h3>
 You need a serial port terminal program connected to
 the Arduino&#8217;s serial port for the following tests. I recommend
@@ -96,12 +108,36 @@ either 3.3V or 5.0 V.
 
 Now you can populate the parts on the rest of the board.
 
-The GND and VCC jumpers on the PCB, if needed, are most easily installed from the <a href='ASW12V-bottom.pdf'>bottom</a>.
+<h3>12V output section test</h3>
+This author strongly recommends testing the 12V output section using a current limiting circuit as shown 
+by the 220 ohm series resistor
+in the <a href='ASW12V-circuit3.pdf'>circuit diagram page 3</a>.
+I have twice had to remove an already soldered-in PS2502 in its DIP16 to deal with
+a permanent failure caused by applying full 12VDC to an output section that had
+a solder bridge involving one of the 3.3K ohm resistors between the PS2502 and the PNP darlington.
+In one of those cases, the solder bridge formed on the lower side of the board when I 
+applied too much solder to the pin from the top!
+<p>With the test circuit wired in as shown on the circuit diagram, 
+use a terminal emulator connected to the Pro Micro's serial port
+to alternately send these two commands, which, on a properly wired
+output section, give, respectively, 0V and 12V on the output pin.</p>
+<ul>
+<li><code>m 1 L0F</code>
+<li><code>m 1 LFF</code>
+</ul>
+<p>For the <code>L</code> substitute <code>M</code> for the middle section and <code>R</code> when testing the right section.</p>
+
+<p>The GND and VCC jumpers on the PCB, if needed, are most easily installed from the <a href='ASW12V-bottom.pdf'>bottom</a>.</p>
 
 <h3>Enclosure</h3>
 
 The enclosure is documented in the <a href="CAD/">CAD</a> and <a href='STL/'>STL</a> folders.
-The mounting posts have channels that fit #4 machine nuts. Square nuts are easier to
+The mounting posts on the enclosure top have channels that fit #4 machine nuts. Square nuts are easier to
 place, but hex nuts work as well. In either case, clean out the 3D printing debris before
-pushing a nut in the channel. And put a small piece of tape over the opening after the nut
+pushing a nut in the channel.  And put a small piece of tape over the opening after the nut
 is placed because gravity is going to try to remove it.  
+
+Quantity 4 by 5/8 inch machine screw is needed per section to fasten the top to the bottom.
+
+The mounting screw holes in the enclosure bottom can be cleared of print debris by pushing a
+#4 machine screw through from the inside toward the outside.

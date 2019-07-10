@@ -287,6 +287,9 @@ void loop()
             }
             else if ((char)incoming == (char)'i')
             {   // print current inputs
+                int dc = DaisyChainLength;
+                if (DaisyChainLength <= 0)
+			DaisyChainLength = 1;
                 LatchInputs();
                 Serial.print("Read: ");
                 SPI.beginTransaction(SPISetup);
@@ -304,6 +307,7 @@ void loop()
                 }
                 SPI.endTransaction();
                 Serial.println();
+                DaisyChainLength = dc;
             }
             else if ((char)incoming == (char)'o')
             {   // print current outputs

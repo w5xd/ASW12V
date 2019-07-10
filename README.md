@@ -30,7 +30,7 @@ in groups of four channels. Each group of four has its power and ground.
 All the input and output power and ground circuits are optically isolated
 from the USB power and ground, which is only used by the controller.</p>
 <p>
-Here is the 24 channel version:</p>
+Here is the 24 channel version built with screw terminals:</p>
 <p align='center'><img height="50%" src='Picture24Channel.jpg' alt='Picture24Channel.jpg'/></p>
 The longest dimension is about 8in (21cm). The short dimension is about 4in (10cm). The other 12 channel enclosure is half as wide (4" x 4" or 10cm x 10cm).
 
@@ -63,12 +63,14 @@ The PCB has jumpers that can internally connect:</p>
  
 Construction
 
-<p>A parts list and a PCB layout are published <a href='construction.md'>here</a>.</p>
+<p>A parts list, construction details, and a PCB layout are published <a href='construction.md'>here</a>.</p>
 
 Controlling the ASW12V
 
-A powered USB connection to the microUSB connector is required. At boot up, the firmware operates the OUTPUT
-side as a pass through&mdash;a signal on an input pin results in V+ applied to corresponding OUTPUT pin on
+A USB connection to the microUSB connector is required for 5V DC for the microcontroller, and,
+with that 5V applied, it
+operates in a pass through mode in the absence of any incoming USB commands. At boot up, the firmware transfers the INPUT
+side as a pass through to the OUTPUT&mdash;a signal on an INPUT pin results in V+ applied to corresponding OUTPUT pin on
 the opposite side of the box.
 <p>When plugged in to a computer, the fdichip chip drivers for its USB port automatically are installed (on most
  operating systems) and create a virtual serial port. An example program to write useful serial commands is published <a href='W5XD-antennas'>here on github</a>. The example
@@ -80,7 +82,7 @@ is specific to the antennas to be controlled at W5XD. It doesn't put much on the
 <p>All the buttons on the two windows above can be programmed as keyboard shortcuts in WriteLog.</p>
 Enclosures
 
-<p>This repository publishes designs for enclosures for each of two configurations: a 12 channel device (with 1 PCB) or a 24 channel device (with 2 PCBs.) The 3D designs were done with <a href='solidworks.com'>SolidWorks</a>. The
+<p>This repository publishes designs for enclosures for each of these variations: a 12 channel device (with 1 PCB) or a 24 channel device (with 2 PCBs) and for either screw binding posts or connectors on the PCB. The 3D designs were done with <a href='solidworks.com'>SolidWorks</a>. The PCB hole pattern accommodates either the screw terminals or the connector. The
 Soldworks models are in the CAD folder. The 3D printable parts are published in the <a href="STL/">STL</a> directory. Unfamiliar with 3D design and printing? Don't be bashful about clicking the <a href="STL/">STL</a> link and the enclosure models. </p>
 
 <p>The orientation of the STL models should not be taken as a recommendation for

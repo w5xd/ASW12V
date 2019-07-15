@@ -8,7 +8,7 @@ The enclosure mates with either of these connection designs
 <ul>
     <li>screw terminal contacts (Phoenix Contact 1935200)
     <li>plug and socket connectors, the male contacts on the PCB (TE AMP 144048-6)
-<ul>
+</ul>
 Both of the above fit the same PCB hole pattern, even though the screw terminals
 are 5mm spacking and the connectors are .2 inch.
 

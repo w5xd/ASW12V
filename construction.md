@@ -2,7 +2,7 @@
 <h3>Parts lists</h3>
 The parts of the device can all&mdash;except the PCB and enclosure&mdash; be obtained at digikey: <a href="partslist.pdf">partslist.pdf</a>.
 Or here is a link to the equivalent digikey shared shopping cart:
-<a href="https://www.digikey.com/short/p9fr3t">https://www.digikey.com/short/p9fr3t</a>.
+<a href="https://www.digikey.com/short/p9f2hq">https://www.digikey.com/short/p9f2hq</a>.
 
 <p>The digikey references above do <b>not</b> include the necessary screw terminals or connectors. The PCB design accommodates 
 either of these:</p>

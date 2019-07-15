@@ -1,20 +1,23 @@
 ﻿ASW12V Construction
-    <h3>Parts lists</h3>
-    The parts of the device can all&mdash;except the PCB and enclosure&mdash; be obtained at digikey: <a href="partslist.pdf">partslist.pdf</a>.
-    Or here is a link to the equivalent digikey shared shopping cart:
-    <a href="https://www.digikey.com/short/p9fr3t">https://www.digikey.com/short/p9fr3t</a>.
+<h3>Parts lists</h3>
+The parts of the device can all&mdash;except the PCB and enclosure&mdash; be obtained at digikey: <a href="partslist.pdf">partslist.pdf</a>.
+Or here is a link to the equivalent digikey shared shopping cart:
+<a href="https://www.digikey.com/short/p9fr3t">https://www.digikey.com/short/p9fr3t</a>.
 
 <p>The digikey references above do <b>not</b> include the necessary screw terminals or connectors. The PCB design accommodates 
 either of these:</p>
 <ul>
 <li><a href='https://www.digikey.com/product-detail/en/1935200/277-1581-ND/568618/?itemSeq=277063756'>Phoenix Contact 1935200 </a>
 <li><a href='https://www.digikey.com/product-detail/en/te-connectivity-amp-connectors/1744048-6/A116470-ND/4730099'>TE Connectivity AMP Connectors part 1744048-6</a>
+which mates with these parts:
+<ul>
 <li><a href='https://www.digikey.com/product-detail/en/te-connectivity-amp-connectors/2-1744036-6/A144553-ND/5438998'>mating housing</a>
 <li><a href='https://www.digikey.com/product-detail/en/te-connectivity-amp-connectors/1123721-2/A100446CT-ND/2233212'>crimp pins</a>
-<ul>
+</ul>
+</ul>
 Separate enclosure STL files are published depending on your choice of part.
 
-The printed circuit board is a four layer part. It is not commercially available.
+The printed circuit board is a four layer design. It is not commercially available.
 It was designed with <a href="http://expresspcb.com">expresspcb</a> from the
 file ASW12V.rrb. Or you may use the gerber
 files in the <a href="gerber">gerber</a> folder. Revision 3 of the PCB is limited to 3A among its outputs.
@@ -125,7 +128,7 @@ output section, give, respectively, 0V and 12V on the output pin.</p>
 <li><code>m 1 L0F</code>
 <li><code>m 1 LFF</code>
 </ul>
-<p>For the <code>L</code> substitute <code>M</code> for the middle section and <code>R</code> when testing the right section.</p>
+<p>For the <code>L</code>, substitute <code>M</code> when testing the middle section and <code>R</code> when testing the right section.</p>
 
 <p>The GND and VCC jumpers on the PCB, if needed, are most easily installed from the <a href='ASW12V-bottom.pdf'>bottom</a>.</p>
 
@@ -137,7 +140,7 @@ place, but hex nuts work as well. In either case, clean out the 3D printing debr
 pushing a nut in the channel.  And put a small piece of tape over the opening after the nut
 is placed because gravity is going to try to remove it.  
 
-Quantity 4 by 5/8 inch machine screw is needed per section to fasten the top to the bottom.
+Quantity 4 by 5/8 inch machine screws are needed per section to fasten the top to the bottom.
 
 The mounting screw holes in the enclosure bottom can be cleared of print debris by pushing a
 #4 machine screw through from the inside toward the outside.

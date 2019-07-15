@@ -32,8 +32,9 @@ from the USB power and ground, which is only used by the controller.</p>
 <p>
 Here is the 24 channel version built with screw terminals:</p>
 <p align='center'><img height="50%" src='Picture24Channel.jpg' alt='Picture24Channel.jpg'/></p>
-The longest dimension is about 8in (21cm). The short dimension is about 4in (10cm). The other 12 channel enclosure is half as wide (4" x 4" or 10cm x 10cm).
-
+The longest dimension is about 8in (21cm). The short dimension is about 4in (10cm). The other 12 channel enclosure is half as wide (4" x 4" or 10cm x 10cm). Here is an assembled PCB using connectors instead of screw terminals.
+<p align='center'><img src='PCBassembledConnectors.jpg' alt='PCBassembledConnectors.jpg'/></p>
+<br/>
 <p>Power and Ground</p>
 
 <p>The PCB layout has three sections each with four input/output channels and with grounds and

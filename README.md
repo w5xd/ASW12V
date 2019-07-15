@@ -73,7 +73,7 @@ with that 5V applied, it
 operates in a pass through mode in the absence of any incoming USB commands. At boot up, the firmware transfers the INPUT
 side as a pass through to the OUTPUT&mdash;a signal on an INPUT pin results in V+ applied to corresponding OUTPUT pin on
 the opposite side of the box.
-<p>When plugged in to a computer, the fdichip chip drivers for its USB port automatically are installed (on most
+<p>When plugged in to a computer, the drivers for its USB port automatically are installed (on most
  operating systems) and create a virtual serial port. An example program to write useful serial commands is published <a href='W5XD-antennas'>here on github</a>. The example
 is specific to the antennas to be controlled at W5XD. It doesn't put much on the screen. as not much is required at W5XD.</p>
 <p>Control the beverages, one to the RX antenna on each of two radios:</p>

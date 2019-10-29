@@ -55,9 +55,9 @@ and make a new entry in WriteLog.ini. WriteLog can then access the beverage swit
 keyboard shortcuts. The INI entry looks like this:
 <pre><code>
 [ExternalShortcuts]
-W5XD_antenna_shortcuts.WriteLogKeyProcessor=W5XD_antennas_shortcuts</code>
+W5XD_antennas_shortcuts.WriteLogKeyProcessor=W5XD_antennas_shortcuts</code>
 </pre>
-WriteLog doesn't need the .exe file. Only the .dll need be installed in WriteLog's Program folder.
+WriteLog doesn't need the .exe file. Only the .dll need be installed in WriteLog's Program folder. To get the antenna controller on the screen assign any (or all) of its four shortcuts to keyboard keys, then invoke one.
 
 
 <h3>WriteLog Remote Control</h3>

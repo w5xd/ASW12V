@@ -65,5 +65,5 @@ WriteLog as of its version 12.36 supports keyboard shortcut processing split acr
 the control-site to the remote-site. This project shows how to accomplish that
 in its .NET source code. The Writelog.ini setting at the remote site is as above, but at the control site,
 you need this entry instead:
-<br/><code>W5XD_antennas_shortcuts.WriteLogKeyProcessorControlSite=W5XD_antenna_shortcuts</code>
+<br/><code>W5XD_antennas_shortcuts.WriteLogKeyProcessorControlSite=W5XD_antennas_shortcuts</code>
  

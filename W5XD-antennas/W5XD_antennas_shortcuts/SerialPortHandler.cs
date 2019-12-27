@@ -51,9 +51,6 @@ namespace W5XD_antennas
 
         private void comboBoxSerialPorts_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (m_SerialPort != null)
-                m_SerialPort.Dispose();
-            m_SerialPort = null;
             String comName = comboBoxSerialPorts.SelectedItem.ToString();
             InitSerialPort(comName);
             Properties.ASW12V.Default.CommPort = comName;
@@ -63,8 +60,10 @@ namespace W5XD_antennas
 
         private void InitSerialPort(String comName)
         {
-            if (String.Equals(comName,prevCommPort))
+            if (null != m_SerialPort && String.Equals(comName,prevCommPort))
                 return;
+            if (m_SerialPort != null)
+                m_SerialPort.Dispose();
             m_SerialPort = new System.IO.Ports.SerialPort(comName,
                9600, System.IO.Ports.Parity.None, 8, System.IO.Ports.StopBits.One);
             m_SerialPort.Handshake = System.IO.Ports.Handshake.None;

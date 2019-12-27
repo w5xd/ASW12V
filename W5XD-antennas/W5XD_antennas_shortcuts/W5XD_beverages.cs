@@ -282,6 +282,7 @@ namespace W5XD_antennas
             // go back to full manual
             m_Setup.Command("c");
             m_Setup.Dispose();
+            Properties.ASW12V.Default.Save();
         }
 
         private void checkBoxLoopTunerPower_CheckedChanged(object sender, EventArgs e)

@@ -21,20 +21,52 @@ namespace W5XD_antennas
         {
             m_Invoker = invoker;
             InitializeComponent();
+            uint settingsVersion = Properties.ASW12V.Default.SavedVersion;
+            if (settingsVersion < UpgradedVersion)
+            {
+                Properties.ASW12V.Default.Upgrade();
+                Properties.ASW12V.Default.SavedVersion = UpgradedVersion;
+            }
+
+            try
+            {
+                InitSerialPort(Properties.ASW12V.Default.CommPort);
+            }
+            catch (System.Exception)
+            {
+                if (null != m_SerialPort)
+                {
+                    m_SerialPort.Dispose();
+                    m_SerialPort = null;
+                }
+            }
         }
 
         private System.IO.Ports.SerialPort m_SerialPort;
+        const uint UpgradedVersion = 1;  // increment every release
 
         private void SetupForm_Load(object sender, EventArgs e)
-        { }
+        {
+        }
 
         private void comboBoxSerialPorts_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (m_SerialPort != null)
                 m_SerialPort.Dispose();
+            m_SerialPort = null;
             String comName = comboBoxSerialPorts.SelectedItem.ToString();
+            InitSerialPort(comName);
+            Properties.ASW12V.Default.CommPort = comName;
+        }
+
+        private string prevCommPort;
+
+        private void InitSerialPort(String comName)
+        {
+            if (String.Equals(comName,prevCommPort))
+                return;
             m_SerialPort = new System.IO.Ports.SerialPort(comName,
-                9600, System.IO.Ports.Parity.None, 8, System.IO.Ports.StopBits.One);
+               9600, System.IO.Ports.Parity.None, 8, System.IO.Ports.StopBits.One);
             m_SerialPort.Handshake = System.IO.Ports.Handshake.None;
             m_SerialPort.Encoding = new System.Text.ASCIIEncoding();
 
@@ -42,7 +74,9 @@ namespace W5XD_antennas
             m_SerialPort.DtrEnable = false;
             m_SerialPort.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(port_DataReceived);
             m_SerialPort.Open();
+            textBoxSerial.Clear();
             Command("\r");
+            prevCommPort = comName;
         }
 
         public void Command(String c)
@@ -85,15 +119,22 @@ namespace W5XD_antennas
             {
                 e.Cancel = true;
                 Hide();
+                this.Shown += new System.EventHandler(this.SerialPortHandler_Shown);
             }
         }
 
         private void SerialPortHandler_Shown(object sender, EventArgs e)
         {
-            comboBoxSerialPorts.Items.Clear();
+            var prevCommPort = Properties.ASW12V.Default.CommPort;
+            object selItem = null;
             foreach (string s in System.IO.Ports.SerialPort.GetPortNames())
-                comboBoxSerialPorts.Items.Add(s);
+            {
+                var sel = comboBoxSerialPorts.Items.Add(s);
+                if (s == prevCommPort)
+                    selItem = s;
+            }
+            if (selItem != null)
+                comboBoxSerialPorts.SelectedItem = selItem; ;
         }
-
     }
 }

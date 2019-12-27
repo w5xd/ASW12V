@@ -61,6 +61,11 @@
     <Compile Include="..\Version.cs">
       <Link>Properties\Version.cs</Link>
     </Compile>
+    <Compile Include="Properties\ASW12V.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>ASW12V.settings</DependentUpon>
+    </Compile>
     <Compile Include="RemotableSerial.cs" />
     <Compile Include="SerialPortHandler.cs">
       <SubType>Form</SubType>
@@ -90,6 +95,14 @@
     <EmbeddedResource Include="W5XD_beverages.resx">
       <DependentUpon>W5XD_beverages.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\ASW12V.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>ASW12V.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

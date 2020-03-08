@@ -242,6 +242,8 @@ int fromHex(int incoming)
         return mask;
     return -1;
 }
+static unsigned char counterToWrite;
+static unsigned char channelToWrite;
 
 void loop()
 {
@@ -268,19 +270,20 @@ void loop()
                     MaskForceOff[i].init();
                 }
                 Serial.println("All control masks cleared");
+                counterToWrite = 0;
+                channelToWrite = 0;
                 OperatingMode = MODE_DEFAULT;
             }
             else if ((char)incoming == (char)'n')
             {   // shift a known sequence into the outputs
-                static unsigned char toWrite;
                 OperatingMode = MODE_MANUAL;
 
                 SPI.beginTransaction(SPISetup);
-                unsigned char received = SPI.transfer(++toWrite);
+                unsigned char received = SPI.transfer(++counterToWrite);
                 SPI.endTransaction();
 
                 Serial.print("Sent ");
-                Serial.print((int)toWrite, HEX);
+                Serial.print((int)counterToWrite, HEX);
                 Serial.print(" Got ");
                 Serial.println((int)received, HEX);
                 LatchOutputs();
@@ -289,7 +292,7 @@ void loop()
             {   // print current inputs
                 int dc = DaisyChainLength;
                 if (DaisyChainLength <= 0)
-			DaisyChainLength = 1;
+			        DaisyChainLength = 1;
                 LatchInputs();
                 Serial.print("Read: ");
                 SPI.beginTransaction(SPISetup);
@@ -312,6 +315,49 @@ void loop()
             else if ((char)incoming == (char)'o')
             {   // print current outputs
                 printOutOnce = true;
+            }
+            else if ((char) incoming == (char)'t')
+            {   // shift a single ONE across all the outputs for each "t" press
+                OperatingMode = MODE_MANUAL;
+                if (DaisyChainLength > 0)
+                {
+                    //channelToWrite < 12 is right-most board
+                    // up to 24 is second, etc.
+                    if ((unsigned)channelToWrite >= 12 * (unsigned)DaisyChainLength)
+                        channelToWrite = 0;
+                    Serial.print("Right-to-Left channel ");
+                    Serial.print(1 + channelToWrite);
+                    Serial.println(" is ON. all others OFF.");
+                    // channel numbers for test documentation start at right and work to left.
+                    // but we have to write shift registers at left and work to right
+                    // so transpose the channel number to that higher is right
+                    unsigned char channelToWriteInThisBoard = (12 * DaisyChainLength) - 1 - (unsigned)channelToWrite;
+                    // and count down during shifting by boards, 
+                    SPI.beginTransaction(SPISetup);
+                    for (int i = 0; i < DaisyChainLength; i++)
+                    { 
+                       unsigned char outputRM = 0; // 8 bits 
+                       unsigned char outputL = 0;   // 4 bits are output
+                       if (channelToWriteInThisBoard < 12)
+                       {
+                            uint16_t mask = 1u << (unsigned) channelToWriteInThisBoard;
+                            static const unsigned char boardMask[8] =
+                            {
+                                0x80, 0x40, 0x20, 0x10, 8, 4, 2, 1, 
+                            };
+                            if (channelToWriteInThisBoard < 4)
+                                outputL = boardMask[7- channelToWriteInThisBoard];
+                            else
+                                outputRM = boardMask[11-channelToWriteInThisBoard];
+                       }
+                       SPI.transfer(outputL);
+                       SPI.transfer(outputRM);
+                       channelToWriteInThisBoard -= 12;
+                    }
+                    SPI.endTransaction();
+                    LatchOutputs();
+                    channelToWrite += 1;
+                }
             }
             else if ((char) incoming == (char)'m')
             {

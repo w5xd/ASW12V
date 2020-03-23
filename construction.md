@@ -2,31 +2,31 @@
 <h3>Parts lists</h3>
 The parts of a 12-channel, single-PCB device can all&mdash;except the PCB and enclosure&mdash; be obtained at digikey: <a href="partslist.pdf">partslist.pdf</a>.
 Or here is a link to the equivalent digikey shared shopping cart:
-<a href="https://www.digikey.com/short/z8p5mv">https://www.digikey.com/short/z8p5mv</a>.
+<a target="_blank" href="https://www.digikey.com/short/z8p5mv">https://www.digikey.com/short/z8p5mv</a>.
 
 <p>The digikey references above do <b>not</b> include the necessary input/output screw terminals or connectors. The PCB design accommodates 
 either of these connector configurations:</p>
 <ul>
-<li><a href='https://www.digikey.com/short/z8zprc'>Phoenix Contact 1935200 </a>. (screw terminals)
-<li><a href='https://www.digikey.com/short/z8zprj'>TE Connectivity AMP Connectors part 1744048-6</a>. (male pins on plug.)
+<li><a target="_blank" href='https://www.digikey.com/short/z8zprc'>Phoenix Contact 1935200 </a>. (screw terminals)
+<li><a target="_blank" href='https://www.digikey.com/short/z8zprj'>TE Connectivity AMP Connectors part 1744048-6</a>. (male pins on plug.)
 This plug mates with these parts:
 <ul>
-<li><a href='https://www.digikey.com/short/z8zprb'>mating housing</a>
-<li><a href='https://www.digikey.com/short/z8zprd'>crimp pins</a>
+<li><a target="_blank" href='https://www.digikey.com/short/z8zprb'>mating housing</a>
+<li><a target="_blank" href='https://www.digikey.com/short/z8zprd'>crimp pins</a>
 </ul>
 </ul>
 
 <p>The parts lists above also do <b>not</b> include the board-to-board connectors you'll need to interconnect the two PCBs if you build the 24 channel version:</p>
 <ul>
-<li><a href='https://www.digikey.com/short/z8prdt'>Right angle connection header, male</a>. </li>
-<li><a href='https://www.digikey.com/short/z8pr0h'>Right angle connection header, female</a>. </li>
+<li><a target="_blank" href='https://www.digikey.com/short/z8prdt'>Right angle connection header, male</a>. </li>
+<li><a target="_blank" href='https://www.digikey.com/short/z8pr0h'>Right angle connection header, female</a>. </li>
 <li>Double all the quantities in the parts list above.</li>
 </ul>
 
 Separate enclosure STL files are published for each choice of connectors.
 
 The printed circuit board is a four layer design. It is not commercially available.
-It was designed with <a href="http://expresspcb.com">expresspcb</a> and the
+It was designed with <a target="_blank" href="http://expresspcb.com">expresspcb</a> and the
 file is ASW12V.rrb. Or you may use the gerber
 files in the <a href="gerber">gerber</a> folder. 
 <ol>

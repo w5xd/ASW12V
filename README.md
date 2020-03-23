@@ -32,7 +32,8 @@ from the USB power and ground, which is only used by the controller.</p>
 <p>
 Here is the 24 channel version built with screw terminals:</p>
 <p align='center'><img height="50%" src='Picture24Channel.jpg' alt='Picture24Channel.jpg'/></p>
-The longest dimension is about 8in (21cm). The short dimension is about 4in (10cm). The other 12 channel enclosure is half as wide (4" x 4" or 10cm x 10cm). Here is an assembled PCB using connectors instead of screw terminals.
+The longest dimension is about 8in (21cm). The short dimension is about 4in (10cm). The other 12 channel enclosure is half as wide (4" x 4" or 10cm x 10cm). 
+Here is an assembled PCB using connectors instead of screw terminals.
 <p align='center'><img src='PCBassembledConnectors.jpg' alt='PCBassembledConnectors.jpg'/></p>
 <br/>
 <p>Power and Ground</p>
@@ -57,7 +58,8 @@ The PCB has jumpers that can internally connect:</p>
 <li>the INPUT GND pin to the INPUT Gnd pin of the adjacent section.
  </ol>
  The positions of the jumpers are hand-outlined on this <a href='ASW12V-bottom.pdf'>bottom view of the PCB silkscreen</a>. 
- The jumpers are most easily installed (and removed) on the bottom side of the PCB. The jumpers corresponding to (1) and (2) are at the top of the picture, the ones for (4), the INPUT to INPUT, are at the bottom and the ones for (3) are between.
+ The jumpers are most easily installed (and removed) on the bottom side of the PCB. The jumpers corresponding to (1) and (2) are at the top of the picture, 
+ the ones for (4), the INPUT to INPUT, are at the bottom and the ones for (3) are between.
  
  The 3A maximum current is for the OUTPUT terminal block. The circuit board traces are wide enough
  for a total of 3A to the VCC and GND connectors on that terminal block.
@@ -83,8 +85,11 @@ is specific to the antennas to be controlled at W5XD. It doesn't put much on the
 <p>All the buttons on the two windows above can be programmed as keyboard shortcuts in WriteLog.</p>
 Enclosures
 
-<p>This repository publishes designs for enclosures for each of these variations: a 12 channel device (with 1 PCB) or a 24 channel device (with 2 PCBs) and for either screw binding posts or connectors on the PCB. The 3D designs were done with <a href='solidworks.com'>SolidWorks</a>. The PCB hole pattern accommodates either the screw terminals or the connector. The
-Soldworks models are in the CAD folder. The 3D printable parts are published in the <a href="STL/">STL</a> directory. Unfamiliar with 3D design and printing? Don't be bashful about clicking the <a href="STL/">STL</a> link and the enclosure models. </p>
+<p>This repository publishes designs for enclosures for each of these variations: a 12 channel device (with 1 PCB) or a 24 channel 
+device (with 2 PCBs) and for either screw binding posts or connectors on the PCB. The 3D designs were done with <a href='solidworks.com'>SolidWorks</a>. 
+The PCB hole pattern accommodates either the screw terminals or the connector. The
+Soldworks models are in the CAD folder. The 3D printable parts are published in the <a href="STL/">STL</a> directory. Unfamiliar with 3D design 
+and printing? Don't be bashful about clicking the <a href="STL/">STL</a> link and the enclosure models. </p>
 
 <p>The orientation of the STL models should not be taken as a recommendation for
 the printed orientation on any particular 3D printer. I use a <a href='http://prusa3d.com'>prusa3d</a> printer and rotate the

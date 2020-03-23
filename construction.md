@@ -35,9 +35,11 @@ files in the <a href="gerber">gerber</a> folder.
 Earlier revisions have lower current limits. Revision 3 and later of the PCB accommodates either of the above interconnects. </li>
 <li>Revision 4 adds pads for SMD <code>1206</code> size resistors while the through-hole positions remain an option. 
 Install one or the other. Revision 4 and earlier accommodate the SMA4021 12-pin SI Darlington PNP with built-in flywheel diodes. </li>
-<li>Revision 5 changes the layout to accommodate the pinout of the more readily available STA402 10-pin SIP PNP darlington, and 
+<li>Revision 6 changes the layout to accommodate the pinout of the more readily available STA402 10-pin SIP PNP darlington, and 
 adds 2 Amp SMD size <code>1206</code> flywheel diodes to accommodate inductive loads (which includes, for example, a relay coil!) The 
 SMA4021 part for earlier PCBs has built-in flywheel diodes.
+<li>
+<li>REV 5 is identical to REV 6, but has a stray trace that must be cut! On the Right section output PS2502 optoisolator, its pin 11 on the top side of the board, has a stray trace connecting to the "far" side of the 3.3K resistor. There must be no connections on the top side on pin 11 of that optoisolator. Before installing any components, use an Xacto knife to remove that stray trace.
 </ol>
  
 Program an Arduino Pro Micro with the sketch published in <a href="sketch//ASW12V">sketch/ASW12V/</a>. Both the 5V and 3.3V 

@@ -22,3 +22,5 @@ STL models for four different enclosures. Each enclosure is a Bottom and a Top:
 <li>EnclosureBottom24-connectors.STL
 </ul>
 </ul>
+TerminalBlockSpacer.STL prints a spacer that fits under the screw terminal block when 
+mounted on the Rev 5 and up PCB that has the STA402 PNP darlingtons. Its of use only with the screw terminal configurations, not the ones with connectors.

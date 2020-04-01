@@ -35,7 +35,7 @@ files in the <a href="gerber">gerber</a> folder.
 Earlier revisions have lower current limits. Revision 3 and later of the PCB accommodates either of the above interconnects. </li>
 <li>Revision 4 adds pads for SMD <code>1206</code> size resistors while the through-hole positions remain an option. 
 	Install one or the other. </li>
-	<li>Revision 4 and earlier accommodate the SMA4021 12-pin SI Darlington PNP with built-in flywheel diodes. </li>
+	<li>Revision 4 and earlier accommodate the SMA4021 12-pin SIP Darlington PNP with built-in flywheel diodes. </li>
 <li>Revision 6 changes the layout to accommodate the pinout of the more readily available STA402 10-pin SIP PNP darlington, and 
 adds 2 Amp SMD size <code>1206</code> flywheel diodes to accommodate inductive loads (which includes, for example, a relay coil!) The 
 SMA4021 part for earlier PCBs has built-in flywheel diodes.

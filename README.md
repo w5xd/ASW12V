@@ -44,7 +44,9 @@ VCC isolated to that section. In the photo above, all the G and 12V connections 
  The power and ground circuit is this:
 <a href='ASW12V-circuit3.pdf'>ASW12V-circuit3.pdf</a>. 
 There are a lot of options on the PCB for exactly what Ground and VCC connections get connected internal
-to the device. 
+to the device. One thing that is not optional: fuse at about 3A or otherwise current limit the connection from the
+ power supply to the 12V terminal on the ASW12V. The ASW12V PCB has components too dense to service. Plan on
+ replacing it if it is damaged by over current.
  
 You can successfully use this device with NONE of these jumpers in place. But consider how you want to use it.
 In my own case, the same 12VDC supply powers all my antenna relays, so I can safely tie all the Gnd and VCC

@@ -183,7 +183,7 @@ place, but hex nuts work as well. In either case, clean out the 3D printing debr
 pushing a nut in the channel.  And put a small piece of tape over the opening after the nut
 is placed because gravity is going to try to remove it while you do the remainder of the assembly.  
 
-Quantity 4 by 5/8 inch machine screws are needed per section to fasten the top to the bottom.
+Quantity 4 by 3/4 (or 5/8) inch machine screws are needed per section to fasten the top to the bottom.
 
 The mounting screw holes in the enclosure bottom can be cleared of print debris by pushing a
 #4 machine screw through from the inside toward the outside.

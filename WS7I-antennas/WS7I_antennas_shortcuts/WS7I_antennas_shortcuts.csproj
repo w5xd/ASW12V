@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{143BC1FC-C7CF-4E24-A930-132F74AB6C34}</ProjectGuid>
+    <ProjectGuid>{143BC1FD-C7CF-4E24-A930-132F74AB6C34}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>W5XD_antennas</RootNamespace>
-    <AssemblyName>W5XD_antennas_shortcuts</AssemblyName>
+    <RootNamespace>WS7I_antennas</RootNamespace>
+    <AssemblyName>WS7I_antennas_shortcuts</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -48,7 +48,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="WriteLogClrTypes">
       <HintPath>C:\Program Files (x86)\WriteLog\Programs\WriteLogClrTypes.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="WriteLogExternalShortcuts">
       <HintPath>C:\Program Files (x86)\WriteLog\Programs\WriteLogExternalShortcuts.dll</HintPath>
@@ -73,27 +73,18 @@
     <Compile Include="SerialPortHandler.Designer.cs">
       <DependentUpon>SerialPortHandler.cs</DependentUpon>
     </Compile>
-    <Compile Include="TwoByRatPak.cs">
+    <Compile Include="WS7I_ratpak.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TwoByRatPak.Designer.cs">
-      <DependentUpon>TwoByRatPak.cs</DependentUpon>
-    </Compile>
-    <Compile Include="W5XD_beverages.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="W5XD_beverages.Designer.cs">
-      <DependentUpon>W5XD_beverages.cs</DependentUpon>
+    <Compile Include="WS7I_ratpak.Designer.cs">
+      <DependentUpon>WS7I_ratpak.cs</DependentUpon>
     </Compile>
     <Compile Include="WriteLogKeyProcessor.cs" />
     <EmbeddedResource Include="SerialPortHandler.resx">
       <DependentUpon>SerialPortHandler.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TwoByRatPak.resx">
-      <DependentUpon>TwoByRatPak.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="W5XD_beverages.resx">
-      <DependentUpon>W5XD_beverages.cs</DependentUpon>
+    <EmbeddedResource Include="WS7I_ratpak.resx">
+      <DependentUpon>WS7I_ratpak.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

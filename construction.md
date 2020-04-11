@@ -23,7 +23,7 @@ This plug mates with these parts:
 <li>Double all the quantities in the parts list above.</li>
 </ul>
 
-If you're going to build several of these in a batch, here is a handy <a href='https://www.digikey.com/short/zp4253'>part</a>. It can be used with a jig to connected an Arduino Pro Micro to test a partially populated PCB.
+If you're going to build several of these in a batch, here is a handy <a href='https://www.digikey.com/short/zp4253'>part</a>. It can be used with a jig to connected an Arduino Pro Micro to test a partially populated PCB. See the testing instructions <a href='#TestJig'>below</a>.
 
 Separate enclosure STL files are published for each choice of connectors.
 
@@ -96,10 +96,17 @@ Also install male headers on your Pro Micro and then use
     </ol>
     </li>
 </ol>
-Your board might look like this, minus the resistors I have already placed:
-<img src='TestConfiguration.jpg' alt='TestConfiguration.jpg' />
+<p>Your board might look like this, minus the resistors I have already placed:
+<img src='TestConfiguration.jpg' alt='TestConfiguration.jpg' width='50%' />
 The board in this photo is destined to be board number 1 (it has a vertical header installed at J1 on the right.)
-And it is planned to go in a more-than-12 channel enclosure, so it has a right angle connector installed at J2 on the left.
+And it is planned to go in a more-than-12 channel enclosure, so it has a right angle connector installed at J2 on the left.</p>
+<p id='TestJig'>Or if you're building more than one of these at a time. this test jig might come in handy. There is no need to
+commit to a particular set of headers because the spring loaded connector holds well enough to test with jumper leads per these
+photographs. STL files to 3D print the jig are in the <a href='STL'>STL folder</a>.
+</p>
+<p align='center'><img src='test-jig-1.jpg' alt='test-jig-1.jpg' width='50%'/></p>
+<p align='center'><img src='test-jig-2.jpg' alt='test-jig-2.jpg' width='50%'/></p>
+
 <h3>Shift Register Digital Test</h3>
 You need a serial port terminal program connected to
 the Arduino&#8217;s serial port for the following tests. I recommend
@@ -191,3 +198,4 @@ Quantity 4 by 3/4 (or 5/8) inch machine screws are needed per section to fasten 
 
 The mounting screw holes in the enclosure bottom can be cleared of print debris by pushing a
 #4 machine screw through from the inside toward the outside.
+

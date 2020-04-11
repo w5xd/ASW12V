@@ -19,9 +19,11 @@ This plug mates with these parts:
 <p>The parts lists above also do <b>not</b> include the board-to-board connectors you'll need to interconnect the two PCBs if you build the 24 channel version:</p>
 <ul>
 <li><a target="_blank" href='https://www.digikey.com/short/z8prdt'>Right angle connection header, male</a>. </li>
-<li><a target="_blank" href='https://www.digikey.com/short/z8pr0h'>Right angle connection header, female</a>. </li>
+<li><a target="_blank" href='https://www.digikey.com/short/zp42fr'>Right angle connection header, female</a>. </li>
 <li>Double all the quantities in the parts list above.</li>
 </ul>
+
+If you're going to build several of these in a batch, here is a handy <a href='https://www.digikey.com/short/zp4253'>part</a>. It can be used with a jig to connected an Arduino Pro Micro to test a partially populated PCB.
 
 Separate enclosure STL files are published for each choice of connectors.
 

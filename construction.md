@@ -43,7 +43,9 @@ SMA4021 part for earlier PCBs has built-in flywheel diodes.
 </ol>
  
 Program an Arduino Pro Micro with the sketch published in <a href="sketch//ASW12V">sketch/ASW12V/</a>. Both the 5V and 3.3V 
-versions of the Pro Micro work equally well. 
+versions of the Pro Micro work equally well. One oddity about programming the Pro Micro: do <strong>not</strong> use the wrong voltage setting when programming it. The Arduino is then bricked, and it takes <a href='https://learn.sparkfun.com/tutorials/pro-micro--fio-v3-hookup-guide/all#ts-revive'>extra work to recover</a>. If you have put it in the enclosure, and now
+are upgrading the firmware long after you have forgotten whether its a 5V or 3.3V, here is a little trick. Further down that same page referenced above, there is a listing of the USB PID that the various boards will report. The Arduino IDE's Tools/Get-Board-Info will report the PID given the Pro Micro's COM port. The 5V reports PID 9205, while the 3.3V part reports PID 9203
+
     <h3>Construction Recommendations</h3>
 The PCB layout is very tight which does not make for easy maintenance. The
         tight clearances mean that once all the big parts

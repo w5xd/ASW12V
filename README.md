@@ -4,23 +4,25 @@ ASW12V
 Remote controllable multi-channel DC switch<br/>
 ASW12V: antenna switch for 12V
 </p>
-<p>
+
 My shack has a number of 12VDC controlled circuits for antennas. When
 I am sitting at the operating position, they are
  controlled by rotary switches there. 
 When connected to the station remotely using WriteLog, I need a way to 
 control the switches from the shack PC. This device is a USB controlled
-solid state multi-channel DC switch.The output transistors are rated to 60VDC
-at up to 3A. In the absence of control commands over its USB input,
+solid state multi-channel DC switch. While its named "12V" it can
+safely switch up to about 28VDC and at up to about 3A. 
+
+In the absence of 
+control commands over its USB input,
 its output channels follow its input channels. 5VDC on the micro
 USB plug is required to power the embedded microprocessor for it to
 follow its inputs.
-</p>
 
 <p>This device is controlled by ASCII command strings sent over
 its USB virtual serial port. WriteLog is not required to operate it,
- although a WriteLog plugin is posted <a href='W5XD-antennas'>here</a> showing 
- how to embed
+although a WriteLog plugin is posted <a href='W5XD-antennas'>here</a> showing 
+how to embed
 antenna switching commands destined for this hardware
 within WriteLog. The example has on-screen controls corresponding
 to the antennas at W5XD. Full source code is posted.</p>

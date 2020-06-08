@@ -36,6 +36,8 @@
             this.radioButton2MHz = new System.Windows.Forms.RadioButton();
             this.buttonSetup = new System.Windows.Forms.Button();
             this.checkBoxManual = new System.Windows.Forms.CheckBox();
+            this.radioButtonLoop = new System.Windows.Forms.RadioButton();
+            this.radioButtonVertical = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,7 +58,7 @@
             // 
             this.radioButton7MHz.AutoSize = true;
             this.radioButton7MHz.Enabled = false;
-            this.radioButton7MHz.Location = new System.Drawing.Point(79, 25);
+            this.radioButton7MHz.Location = new System.Drawing.Point(94, 25);
             this.radioButton7MHz.Name = "radioButton7MHz";
             this.radioButton7MHz.Size = new System.Drawing.Size(56, 17);
             this.radioButton7MHz.TabIndex = 2;
@@ -67,6 +69,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.radioButtonVertical);
+            this.groupBox1.Controls.Add(this.radioButtonLoop);
             this.groupBox1.Controls.Add(this.radioButtonDisconnected);
             this.groupBox1.Controls.Add(this.radioButton80m);
             this.groupBox1.Controls.Add(this.radioButton2MHz);
@@ -74,7 +78,7 @@
             this.groupBox1.Controls.Add(this.radioButton7MHz);
             this.groupBox1.Location = new System.Drawing.Point(1, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(313, 86);
+            this.groupBox1.Size = new System.Drawing.Size(256, 117);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
@@ -82,7 +86,7 @@
             // 
             this.radioButtonDisconnected.AutoSize = true;
             this.radioButtonDisconnected.Enabled = false;
-            this.radioButtonDisconnected.Location = new System.Drawing.Point(20, 63);
+            this.radioButtonDisconnected.Location = new System.Drawing.Point(20, 85);
             this.radioButtonDisconnected.Name = "radioButtonDisconnected";
             this.radioButtonDisconnected.Size = new System.Drawing.Size(91, 17);
             this.radioButtonDisconnected.TabIndex = 0;
@@ -95,7 +99,7 @@
             // 
             this.radioButton80m.AutoSize = true;
             this.radioButton80m.Enabled = false;
-            this.radioButton80m.Location = new System.Drawing.Point(144, 25);
+            this.radioButton80m.Location = new System.Drawing.Point(165, 25);
             this.radioButton80m.Name = "radioButton80m";
             this.radioButton80m.Size = new System.Drawing.Size(65, 17);
             this.radioButton80m.TabIndex = 3;
@@ -108,7 +112,7 @@
             // 
             this.radioButton2MHz.AutoSize = true;
             this.radioButton2MHz.Enabled = false;
-            this.radioButton2MHz.Location = new System.Drawing.Point(214, 25);
+            this.radioButton2MHz.Location = new System.Drawing.Point(17, 50);
             this.radioButton2MHz.Name = "radioButton2MHz";
             this.radioButton2MHz.Size = new System.Drawing.Size(56, 17);
             this.radioButton2MHz.TabIndex = 4;
@@ -140,11 +144,37 @@
             this.checkBoxManual.UseVisualStyleBackColor = true;
             this.checkBoxManual.CheckedChanged += new System.EventHandler(this.checkBoxManual_CheckedChanged);
             // 
+            // radioButtonLoop
+            // 
+            this.radioButtonLoop.AutoSize = true;
+            this.radioButtonLoop.Enabled = false;
+            this.radioButtonLoop.Location = new System.Drawing.Point(165, 50);
+            this.radioButtonLoop.Name = "radioButtonLoop";
+            this.radioButtonLoop.Size = new System.Drawing.Size(49, 17);
+            this.radioButtonLoop.TabIndex = 6;
+            this.radioButtonLoop.TabStop = true;
+            this.radioButtonLoop.Text = "Loop";
+            this.radioButtonLoop.UseVisualStyleBackColor = true;
+            this.radioButtonLoop.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            // 
+            // radioButtonVertical
+            // 
+            this.radioButtonVertical.AutoSize = true;
+            this.radioButtonVertical.Enabled = false;
+            this.radioButtonVertical.Location = new System.Drawing.Point(94, 50);
+            this.radioButtonVertical.Name = "radioButtonVertical";
+            this.radioButtonVertical.Size = new System.Drawing.Size(60, 17);
+            this.radioButtonVertical.TabIndex = 5;
+            this.radioButtonVertical.TabStop = true;
+            this.radioButtonVertical.Text = "Vertical";
+            this.radioButtonVertical.UseVisualStyleBackColor = true;
+            this.radioButtonVertical.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            // 
             // WS7I_ratpak
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(376, 167);
+            this.ClientSize = new System.Drawing.Size(266, 167);
             this.Controls.Add(this.checkBoxManual);
             this.Controls.Add(this.buttonSetup);
             this.Controls.Add(this.groupBox1);
@@ -170,5 +200,7 @@
         private System.Windows.Forms.Button buttonSetup;
         private System.Windows.Forms.CheckBox checkBoxManual;
         private System.Windows.Forms.RadioButton radioButtonDisconnected;
+        private System.Windows.Forms.RadioButton radioButtonVertical;
+        private System.Windows.Forms.RadioButton radioButtonLoop;
     }
 }

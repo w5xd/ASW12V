@@ -29,6 +29,8 @@ namespace WS7I_antennas_shortcuts
                 "Antenna7MHz",
                 "Antenna3.5MHz",
                 "Antenna2MHz",
+                "AntennaVertical",
+                "AntennaLoop",
          };
 
         public override string this[int which]

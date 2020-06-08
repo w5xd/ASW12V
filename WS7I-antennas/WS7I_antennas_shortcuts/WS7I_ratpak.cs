@@ -64,6 +64,8 @@ namespace WS7I_antennas
             radioButtons.Add(radioButton7MHz); // 2
             radioButtons.Add(radioButton80m);   // 3
             radioButtons.Add(radioButton2MHz);  // 4
+            radioButtons.Add(radioButtonVertical);  // 5
+            radioButtons.Add(radioButtonLoop);  // 6
             if (null != m_formLoaded)
                 m_formLoaded.Set();
         }
@@ -83,6 +85,8 @@ namespace WS7I_antennas
         const int Antenna7Hz = 2;
         const int Antenna3dot5MHz = 3;
         const int Antenna2MHz = 4;
+        const int AntennaVertical = 5;
+        const int AntennaLoop = 6;
 
         public void DoShortcut(int which) 
         {
@@ -94,11 +98,13 @@ namespace WS7I_antennas
         // The beverages account for 8 of the 12 channels on the device, and they are the Right and Middle (R and M in this array)
         private string[] commandTable = new string[] 
             
-        {   "m 1 L0F",    // disconnect
-            "m 1 L1F" ,     // TH7
-            "m 1 L2F",      // 7MHz
-            "m 1 L4F",      // 3.5 MHz
-            "m 1 L8F"       // 2.0 MHz
+        {   "m 1 L0F M03",    // disconnect
+            "m 1 L1F M03" ,     // TH7
+            "m 1 L2F M03",      // 7MHz
+            "m 1 L4F M03",      // 3.5 MHz
+            "m 1 L8F M03",       // 2.0 MHz
+            "m 1 L0F M13",       // Vertical
+            "m 1 L0F M23",       // Loop
         };
         // Where did those magic strings come from? R1F M1F etc.
         // The beginning "m" means its a "mask" command to the ASW12V. It tells the firmware

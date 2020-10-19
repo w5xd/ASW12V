@@ -31,6 +31,10 @@ namespace WS7I_antennas_shortcuts
                 "Antenna2MHz",
                 "AntennaVertical",
                 "AntennaLoop",
+                "Antenna160",
+                "Antenna40Yagi",
+                "Antenna468V",
+                "AntennaInvL",
          };
 
         public override string this[int which]

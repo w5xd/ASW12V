@@ -66,6 +66,12 @@ namespace WS7I_antennas
             radioButtons.Add(radioButton2MHz);  // 4
             radioButtons.Add(radioButtonVertical);  // 5
             radioButtons.Add(radioButtonLoop);  // 6
+
+            radioButtons.Add(radioButton160); // 7
+            radioButtons.Add(radioButton40Yagi); // 8
+            radioButtons.Add(radioButton468V); // 9 
+            radioButtons.Add(radioButtonInvL); // 10
+            radioButtonInvL.Checked = true; // its the one will all off
             if (null != m_formLoaded)
                 m_formLoaded.Set();
         }
@@ -87,6 +93,10 @@ namespace WS7I_antennas
         const int Antenna2MHz = 4;
         const int AntennaVertical = 5;
         const int AntennaLoop = 6;
+        const int Antenna160 = 7;
+        const int Antenna40Yagi = 8;
+        const int Antenna468V = 9;
+        const int AntennaInvL = 10;
 
         public void DoShortcut(int which) 
         {
@@ -105,6 +115,11 @@ namespace WS7I_antennas
             "m 1 L8F M03",       // 2.0 MHz
             "m 1 L0F M13",       // Vertical
             "m 1 L0F M23",       // Loop
+
+                "m 1 M4C R01",  // 160
+                "m 1 M8C R01",  // 40Yagi
+                "m 1 M0C R11",  // 468V
+                "m 1 M0C R01", // InvL
         };
         // Where did those magic strings come from? R1F M1F etc.
         // The beginning "m" means its a "mask" command to the ASW12V. It tells the firmware

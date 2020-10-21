@@ -68,7 +68,7 @@
             this.buttonL80_15m.Name = "buttonL80_15m";
             this.buttonL80_15m.Size = new System.Drawing.Size(55, 43);
             this.buttonL80_15m.TabIndex = 5;
-            this.buttonL80_15m.Text = "80-15 back";
+            this.buttonL80_15m.Text = "Vert";
             this.buttonL80_15m.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.buttonL80_15m.UseVisualStyleBackColor = true;
             // 
@@ -149,7 +149,7 @@
             this.buttonR80_15m.Name = "buttonR80_15m";
             this.buttonR80_15m.Size = new System.Drawing.Size(55, 43);
             this.buttonR80_15m.TabIndex = 5;
-            this.buttonR80_15m.Text = "80-15 back";
+            this.buttonR80_15m.Text = "Vert";
             this.buttonR80_15m.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.buttonR80_15m.UseVisualStyleBackColor = true;
             // 

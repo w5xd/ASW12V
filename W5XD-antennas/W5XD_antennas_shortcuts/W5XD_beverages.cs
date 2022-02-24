@@ -295,7 +295,15 @@ namespace W5XD_antennas
             // the Left section, position 1. There is no input to be monitored
             // because the W5XD shack has no switch within reach of the operator.
             String s = checkBoxLoopTunerPower.Checked ?
-                "m 1 L11\r" : "m 1 L01\r";
+                "m 1 L22\r" : "m 1 L02\r";
+            m_Setup.Command(s);
+        }
+
+        private void checkBoxVerticalPower_CheckedChanged(object sender, EventArgs e)
+        {
+            // The W5XD station has another MFJ-998RT tuner. 
+            String s = checkBoxVerticalPower.Checked ?
+                "m 1 L44\r" : "m 1 L04\r";
             m_Setup.Command(s);
         }
 
@@ -313,6 +321,6 @@ namespace W5XD_antennas
         }
         private TwoByRatPak m_ratPakForm;
         public TwoByRatPak ratPakForm { set { m_ratPakForm = value; } }
-       
+
     }
 }

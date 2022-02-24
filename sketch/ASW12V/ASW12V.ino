@@ -255,7 +255,7 @@ void loop()
         {
             // commands are a single character
             if ((char)incoming == (char)'\r')
-                Serial.println("AWS 12V controller"); // tell user we're here...
+                Serial.println("ASW12V controller"); // tell user we're here...
             else if ((char)incoming == (char)'d')
             {   // print daisy chain length
                 Serial.print("Daisy chain length = ");

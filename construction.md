@@ -19,9 +19,11 @@ This plug mates with these parts:
 <p>The parts lists above also do <b>not</b> include the board-to-board connectors you'll need to interconnect the two PCBs if you build the 24 channel version:</p>
 <ul>
 <li><a target="_blank" href='https://www.digikey.com/short/z8prdt'>Right angle connection header, male</a>. </li>
-<li><a target="_blank" href='https://www.digikey.com/short/z8pr0h'>Right angle connection header, female</a>. </li>
+<li><a target="_blank" href='https://www.digikey.com/short/zp42fr'>Right angle connection header, female</a>. </li>
 <li>Double all the quantities in the parts list above.</li>
 </ul>
+
+If you're going to build several of these in a batch, here is a handy <a href='https://www.digikey.com/short/zp4253'>part</a>. It can be used with a jig to connected an Arduino Pro Micro to test a partially populated PCB. See the testing instructions <a href='#TestJig'>below</a>.
 
 Separate enclosure STL files are published for each choice of connectors.
 
@@ -43,8 +45,10 @@ SMA4021 part for earlier PCBs has built-in flywheel diodes.
 </ol>
  
 Program an Arduino Pro Micro with the sketch published in <a href="sketch//ASW12V">sketch/ASW12V/</a>. Both the 5V and 3.3V 
-versions of the Pro Micro work equally well. 
-    <h3>Construction Recommendations</h3>
+versions of the Pro Micro work equally well. One oddity about programming the Pro Micro: do <strong>not</strong> use the wrong voltage setting when programming it. The Arduino is then bricked, and it takes <a href='https://learn.sparkfun.com/tutorials/pro-micro--fio-v3-hookup-guide/all#ts-revive'>extra work to recover</a>. If you have put it in the enclosure, and now
+are upgrading the firmware long after you have forgotten whether its a 5V or 3.3V, here is a little trick. Further down that <a href='https://learn.sparkfun.com/tutorials/pro-micro--fio-v3-hookup-guide/all#ts-revive'>same page</a> referenced above, there is a listing of the USB PID that the various boards will report. The Arduino IDE's Tools/Get-Board-Info will report the PID given the Pro Micro's COM port. The 5V reports PID 9205, while the 3.3V part reports PID 9203
+
+<h3>Construction Recommendations</h3>
 The PCB layout is very tight which does not make for easy maintenance. The
         tight clearances mean that once all the big parts
         are installed, it is essentially impossible to
@@ -92,10 +96,17 @@ Also install male headers on your Pro Micro and then use
     </ol>
     </li>
 </ol>
-Your board might look like this, minus the resistors I have already placed:
-<img src='TestConfiguration.jpg' alt='TestConfiguration.jpg' />
+<p>Your board might look like this, minus the resistors I have already placed:
+<img src='TestConfiguration.jpg' alt='TestConfiguration.jpg' width='50%' />
 The board in this photo is destined to be board number 1 (it has a vertical header installed at J1 on the right.)
-And it is planned to go in a more-than-12 channel enclosure, so it has a right angle connector installed at J2 on the left.
+And it is planned to go in a more-than-12 channel enclosure, so it has a right angle connector installed at J2 on the left.</p>
+<p id='TestJig'>Or if you're building more than one of these at a time. this test jig might come in handy. There is no need to
+commit to a particular set of headers because the spring loaded connector holds well enough to test with jumper leads per these
+photographs. STL files to 3D print the jig are in the <a href='STL'>STL folder</a>.
+</p>
+<p align='center'><img src='test-jig-1.jpg' alt='test-jig-1.jpg' width='50%'/></p>
+<p align='center'><img src='test-jig-2.jpg' alt='test-jig-2.jpg' width='50%'/></p>
+
 <h3>Shift Register Digital Test</h3>
 You need a serial port terminal program connected to
 the Arduino&#8217;s serial port for the following tests. I recommend
@@ -183,7 +194,8 @@ place, but hex nuts work as well. In either case, clean out the 3D printing debr
 pushing a nut in the channel.  And put a small piece of tape over the opening after the nut
 is placed because gravity is going to try to remove it while you do the remainder of the assembly.  
 
-Quantity 4 by 5/8 inch machine screws are needed per section to fasten the top to the bottom.
+Quantity 4 by 3/4 (or 5/8) inch machine screws are needed per section to fasten the top to the bottom.
 
 The mounting screw holes in the enclosure bottom can be cleared of print debris by pushing a
 #4 machine screw through from the inside toward the outside.
+

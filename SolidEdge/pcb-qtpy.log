@@ -1,0 +1,41 @@
+STEP translation to Solid Edge
+Date: Thursday,March 10,2022 04:32PM
+Source File: D:\dev\ASW12V\SolidEdge\pcb-qtpy.step
+Author: Author
+Organization: Unknown
+Source System: FreeCAD
+
+Hardware:
+Processor: Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz
+Operating System: Windows 10 Professional
+Installed Memory: 63.94 GB
+
+Software Information
+Parasolid Version: 34.0.153
+PSBodyShop Version: 34.0.110
+Step Adapter Version: 9.0.92
+Solid Edge Version: 222.00.00.132 x64
+
+Step Import Options
+Import Faceted Bodies: On
+Import Check Bodies: Off
+Import Curves: On
+Import DoNotSave: On
+Import Multiple Bodies As Single Part File: On
+Import Stitch Surfaces: On
+Import Boolean Solids: On
+Make Base Feature: On
+Simplify Geometry: On
+Import Imprint Curves: On
+Import Drive: C:
+Import Stitch Surfaces: On
+Import Surfaces: On
+Import Output Path: D:\dev\ASW12V\SolidEdge
+Import Enable Default Output Path: On
+Import PMI: Off
+Import As Internal Components: Off
+Import Path: 
+
+Translating to Parasolid data types...
+Translation process completed
+Total time required to translate and post process:00 : 00 : 01

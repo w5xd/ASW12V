@@ -3,34 +3,38 @@
 /* Arduino sketch for the ASW12V remote control switch box
 ** The hardware is an array of input screw terminals and 
 ** an array of output screw terminals of the same size.
+** The "12V" in the name is only because 12VDC is typically
+** used in ham antenna control boxes. This circuit can handle
+** up to 60V and either AC or DC.
 **
 ** The architecture is to be able to insert this device
-** in a low voltage DC switching circuit such that 
-** manual switching of DC at our inputs controls the 
-** devices at our outputs by asserting supply voltage DC on 
+** in a low voltage switching circuit such that 
+** manual switching at our inputs controls the 
+** devices at our outputs by asserting supply voltage on 
 ** those outputs in various combinations. The circuit 
-** isolates its DC supply and ground from our Arduino
-** power, which is on USB power. The SMA4021 PNP output
-** devices can switch up 60V DC,
-** have built-in flyback diodes for inductive loads. The
-** Circuit board traces on the OUTPUT side of the PCB
+** isolates the controlled supply and ground from our Arduino
+** power, which is on USB power. 
+** The TLP355A solid state relay (SSR) can switch up 60V AC or DC
+** The circuit board traces on the OUTPUT side of the PCB
 ** are capable of handling 3A. The INPUT side has 
 ** narrower traces.
 **
+** All the input sensing channels and all the output control channels
+** are on a single MAX7301 Port expander. It has a 28 channel capacity,
+** of which we need 12 inputs and 12 outputs. The MAX7301 numbers its
+** channels starting at P4 up through P31. This design leaves four
+** unused, and those are the lowest numbered ones, P4 through P7.
+**
 ** At code startup, we assume we're operating stand alone, which
-** means copying our inputs (circuit diagram U3 and U4)
-** to our outputs (U1 and U2). "We" are the Arduino at 
-** U5 on the circuit diagram.
-** We only use the 3 SPI pins, two separate strobe
-** pins, one to load the input registers (U3, U4) and
-** one to assert the
-** the outputs (U1 and U2). VCC and ground are the remaining
-** connections. The board
-** performs essentially the same with either the 3.3V
-** Pro Micro or the 5.0V version.
+** means copying our inputs 
+** to our outputs. "We" means this sketch on the Arduino.
+** It uses only 3 SPI pins and a M7301_SELECT pin. VCC and ground are the remaining
+** connections. The Adafruit QT Py device has all these pins,
+** is tiny, and has a USB-C connector with 500mV of 3.3VDC available
+** to power the control circuits. 
 **
 ** The board is arranged for daisy chaining. That means 
-** we might have another U1/U2 and U3/U4 on a second circuit
+** we might have another MAX7301 on a second circuit
 ** board cabled to our J2 and their J1. The daisy chaining
 ** can continue to more boards.
 ** This firmware needs to know how many boards
@@ -41,11 +45,14 @@
 ** when it comes back.
 ** b) in order to put a limit on how much work we must do
 ** to detect the length of the daisy chain, that
-** number is limited to 8 boards.
+** number is limited to 8 boards (which totals 96 channels.)
 **
 ** Once we detect the length of the daisy chain, 
 ** our loop() copies the input registers to
 ** the output registers. 
+**
+** The LED in each SSR requires about
+** 10mA to turn on, which implies a limit of at most 50 channels ON at one time.
 **
 ** loop() also monitors the serial input for commands.
 ** One set of commands is designed for self test.
@@ -56,20 +63,21 @@ struct ShiftRegister_t {
     uint8_t LeftRegister; // high 4 bits are left register.
     uint8_t RightAndMiddleRegister; // low 4 are Middle, high 4 are Right
     ShiftRegister_t() : LeftRegister(0), RightAndMiddleRegister(0){}
-    void init() { LeftRegister= RightAndMiddleRegister = 0;}
-    void setLeftBits(uint8_t v, uint8_t mask) // both range of 0 to f 
+    void init() { LeftRegister = RightAndMiddleRegister = 0;}
+    // the channels are numbered 0 through 3 which are,
+    // respectively, numbered 1 through 4 on the PCB silkscreen
+    void setLeftBits(uint8_t channel, uint8_t mask) // both range of 0 to f 
     {   
-        mask &= 0xf; // only 4 bits allowed
+        mask &= 0xf; // only 4 bits allowed, the least ones.
         LeftRegister &= ~mask;
-        LeftRegister |= v & mask;
+        LeftRegister |= channel & mask;
     }
-    void setMiddleBits(uint8_t v, uint8_t mask)
+    void setMiddleBits(uint8_t channel, uint8_t mask)
     {
         mask &= 0xf;
         RightAndMiddleRegister &= ~mask;
-        RightAndMiddleRegister |= v & mask;
+        RightAndMiddleRegister |= channel & mask;
     }
-
     void setRightBits(uint8_t v, uint8_t mask)
     {
         mask <<= 4;
@@ -77,17 +85,100 @@ struct ShiftRegister_t {
         RightAndMiddleRegister &= ~mask;
         RightAndMiddleRegister |= (v<<4) & mask;
     }
+
+    uint8_t rawMRout()
+    {   // translate RightAndMiddleRegister to WRITE_MAX7301_P08
+        return 0;
+    }
+
+    uint8_t rawLout()
+    {   // translate LeftRegister to WRITE_MAX7301_P15
+        return 0;
+    }
 };
 
+struct ShiftRegisterWithTimer_t : public ShiftRegister_t
+{
+    static const int DELAY_DETECTING_ZERO_MSEC;
+    void rawMRin(uint8_t v, bool allowZeroing)
+    {   // translate the results of READ_MAX7301_P08 to RightAndMiddleRegister 
+        uint8_t tempM = 0;
+        uint8_t tempR = 0;
+
+        // FIXME. translate v to tempM and tempR
+
+        uint8_t tempRM = 0;
+        auto now = millis();
+        if (!allowZeroing)
+        {   // extend the last-seen timers on long delay between polls
+            LastReadNonZeroMsecM = now;
+            LastReadNonZeroMsecR = now;
+        }
+        // Only after going DELAY_DETECTING_ZERO_MSEC with all zeros do we
+        // allow any of the input bits to be recorded as zero.
+        if (now - LastReadNonZeroMsecM > DELAY_DETECTING_ZERO_MSEC)
+            tempRM |= tempM;
+        else // time not elapsed. Any new nonzero bits or'd with any existing
+            tempRM |= 0xfu & (RightAndMiddleRegister | tempM);
+
+        if (now - LastReadNonZeroMsecR > DELAY_DETECTING_ZERO_MSEC)
+            tempRM |= tempR;
+        else
+            tempRM |= 0xf0u & (RightAndMiddleRegister | tempR);
+
+        if (tempM != 0)
+            LastReadNonZeroMsecM = now;
+        if (tempR != 0)
+            LastReadNonZeroMsecR = now;
+
+
+        RightAndMiddleRegister = tempRM;
+    }
+
+    void rawLin(uint8_t v, bool allowZeros)
+    {   // translate READ_MAX7301_P15 to L
+    }
+protected:
+    unsigned long LastReadNonZeroMsecL;
+    unsigned long LastReadNonZeroMsecM;
+    unsigned long LastReadNonZeroMsecR;
+};
+const int ShiftRegisterWithTimer_t::DELAY_DETECTING_ZERO_MSEC = 12;
 namespace {
-    const int INPUT_PORT_STROBE_PIN = 10;
-    const int OUTPUT_PORT_STROBE_PIN = 9;
+    const int M7301_SELECT = A2; // the PCB wires the QT PY pin A2 to the MAX7301 select
+    const int FLASH_CS_PIN = 17; // per adafruit documentation  is pin 11 on SAMD21E QT PY board, which is hardware SS for the SPI channel
     const int MAX_BOARDS_DAISY_CHAINED = 8;
+    const uint8_t WRITE_MAX7301_P08 = 0x48u;
+    const uint8_t WRITE_MAX7301_P15 = 0x50u;
+    const uint8_t READ_MAX7301_P08 = WRITE_MAX7301_P08 | 0x80u;
+    const uint8_t READ_MAX7301_P15 = WRITE_MAX7301_P15 | 0x80u;
+    const uint8_t PORT_CONFIG_MAX7301_P08 = 0xAu;
+    const uint8_t PORT_CONFIG_MAX7301_P12 = 0xBu;
+    const uint8_t PORT_CONFIG_MAX7301_P16 = 0xCu;
+    const uint8_t PORT_CONFIG_MAX7301_P20 = 0xDu;
+    const uint8_t PORT_CONFIG_MAX7301_P24 = 0xEu;
+    const uint8_t PORT_CONFIG_MAX7301_P28 = 0xFu;
+    const uint8_t CONFIG_MAX7301 = 0x4u;
+    const uint8_t MAX7301_NOOP = 0;
+    const uint8_t MAX7301_DUMMY = 0;
+    const uint8_t CONFIG_NORMAL = 1u;
+    const uint8_t NUM_CONFIG_REGISTERS = 7;
 
-    // here are the SPI parameters for the 74hc597 AND 74HC594
-    const SPISettings SPISetup(1000000, MSBFIRST, SPI_MODE0);
+    const uint8_t PortSetup[NUM_CONFIG_REGISTERS][2] =
+    {
+        {PORT_CONFIG_MAX7301_P08, 0xffu}, // FIXME 0xffu is all bits input with pullup
+        {PORT_CONFIG_MAX7301_P12, 0xffu},
+        {PORT_CONFIG_MAX7301_P16, 0xffu},
+        {PORT_CONFIG_MAX7301_P20, 0xffu},
+        {PORT_CONFIG_MAX7301_P24, 0xffu},
+        {PORT_CONFIG_MAX7301_P28, 0xffu},
+        {CONFIG_MAX7301, CONFIG_NORMAL},
+    };
 
-    ShiftRegister_t ShiftRegisters[MAX_BOARDS_DAISY_CHAINED];
+    // here are the SPI parameters for the MAX7301
+    const SPISettings SPISetup(10000000, MSBFIRST, SPI_MODE0);
+
+    ShiftRegisterWithTimer_t ShiftRegisters[MAX_BOARDS_DAISY_CHAINED];
     ShiftRegister_t AsOutput[MAX_BOARDS_DAISY_CHAINED];
     ShiftRegister_t MaskForceOn[MAX_BOARDS_DAISY_CHAINED];
     ShiftRegister_t MaskForceOff[MAX_BOARDS_DAISY_CHAINED];
@@ -100,27 +191,11 @@ namespace {
             MODE_MANUAL, // Outputs manipulated directly from Serial
     } OperatingMode = MODE_DEFAULT;
 
-    void LatchInputs()
-    {   // latch the opto-isolated pullup data into the input
-        // registers.
-        digitalWrite(INPUT_PORT_STROBE_PIN, LOW);
-        digitalWrite(INPUT_PORT_STROBE_PIN, HIGH);
-        // TWO cycles are needed because both the PL and STCP
-        // leads must be clocked
-        digitalWrite(INPUT_PORT_STROBE_PIN, LOW);
-        digitalWrite(INPUT_PORT_STROBE_PIN, HIGH);
-    }
-
-    void LatchOutputs()
-    {
-        digitalWrite(OUTPUT_PORT_STROBE_PIN, LOW);
-        digitalWrite(OUTPUT_PORT_STROBE_PIN, HIGH);
-    }
-
     int FindDaisyChainLength()
     {
         // prime the shift register with all zeros
         SPI.beginTransaction(SPISetup);
+        digitalWrite(M7301_SELECT, LOW);
         for (int i = 0; i < MAX_BOARDS_DAISY_CHAINED; i++)
         {   // each board has two bytes in each direction
             SPI.transfer(0);
@@ -129,7 +204,6 @@ namespace {
 
         static const uint8_t MARKER1 = 1;
         static const uint8_t MARKER2 = 2;
-
         SPI.transfer(MARKER1); //put a marker into the pipeline
         SPI.transfer(MARKER2); // it's two bytes long
 
@@ -143,7 +217,7 @@ namespace {
             if ((b1 == MARKER1) && (b2 == MARKER2))
                 break;
         }
-
+        digitalWrite(M7301_SELECT, HIGH); // 7301 executes on this. only no-ops are in them now.
         SPI.endTransaction();
         if (ret >= MAX_BOARDS_DAISY_CHAINED)
             return -1;
@@ -152,23 +226,94 @@ namespace {
 
     bool printOutOnce;
 
+    void readInputs(ShiftRegisterWithTimer_t sr[])
+    {
+        auto now = millis();
+        SPI.beginTransaction(SPISetup);
+        digitalWrite(M7301_SELECT, LOW);
+        /* The 12 inputs appear on P08 through P21 (but not including P18 and P19)
+        ** All 8 of the R and M channels are read using
+        **                        command 0x48 on the MAX7301 (READ_MAX7301_P08)
+        ** The 4 L channels are read with 0x50 (READ_MAX7301_P15)
+        ** For each 12-channel group in the daisy chain we must:
+        **      Read two bytes from the PE, each of which requires:
+        **          A two byte SPI shift of the READ command followed by
+        **          A two byte SPI shift to read the result.
+        */
+        int i = 0;
+        for (i = 0; i < DaisyChainLength; i += 1)
+        {
+            SPI.transfer(READ_MAX7301_P08); // read 8 lower inputs
+            SPI.transfer(MAX7301_DUMMY);
+        }
+        digitalWrite(M7301_SELECT, HIGH);
+        SPI.endTransaction(); // Tell the PE's to execute the first READ command
+
+        static unsigned long lastReadMsec;
+        bool OkToZero = now < lastReadMsec + ShiftRegisterWithTimer_t::DELAY_DETECTING_ZERO_MSEC / 2;
+        SPI.beginTransaction(SPISetup);
+        digitalWrite(M7301_SELECT, LOW);
+        for (i -= 1; i >= 0; i -= 1) // daisy chain reads chips in reverse order
+        {
+            SPI.transfer(MAX7301_NOOP);
+            sr[i].rawMRin(SPI.transfer(MAX7301_DUMMY), OkToZero);
+        }
+        digitalWrite(M7301_SELECT, HIGH);
+        SPI.endTransaction(); // 
+
+        // now the L channels on the entire daisy chain
+        for (i = 0; i < DaisyChainLength; i += 1)
+        {
+            SPI.transfer(READ_MAX7301_P15);
+            SPI.transfer(MAX7301_DUMMY);
+        }
+        digitalWrite(M7301_SELECT, HIGH);
+        SPI.endTransaction(); // Tell the PE's to execute the first READ command
+
+        SPI.beginTransaction(SPISetup);
+        digitalWrite(M7301_SELECT, LOW);
+        for (i -= 1; i >= 0; i -= 1)
+        {
+            SPI.transfer(MAX7301_NOOP);
+            sr[i].rawLin(SPI.transfer(MAX7301_DUMMY), OkToZero);
+        }
+        digitalWrite(M7301_SELECT, HIGH);
+        SPI.endTransaction();
+        lastReadMsec = now;
+    }
+    
+    void writeOutputs(ShiftRegister_t sr[]) 
+    {
+        SPI.beginTransaction(SPISetup);
+        digitalWrite(M7301_SELECT, LOW);
+        for (int i = 0; i < DaisyChainLength; i += 1)
+        {
+            SPI.transfer(WRITE_MAX7301_P08);
+            SPI.transfer(sr[i].rawMRout());
+        }
+        digitalWrite(M7301_SELECT, HIGH);
+        SPI.endTransaction();
+        // output L
+        SPI.beginTransaction(SPISetup);
+        digitalWrite(M7301_SELECT, LOW);
+        for (int i = 0; i < DaisyChainLength; i += 1)
+        {
+            SPI.transfer(WRITE_MAX7301_P15);
+            SPI.transfer(sr[i].rawLout());
+        }
+        digitalWrite(M7301_SELECT, HIGH);
+        SPI.endTransaction();
+    }
+    
     void DoCopyMode(bool HonorMasks)
     {
         if (DaisyChainLength <= 0)
             return;
 
-        LatchInputs(); 
-        SPI.beginTransaction(SPISetup);
-        int i = 0;
-        // read the inputs
-        for (; i < DaisyChainLength; i += 1)
-        {   // ~ input opto's invert
-            ShiftRegisters[i].RightAndMiddleRegister = ~SPI.transfer(0);
-            ShiftRegisters[i].LeftRegister = ~SPI.transfer(0);
-        }
-        i -= 1;
-        // write them out. Order reversed per their wiring.
-        for (; i >= 0; i -= 1)
+        readInputs(ShiftRegisters);
+
+        // apply HonorMasks
+        for (int i = 0; i < DaisyChainLength; i += 1)
         {   // outputs do not invert
             uint8_t LeftRegister = ShiftRegisters[i].LeftRegister;
             uint8_t RightAndMiddleRegister = ShiftRegisters[i].RightAndMiddleRegister;
@@ -181,15 +326,15 @@ namespace {
             }
             AsOutput[i].LeftRegister = LeftRegister;
             AsOutput[i].RightAndMiddleRegister = RightAndMiddleRegister;
-            SPI.transfer(LeftRegister);
-            SPI.transfer(RightAndMiddleRegister);
         }
-        SPI.endTransaction();
-        LatchOutputs();
+
+        // output MR
+        writeOutputs(AsOutput);
+
         if (printOutOnce)
         {
             Serial.print("Out:  ");
-            for (i=0; i < DaisyChainLength; i += 1)
+            for (int i = 0; i < DaisyChainLength; i += 1)
             {
                     if (i != 0)
                         Serial.print(" ");
@@ -208,15 +353,28 @@ namespace {
 void setup()
 {
     Serial.begin(9600); // control at 9600 baud, ascii
-
-    // I/O pin setup--strobe pins for INPUT registers and OUTPUT registers
-    pinMode(INPUT_PORT_STROBE_PIN, OUTPUT);
-    pinMode(OUTPUT_PORT_STROBE_PIN, OUTPUT);
-    digitalWrite(INPUT_PORT_STROBE_PIN, HIGH);
-    digitalWrite(OUTPUT_PORT_STROBE_PIN, HIGH);
+    pinMode(FLASH_CS_PIN, OUTPUT); // hardware SS pin for SPI
+    digitalWrite(FLASH_CS_PIN, HIGH);
+    // SS pin we are using.
+    pinMode(M7301_SELECT, OUTPUT);
+    pinMode(SS, OUTPUT);
+    digitalWrite(M7301_SELECT, HIGH);
     SPI.begin();
-
     DaisyChainLength = FindDaisyChainLength();
+
+    if (DaisyChainLength > 0)
+    {
+        for (int i = 0; i < NUM_CONFIG_REGISTERS; i++)
+        {
+            SPI.beginTransaction(SPISetup);
+            digitalWrite(M7301_SELECT, LOW);
+            SPI.transfer(PortSetup[i][0]);
+            SPI.transfer(PortSetup[i][1]);
+            digitalWrite(M7301_SELECT, HIGH);
+            SPI.endTransaction();
+        }
+    }
+}
 }
 
 int fromHex(int incoming)
@@ -274,32 +432,13 @@ void loop()
                 channelToWrite = 0;
                 OperatingMode = MODE_DEFAULT;
             }
-            else if ((char)incoming == (char)'n')
-            {   // shift a known sequence into the outputs
-                OperatingMode = MODE_MANUAL;
-
-                SPI.beginTransaction(SPISetup);
-                unsigned char received = SPI.transfer(++counterToWrite);
-                SPI.endTransaction();
-
-                Serial.print("Sent ");
-                Serial.print((int)counterToWrite, HEX);
-                Serial.print(" Got ");
-                Serial.println((int)received, HEX);
-                LatchOutputs();
-            }
             else if ((char)incoming == (char)'i')
             {   // print current inputs
-                int dc = DaisyChainLength;
-                if (DaisyChainLength <= 0)
-			        DaisyChainLength = 1;
-                LatchInputs();
                 Serial.print("Read: ");
-                SPI.beginTransaction(SPISetup);
-                for (int i = 0; i < DaisyChainLength; i++)
-                { // ~ opto pullups invert
-                    unsigned char receivedRM = ~SPI.transfer(0);
-                    unsigned char receivedL = ~SPI.transfer(0);
+                for (int i = DaisyChainLength-1; i >= 0; i-=1)
+                { 
+                    unsigned char receivedRM = ShiftRegisters[i].RightAndMiddleRegister;
+                    unsigned char receivedL = ShiftRegisters[i].LeftRegister;
                     if (i != 0)
                         Serial.print(" ");
                     Serial.print((int)receivedL, HEX);
@@ -308,9 +447,7 @@ void loop()
                         Serial.print("0");
                     Serial.print((int) receivedRM, HEX);
                 }
-                SPI.endTransaction();
                 Serial.println();
-                DaisyChainLength = dc;
             }
             else if ((char)incoming == (char)'o')
             {   // print current outputs
@@ -333,7 +470,6 @@ void loop()
                     // so transpose the channel number to that higher is right
                     unsigned char channelToWriteInThisBoard = (12 * DaisyChainLength) - 1 - (unsigned)channelToWrite;
                     // and count down during shifting by boards, 
-                    SPI.beginTransaction(SPISetup);
                     for (int i = 0; i < DaisyChainLength; i++)
                     { 
                        unsigned char outputRM = 0; // 8 bits 
@@ -349,13 +485,12 @@ void loop()
                                 outputL = boardMask[7- channelToWriteInThisBoard];
                             else
                                 outputRM = boardMask[11-channelToWriteInThisBoard];
+                            AsOutput[i].LeftRegister = outputL;
+                            AsOutput[i].RightAndMiddleRegister = outputRM;
                        }
-                       SPI.transfer(outputL);
-                       SPI.transfer(outputRM);
                        channelToWriteInThisBoard -= 12;
                     }
-                    SPI.endTransaction();
-                    LatchOutputs();
+                    writeOutputs(AsOutput);
                     channelToWrite += 1;
                 }
             }

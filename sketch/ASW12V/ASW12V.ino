@@ -178,6 +178,9 @@ namespace {
     // here are the SPI parameters for the MAX7301
     const SPISettings SPISetup(10000000, MSBFIRST, SPI_MODE0);
 
+    // each of the following arrays is addressed such that the zeroth element
+    // is the one with the QT PY controller installed. In the user CLI, the
+    // origin element is number one.
     ShiftRegisterWithTimer_t ShiftRegisters[MAX_BOARDS_DAISY_CHAINED];
     ShiftRegister_t AsOutput[MAX_BOARDS_DAISY_CHAINED];
     ShiftRegister_t MaskForceOn[MAX_BOARDS_DAISY_CHAINED];
@@ -253,7 +256,7 @@ namespace {
         bool OkToZero = now < lastReadMsec + ShiftRegisterWithTimer_t::DELAY_DETECTING_ZERO_MSEC / 2;
         SPI.beginTransaction(SPISetup);
         digitalWrite(M7301_SELECT, LOW);
-        for (i -= 1; i >= 0; i -= 1) // daisy chain reads chips in reverse order
+        for (i -= 1; i >= 0; i -= 1) // daisy chain reads PCBs in reverse order
         {
             SPI.transfer(MAX7301_NOOP);
             sr[i].rawMRin(SPI.transfer(MAX7301_DUMMY), OkToZero);
@@ -286,7 +289,8 @@ namespace {
     {
         SPI.beginTransaction(SPISetup);
         digitalWrite(M7301_SELECT, LOW);
-        for (int i = 0; i < DaisyChainLength; i += 1)
+        for (int i = DaisyChainLength - 1; // most distant PCB first
+            i >= 0; i -= 1)
         {
             SPI.transfer(WRITE_MAX7301_P08);
             SPI.transfer(sr[i].rawMRout());
@@ -296,7 +300,8 @@ namespace {
         // output L
         SPI.beginTransaction(SPISetup);
         digitalWrite(M7301_SELECT, LOW);
-        for (int i = 0; i < DaisyChainLength; i += 1)
+        for (int i = DaisyChainLength-1; // most distant PCB first
+            i >= 0; i -= 1)
         {
             SPI.transfer(WRITE_MAX7301_P15);
             SPI.transfer(sr[i].rawLout());

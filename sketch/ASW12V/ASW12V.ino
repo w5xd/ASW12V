@@ -353,28 +353,28 @@ namespace {
 void setup()
 {
     Serial.begin(9600); // control at 9600 baud, ascii
-    pinMode(FLASH_CS_PIN, OUTPUT); // hardware SS pin for SPI
+
     digitalWrite(FLASH_CS_PIN, HIGH);
-    // SS pin we are using.
-    pinMode(M7301_SELECT, OUTPUT);
-    pinMode(SS, OUTPUT);
+    pinMode(FLASH_CS_PIN, OUTPUT); // hardware SS pin for SPI
+
+    // SS pin we are using for SPI
     digitalWrite(M7301_SELECT, HIGH);
+    pinMode(M7301_SELECT, OUTPUT);
     SPI.begin();
     DaisyChainLength = FindDaisyChainLength();
 
-    if (DaisyChainLength > 0)
+    for (int i = 0; i < NUM_CONFIG_REGISTERS; i++)
     {
-        for (int i = 0; i < NUM_CONFIG_REGISTERS; i++)
-        {
-            SPI.beginTransaction(SPISetup);
-            digitalWrite(M7301_SELECT, LOW);
+        SPI.beginTransaction(SPISetup);
+        digitalWrite(M7301_SELECT, LOW);
+        for (int j = 0; j < DaisyChainLength; j++)
+        { // 7301's in the chain get the identical setup
             SPI.transfer(PortSetup[i][0]);
             SPI.transfer(PortSetup[i][1]);
-            digitalWrite(M7301_SELECT, HIGH);
-            SPI.endTransaction();
-        }
-    }
-}
+        } 
+        digitalWrite(M7301_SELECT, HIGH); // executes the command
+        SPI.endTransaction();
+    }  // final command to M7301 switch the chip's mode from "shutdown" to "normal"
 }
 
 int fromHex(int incoming)

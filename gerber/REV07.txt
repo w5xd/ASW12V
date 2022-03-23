@@ -1,0 +1,15 @@
+The Gerber files are formatted as RS-274X, the industry standard. The drill file is an Excellon format, that includes embedded hole size definitions. Please note, the hole diameters listed refer to the finished hole sizes after plating, not the hole size to be drilled by manufacturing.
+
+Each file can be identify by its extension:
+
+.TSK or .SLK = top silkscreen layer
+.TSM or .SMT = top solder mask layer
+.TOP = top copper layer
+.GTP = top paste layer
+.IPT or .INT = top inner copper layer
+.BOT = bottom copper layer
+.IPB or .INB = bottom inner copper layer
+.BSM or .SMB = bottom solder mask layer
+.GBP = bottom paste layer
+.DRI = drill file
+.OLN = board outline 

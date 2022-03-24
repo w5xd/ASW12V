@@ -213,8 +213,6 @@ namespace {
         int ret = 1;
         for (; ret < MAX_BOARDS_DAISY_CHAINED; ret++)
         {
-            SPI.transfer(0);
-            SPI.transfer(0);
             uint8_t b1 = SPI.transfer(0);
             uint8_t b2 = SPI.transfer(0);
             if ((b1 == MARKER1) && (b2 == MARKER2))

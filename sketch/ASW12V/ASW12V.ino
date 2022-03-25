@@ -24,8 +24,8 @@
 ** All the input sensing channels and all the output control channels
 ** are on a single MAX7301 Port expander. It has a 28 channel capacity,
 ** of which we need 12 inputs and 12 outputs. The MAX7301 numbers its
-** channels starting at P4 up through P31. This design leaves four
-** unused, and those are the lowest numbered ones, P4 through P7.
+** channels starting at P4 up through P31. This design leaves the four
+** lowest unused, and uses P8 through P31.
 **
 ** At code startup, we assume we're operating stand alone, which
 ** means copying our inputs 
@@ -35,12 +35,12 @@
 ** is tiny, and has a USB-C connector with 500mV of 3.3VDC available
 ** to power the control circuits. 
 **
-** The board is arranged for daisy chaining. That means 
+** The board is designed for daisy chaining. That means 
 ** we might have another MAX7301 on a second circuit
 ** board cabled to our J2 and their J1. The daisy chaining
 ** can continue to more boards.
 ** This firmware needs to know how many boards
-** are out there on the daisy chain. We do that by insisting:
+** are out there on the daisy chain. It calculates that by insisting:
 ** a) that the final board on the daisy chain (even if
 ** we're the only board) has its J2 I/O pins jumpered 
 ** together. That allows us to shift data out and detect
@@ -54,7 +54,7 @@
 ** the output registers. 
 **
 ** The LED in each SSR requires about
-** 10mA to turn on, which implies a limit of at most 50 channels ON at one time.
+** 10mA to turn on. That means a limit of at most 50 channels ON at one time.
 **
 ** loop() also monitors the serial input for commands.
 ** One set of commands is designed for self test.
@@ -158,7 +158,8 @@ struct ShiftRegister_t {
         if (RightAndMiddleRegister & 0x80u)
             ret &= ~(1 << P31_BIT);
         return ret;
-#else
+#else // but the PCB layout arranges for these outputs to align 
+        // with the MAX7301 pin layout
         return ~RightAndMiddleRegister;
 #endif
     }
@@ -184,7 +185,7 @@ struct ShiftRegister_t {
 
 struct ShiftRegisterWithTimer_t : public ShiftRegister_t
 {
-    static const int DELAY_DETECTING_ZERO_MSEC;
+    static const int DELAY_DETECTING_ZERO_MSEC; // to support AC input
     void rawMRin(uint8_t v, bool allowZeroing)
     {   // translate the results of READ_MAX7301_P08 to RightAndMiddleRegister 
         static const int P08_BIT = 0;
@@ -200,6 +201,7 @@ struct ShiftRegisterWithTimer_t : public ShiftRegister_t
         uint8_t tempR = 0;
 
         // translate v to tempM and tempR
+        // invert cuz input v is active low, but tempM/R are active high
 
         if (0 == (v & (1 << P15_BIT)))
             tempM |= 1;
@@ -228,12 +230,12 @@ struct ShiftRegisterWithTimer_t : public ShiftRegister_t
         }
         // Only after going DELAY_DETECTING_ZERO_MSEC with all zeros do we
         // allow any of the input bits to be recorded as zero.
-        if (now - LastReadNonZeroMsecM > DELAY_DETECTING_ZERO_MSEC)
+        if (static_cast<int>(now - LastReadNonZeroMsecM) > DELAY_DETECTING_ZERO_MSEC)
             tempRM |= tempM;
         else // time not elapsed. Any new nonzero bits or'd with any existing
             tempRM |= 0xfu & (RightAndMiddleRegister | tempM);
 
-        if (now - LastReadNonZeroMsecR > DELAY_DETECTING_ZERO_MSEC)
+        if (static_cast<int>(now - LastReadNonZeroMsecR) > DELAY_DETECTING_ZERO_MSEC)
             tempRM |= tempR;
         else
             tempRM |= 0xf0u & (RightAndMiddleRegister | tempR);
@@ -242,7 +244,6 @@ struct ShiftRegisterWithTimer_t : public ShiftRegister_t
             LastReadNonZeroMsecM = now;
         if (tempR != 0)
             LastReadNonZeroMsecR = now;
-
 
         RightAndMiddleRegister = tempRM;
     }
@@ -257,6 +258,7 @@ struct ShiftRegisterWithTimer_t : public ShiftRegister_t
         static const int P21_BIT = 5;
 
         // translate v to tempM and tempR
+        // invert cuz input v is active low, but tempL is active high
 
         if (0 == (v & (1 << P20_BIT)))
             tempL |= 1;
@@ -275,7 +277,7 @@ struct ShiftRegisterWithTimer_t : public ShiftRegister_t
         }
         // Only after going DELAY_DETECTING_ZERO_MSEC with all zeros do we
         // allow any of the input bits to be recorded as zero.
-        if (now - LastReadNonZeroMsecL > DELAY_DETECTING_ZERO_MSEC)
+        if (static_cast<int>(now - LastReadNonZeroMsecL) > DELAY_DETECTING_ZERO_MSEC)
             temp |= tempL;
         else // time not elapsed. Any new nonzero bits or'd with any existing
             temp |= 0xfu & (LeftRegister | tempL);
@@ -291,7 +293,7 @@ protected:
     unsigned long LastReadNonZeroMsecM;
     unsigned long LastReadNonZeroMsecR;
 };
-const int ShiftRegisterWithTimer_t::DELAY_DETECTING_ZERO_MSEC = 12;
+const int ShiftRegisterWithTimer_t::DELAY_DETECTING_ZERO_MSEC = 15; // input stays zero this long to believe it is zero
 namespace {
 
     // here are the SPI parameters for the MAX7301
@@ -350,7 +352,7 @@ namespace {
         auto now = millis();
         SPI.beginTransaction(SPISetup);
         digitalWrite(M7301_SELECT, LOW);
-        /* The 12 inputs appear on P08 through P21 (but not including P18 and P19)
+        /* The 12 inputs appear on P08 through P21 (excepting P18 and P19)
         ** All 8 of the R and M channels are read using
         **                        command 0x48 on the MAX7301 (READ_MAX7301_P08)
         ** The 4 L channels are read with 0x50 (READ_MAX7301_P16)

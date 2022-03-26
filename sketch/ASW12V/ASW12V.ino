@@ -158,8 +158,7 @@ struct ShiftRegister_t {
         if (RightAndMiddleRegister & 0x80u)
             ret &= ~(1 << P31_BIT);
         return ret;
-#else // but the PCB layout arranges for these outputs to align 
-        // with the MAX7301 pin layout
+#else // but the PCB layout arranges for these outputs to align with the MAX7301 pin layout
         return ~RightAndMiddleRegister;
 #endif
     }
@@ -183,6 +182,7 @@ struct ShiftRegister_t {
     }
 };
 
+static const int NUM_CHANNELS_PER_SECTION=4;
 struct ShiftRegisterWithTimer_t : public ShiftRegister_t
 {
     static const int DELAY_DETECTING_ZERO_MSEC; // to support AC input
@@ -197,108 +197,91 @@ struct ShiftRegisterWithTimer_t : public ShiftRegister_t
         static const int P14_BIT = 6;
         static const int P15_BIT = 7;
 
-        uint8_t tempM = 0;
-        uint8_t tempR = 0;
+        static const int M_BIT_NUMBER[NUM_CHANNELS_PER_SECTION] = {
+            P15_BIT, P11_BIT, P14_BIT, P10_BIT
+        };
+        static const int R_BIT_NUMBER[NUM_CHANNELS_PER_SECTION] = {
+            P13_BIT, P09_BIT, P12_BIT, P08_BIT
+        };
 
-        // translate v to tempM and tempR
-        // invert cuz input v is active low, but tempM/R are active high
-
-        if (0 == (v & (1 << P15_BIT)))
-            tempM |= 1;
-        if (0 == (v & (1 << P11_BIT)))
-            tempM |= 2;
-        if (0 == (v & (1 << P14_BIT)))
-            tempM |= 4;
-        if (0 == (v & (1 << P10_BIT)))
-            tempM |= 8;
-
-        if (0 == (v & (1 << P13_BIT)))
-            tempR |= 0x10u;
-        if (0 == (v & (1 << P09_BIT)))
-            tempR |= 0x20u;
-        if (0 == (v & (1 << P12_BIT)))
-            tempR |= 0x40u;
-        if (0 == (v & (1 << P08_BIT)))
-            tempR |= 0x80u;
+        auto now = millis();
+        int i = 0;
+        if (!allowZeroing)
+        {   // extend the debounce timers if we've been held off
+            for (i = 0; i < NUM_CHANNELS_PER_SECTION; i++)
+            {
+                SinceReadZeroMsecM[i] = now;
+                SinceReadZeroMsecR[i] = now;
+            }
+        }
 
         uint8_t tempRM = 0;
-        auto now = millis();
-        if (!allowZeroing)
-        {   // extend the last-seen timers on long delay between polls
-            FirstReadZeroMsecM = now;
-            FirstReadZeroMsecR = now;
+        // translate v to tempRM
+        // invert cuz input v is active low, but tempM/R are active high
+        for (i = 0; i < NUM_CHANNELS_PER_SECTION; i++)
+        {
+            const uint8_t maskM = 1 << i;
+            if (0 == (v & (1 << M_BIT_NUMBER[i])))
+            {   // bit is active in input
+                tempRM |= maskM;
+                SinceReadZeroMsecM[i] = now;
+            }
+            else if (static_cast<unsigned long>(now - SinceReadZeroMsecM[i]) < DELAY_DETECTING_ZERO_MSEC)
+                tempRM |= maskM & RightAndMiddleRegister; // keep bit on if RightAndMiddleRegister was on
+
+            const uint8_t maskR = 1 << (i + 4);
+            if (0 == (v & (1 << R_BIT_NUMBER[i])))
+            {   // bit is active in input
+                tempRM |= maskR;
+                SinceReadZeroMsecR[i] = now;
+            }
+            else if (static_cast<unsigned long>(now - SinceReadZeroMsecR[i]) < DELAY_DETECTING_ZERO_MSEC)
+                tempRM |= maskR & RightAndMiddleRegister; // keep bit on if RightAndMiddleRegister was on
         }
-        // Only after going DELAY_DETECTING_ZERO_MSEC with all zeros do we
-        // allow any of the input bits to be recorded as zero.
-        if (tempM == 0 && PrevM != 0)
-            FirstReadZeroMsecM = now;
-        if (tempR == 0 && PrevR != 0)
-            FirstReadZeroMsecR = now;
-
-        if (static_cast<int>(now - FirstReadZeroMsecM) > DELAY_DETECTING_ZERO_MSEC)
-            tempRM |= tempM;
-        else // time not elapsed. Any new nonzero bits or'd with any existing
-            tempRM |= (0xfu & RightAndMiddleRegister) | tempM;
-
-        if (static_cast<int>(now - FirstReadZeroMsecR) > DELAY_DETECTING_ZERO_MSEC)
-            tempRM |= tempR;
-        else
-            tempRM |= (0xf0u & RightAndMiddleRegister) | tempR;
-
-        PrevM = tempM;
-        PrevR = tempR;
 
         RightAndMiddleRegister = tempRM;
     }
 
     void rawLin(uint8_t v, bool allowZeros)
     {   // translate READ_MAX7301_P16 to L
-        uint8_t tempL = 0;
-
         static const int P16_BIT = 0;
         static const int P17_BIT = 1;
         static const int P20_BIT = 4;
         static const int P21_BIT = 5;
+        static const int L_BIT_NUMBER[NUM_CHANNELS_PER_SECTION] = {
+            P20_BIT,  P21_BIT, P17_BIT, P16_BIT
+        };
 
-        // translate v to tempM and tempR
-        // invert cuz input v is active low, but tempL is active high
-
-        if (0 == (v & (1 << P20_BIT)))
-            tempL |= 1;
-        if (0 == (v & (1 << P21_BIT)))
-            tempL |= 2;
-        if (0 == (v & (1 << P17_BIT)))
-            tempL |= 4;
-        if (0 == (v & (1 << P16_BIT)))
-            tempL |= 8;
-
-        uint8_t temp = 0;
         auto now = millis();
-        if (!allowZeros  // extend the last-seen timers on long delay between polls
-            || ((tempL == 0) && (PrevL != 0)))
-        {  
-            // Only after going DELAY_DETECTING_ZERO_MSEC with all zeros do we
-            // allow any of the input bits to be recorded as zero.
-            FirstReadZeroMsecL = now;
+        int i = 0;
+        if (!allowZeros)
+        {   // extend debounce timers
+            for (i = 0; i < NUM_CHANNELS_PER_SECTION; i++)
+                SinceReadZeroMsecL[i] = now;
         }
-        if 
-            FirstReadZeroMsecL = now;
-        if (static_cast<int>(now - FirstReadZeroMsecL) > DELAY_DETECTING_ZERO_MSEC)
-            temp |= tempL;
-        else // time not elapsed. Any new nonzero bits or'd with any existing
-            temp |= (0xfu & LeftRegister) | tempL;
 
-        PrevL = tempL;
-        LeftRegister = temp;
+        uint8_t tempL = 0;
+        // translate v to tempL
+        // invert cuz input v is active low, but tempL is active high
+        for (i = 0; i < NUM_CHANNELS_PER_SECTION; i++)
+        {
+            const uint8_t mask = 1 << i;
+            if (0 == (v & (1 << L_BIT_NUMBER[i])))
+            {   // bit is active in input
+                tempL |= mask;
+                SinceReadZeroMsecL[i] = now;
+            }
+            else if (static_cast<unsigned long>(now - SinceReadZeroMsecL[i]) < DELAY_DETECTING_ZERO_MSEC)
+                tempL |= mask & LeftRegister; // keep bit on if LeftRegister was on
+        }
+
+        LeftRegister = tempL;
         LeftRegister |= 0xc0; // for compatibility with older PCB that always reads those two highest bits zero
     }
 protected:
-    unsigned long FirstReadZeroMsecL;
-    uint8_t PrevL;
-    unsigned long FirstReadZeroMsecM;
-    uint8_t PrevM;
-    unsigned long FirstReadZeroMsecR;
-    uint8_t PrevR;
+    unsigned long SinceReadZeroMsecL[NUM_CHANNELS_PER_SECTION];
+    unsigned long SinceReadZeroMsecM[NUM_CHANNELS_PER_SECTION];
+    unsigned long SinceReadZeroMsecR[NUM_CHANNELS_PER_SECTION];
 };
 const int ShiftRegisterWithTimer_t::DELAY_DETECTING_ZERO_MSEC = 15; // input stays zero this long to believe it is zero
 namespace {
@@ -379,7 +362,8 @@ namespace {
         SPI.endTransaction(); // Tell the PE's to execute the first READ command
 
         static unsigned long lastReadMsec;
-        bool OkToZero = now < lastReadMsec + ShiftRegisterWithTimer_t::DELAY_DETECTING_ZERO_MSEC / 2;
+        bool OkToZero = static_cast<long>(now - lastReadMsec) < ShiftRegisterWithTimer_t::DELAY_DETECTING_ZERO_MSEC / 2;
+        lastReadMsec = now;
         if (!OkToZero)
             numNotOkToZero += 1;
         SPI.beginTransaction(SPISetup);
@@ -428,7 +412,6 @@ namespace {
         }
         digitalWrite(M7301_SELECT, HIGH);
         SPI.endTransaction();
-        lastReadMsec = now;
     }
 
     void writeOutputs(ShiftRegister_t sr[])

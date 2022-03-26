@@ -230,6 +230,11 @@ struct ShiftRegisterWithTimer_t : public ShiftRegister_t
         }
         // Only after going DELAY_DETECTING_ZERO_MSEC with all zeros do we
         // allow any of the input bits to be recorded as zero.
+        if (tempM == 0 && PrevM != 0)
+            FirstReadZeroMsecM = now;
+        if (tempR == 0 && PrevR != 0)
+            FirstReadZeroMsecR = now;
+
         if (static_cast<int>(now - FirstReadZeroMsecM) > DELAY_DETECTING_ZERO_MSEC)
             tempRM |= tempM;
         else // time not elapsed. Any new nonzero bits or'd with any existing
@@ -240,11 +245,7 @@ struct ShiftRegisterWithTimer_t : public ShiftRegister_t
         else
             tempRM |= (0xf0u & RightAndMiddleRegister) | tempR;
 
-        if (tempM == 0 && PrevM != 0)
-            FirstReadZeroMsecM = now;
         PrevM = tempM;
-        if (tempR == 0 && PrevR != 0)
-            FirstReadZeroMsecR = now;
         PrevR = tempR;
 
         RightAndMiddleRegister = tempRM;
@@ -273,19 +274,20 @@ struct ShiftRegisterWithTimer_t : public ShiftRegister_t
 
         uint8_t temp = 0;
         auto now = millis();
-        if (!allowZeros)
-        {   // extend the last-seen timers on long delay between polls
+        if (!allowZeros  // extend the last-seen timers on long delay between polls
+            || ((tempL == 0) && (PrevL != 0)))
+        {  
+            // Only after going DELAY_DETECTING_ZERO_MSEC with all zeros do we
+            // allow any of the input bits to be recorded as zero.
             FirstReadZeroMsecL = now;
         }
-        // Only after going DELAY_DETECTING_ZERO_MSEC with all zeros do we
-        // allow any of the input bits to be recorded as zero.
+        if 
+            FirstReadZeroMsecL = now;
         if (static_cast<int>(now - FirstReadZeroMsecL) > DELAY_DETECTING_ZERO_MSEC)
             temp |= tempL;
         else // time not elapsed. Any new nonzero bits or'd with any existing
             temp |= (0xfu & LeftRegister) | tempL;
 
-        if ((tempL == 0) && (PrevL != 0))
-            FirstReadZeroMsecL = now;
         PrevL = tempL;
         LeftRegister = temp;
         LeftRegister |= 0xc0; // for compatibility with older PCB that always reads those two highest bits zero

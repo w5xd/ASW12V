@@ -225,25 +225,27 @@ struct ShiftRegisterWithTimer_t : public ShiftRegister_t
         auto now = millis();
         if (!allowZeroing)
         {   // extend the last-seen timers on long delay between polls
-            LastReadNonZeroMsecM = now;
-            LastReadNonZeroMsecR = now;
+            FirstReadZeroMsecM = now;
+            FirstReadZeroMsecR = now;
         }
         // Only after going DELAY_DETECTING_ZERO_MSEC with all zeros do we
         // allow any of the input bits to be recorded as zero.
-        if (static_cast<int>(now - LastReadNonZeroMsecM) > DELAY_DETECTING_ZERO_MSEC)
+        if (static_cast<int>(now - FirstReadZeroMsecM) > DELAY_DETECTING_ZERO_MSEC)
             tempRM |= tempM;
         else // time not elapsed. Any new nonzero bits or'd with any existing
-            tempRM |= 0xfu & (RightAndMiddleRegister | tempM);
+            tempRM |= (0xfu & RightAndMiddleRegister) | tempM;
 
-        if (static_cast<int>(now - LastReadNonZeroMsecR) > DELAY_DETECTING_ZERO_MSEC)
+        if (static_cast<int>(now - FirstReadZeroMsecR) > DELAY_DETECTING_ZERO_MSEC)
             tempRM |= tempR;
         else
-            tempRM |= 0xf0u & (RightAndMiddleRegister | tempR);
+            tempRM |= (0xf0u & RightAndMiddleRegister) | tempR;
 
-        if (tempM != 0)
-            LastReadNonZeroMsecM = now;
-        if (tempR != 0)
-            LastReadNonZeroMsecR = now;
+        if (tempM == 0 && PrevM != 0)
+            FirstReadZeroMsecM = now;
+        PrevM = tempM;
+        if (tempR == 0 && PrevR != 0)
+            FirstReadZeroMsecR = now;
+        PrevR = tempR;
 
         RightAndMiddleRegister = tempRM;
     }
@@ -273,25 +275,28 @@ struct ShiftRegisterWithTimer_t : public ShiftRegister_t
         auto now = millis();
         if (!allowZeros)
         {   // extend the last-seen timers on long delay between polls
-            LastReadNonZeroMsecL = now;
+            FirstReadZeroMsecL = now;
         }
         // Only after going DELAY_DETECTING_ZERO_MSEC with all zeros do we
         // allow any of the input bits to be recorded as zero.
-        if (static_cast<int>(now - LastReadNonZeroMsecL) > DELAY_DETECTING_ZERO_MSEC)
+        if (static_cast<int>(now - FirstReadZeroMsecL) > DELAY_DETECTING_ZERO_MSEC)
             temp |= tempL;
         else // time not elapsed. Any new nonzero bits or'd with any existing
-            temp |= 0xfu & (LeftRegister | tempL);
+            temp |= (0xfu & LeftRegister) | tempL;
 
-        if (tempL != 0)
-            LastReadNonZeroMsecL = now;
-
+        if ((tempL == 0) && (PrevL != 0))
+            FirstReadZeroMsecL = now;
+        PrevL = tempL;
         LeftRegister = temp;
         LeftRegister |= 0xc0; // for compatibility with older PCB that always reads those two highest bits zero
     }
 protected:
-    unsigned long LastReadNonZeroMsecL;
-    unsigned long LastReadNonZeroMsecM;
-    unsigned long LastReadNonZeroMsecR;
+    unsigned long FirstReadZeroMsecL;
+    uint8_t PrevL;
+    unsigned long FirstReadZeroMsecM;
+    uint8_t PrevM;
+    unsigned long FirstReadZeroMsecR;
+    uint8_t PrevR;
 };
 const int ShiftRegisterWithTimer_t::DELAY_DETECTING_ZERO_MSEC = 15; // input stays zero this long to believe it is zero
 namespace {
@@ -346,6 +351,7 @@ namespace {
     }
 
     bool printOutOnce;
+    int numNotOkToZero;
 
     void readInputs(ShiftRegisterWithTimer_t sr[])
     {
@@ -372,6 +378,8 @@ namespace {
 
         static unsigned long lastReadMsec;
         bool OkToZero = now < lastReadMsec + ShiftRegisterWithTimer_t::DELAY_DETECTING_ZERO_MSEC / 2;
+        if (!OkToZero)
+            numNotOkToZero += 1;
         SPI.beginTransaction(SPISetup);
         digitalWrite(M7301_SELECT, LOW);
         for (i -= 1; i >= 0; i -= 1) // daisy chain reads PCBs in reverse order
@@ -683,6 +691,10 @@ void loop()
             {
                 ParseState = PARSE_MASK;
                 OperatingMode = MODE_OPERATE;
+            }
+            else if ((char)incoming == (char)'n') 
+            {   
+                Serial.print("numNotOKtoZero="); Serial.println(numNotOkToZero);
             }
 #if DBG_PRINT
             else if ((char)incoming == (char)'C')

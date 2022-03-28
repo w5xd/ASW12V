@@ -11,7 +11,9 @@ I am sitting at the operating position, they are
 When connected to the station remotely using WriteLog, I need a way to 
 control the switches from the shack PC. This device is a USB controlled
 solid state multi-channel DC switch. While its named "12V" it can
-safely switch up to about 28VDC and at up to about 3A. 
+safely switch up to about 40V AC or DC, and at up to about 3A. The remainder of
+this document uses "12V" to describe the power supply, even though the PCB
+is more capable.
 
 In the absence of 
 control commands over its USB input,
@@ -28,13 +30,14 @@ within WriteLog. The example has on-screen controls corresponding
 to the antennas at W5XD. Full source code is posted.</p>
 
 <p>The power and ground are optically isolated on both input and output side
-in groups of four channels. Each group of four has its power and ground.
+in groups of four channels. Each group of four has its own power and ground.
 All the input and output power and ground circuits are optically isolated
-from the USB power and ground, which is only used by the controller.</p>
+from the USB power and ground, which is isolated to the controller.</p>
 <p>
 Here is the 24 channel version built with screw terminals:</p>
 <p align='center'><img height="50%" width='50%' src='Picture24Channel.jpg' alt='Picture24Channel.jpg'/></p>
-The longest dimension is about 8in (21cm). The short dimension is about 4in (10cm). The other 12 channel enclosure is half as wide (4" x 4" or 10cm x 10cm). 
+The longest dimension is about 8in (21cm). The short dimension is about 4in (10cm). The other 
+12 channel enclosure is half as wide (4" x 4" or 10cm x 10cm). 
 Here is an assembled PCB using connectors instead of screw terminals.
 <p align='center'><img src='PCBassembledConnectors.jpg' alt='PCBassembledConnectors.jpg'/></p>
 <br/>
@@ -45,9 +48,10 @@ VCC isolated to that section. In the photo above, all the G and 12V connections 
  isolated from each other. The PCB has solder jumpers to enable interconnects among them. See below.
  The power and ground circuit is this:
 <a href='ASW12V-circuit3.pdf'>ASW12V-circuit3.pdf</a>. 
-There are a lot of options on the PCB for exactly what Ground and VCC connections get connected internal
-to the device. One thing that is not optional: fuse at about 3A or otherwise current limit the connection from the
- power supply to the 12V terminal on the ASW12V. The ASW12V PCB has components too dense to service. Plan on
+Many different power supply options are supported by jumper options on the PCB for exactly what Ground and 
+VCC connections are interconnected on
+the PCB. One thing that is not optional: fuse at about 3A or otherwise current limit the connection from the
+ power supply to the Vcc terminal on the ASW12V. The ASW12V PCB has components too dense to service. Plan on
  replacing it if it is damaged by over current.
  
 You can successfully use this device with NONE of these jumpers in place. But consider how you want to use it.
@@ -65,8 +69,8 @@ The PCB has jumpers that can internally connect:</p>
  The jumpers are most easily installed (and removed) on the bottom side of the PCB. The jumpers corresponding to (1) and (2) are at the top of the picture, 
  the ones for (4), the INPUT to INPUT, are at the bottom and the ones for (3) are between.
  
- The 3A maximum current is for the OUTPUT terminal block. The circuit board traces are wide enough
- for a total of 3A to the VCC and GND connectors on that terminal block.
+ The circuit board traces are wide enough
+ to suppoart a total of 3A to the VCC and GND connectors on each terminal block.
  
 Construction
 
@@ -74,10 +78,9 @@ Construction
 
 Controlling the ASW12V
 
-A USB connection to the microUSB connector is required for 5V DC for the microcontroller, and,
-with that 5V applied, it
-operates in a pass through mode in the absence of any incoming USB commands. At boot up, the firmware transfers the INPUT
-side as a pass through to the OUTPUT&mdash;a signal on an INPUT pin results in V+ applied to corresponding OUTPUT pin on
+A USB connection to the USB-C connector is required for operation of the microcontroller such that it
+operates in a pass through mode in the absence of any incoming USB commands. That is, the firmware transfers the INPUT
+side as a pass through to the OUTPUT&mdash;a signal on an INPUT pin results in Vcc applied to corresponding OUTPUT pin on
 the opposite side of the box.
 <p>When plugged in to a computer, the drivers for its USB port automatically are installed (on most
  operating systems) and create a virtual serial port. An example program to write useful serial commands is published <a href='W5XD-antennas'>here on github</a>. The example

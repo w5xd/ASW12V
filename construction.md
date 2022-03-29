@@ -1,13 +1,15 @@
 ﻿ASW12V Construction
 <h3>Parts lists</h3>
-The parts of a 12-channel, single-PCB device can all&mdash;except the PCB and enclosure&mdash; be obtained at digikey: <a href="partslist.pdf">partslist.pdf</a>.
+The parts of a 12-channel, single-PCB device can all&mdash;except the PCB and enclosure&mdash; be obtained at digikey:
+<a href="partslist.pdf">partslist.pdf</a>.
 Or here is a link to the equivalent digikey shared shopping cart:
-<a target="_blank" href="https://www.digikey.com/short/z8p5mv">https://www.digikey.com/short/z8p5mv</a>.
+<a target="_blank" href="https://www.digikey.com/short/tr1t8r3d">https://www.digikey.com/short/tr1t8r3d</a>.
 
 <p>The digikey references above do <b>not</b> include the necessary input/output screw terminals or connectors. The PCB design accommodates 
 either of these connector configurations:</p>
 <ul>
-<li><a target="_blank" href='https://www.digikey.com/short/z8zprc'>Phoenix Contact 1935200 </a>. (screw terminals)
+<li><a target="_blank" href='https://www.digikey.com/short/z8zprc'>Phoenix Contact 1935200 </a>. (screw terminals)<br/>
+OR
 <li><a target="_blank" href='https://www.digikey.com/short/z8zprj'>TE Connectivity AMP Connectors part 1744048-6</a>. (male pins on plug.)
 This plug mates with these parts:
 <ul>
@@ -16,102 +18,109 @@ This plug mates with these parts:
 </ul>
 </ul>
 
-<p>The parts lists above also do <b>not</b> include the board-to-board connectors you'll need to interconnect the two PCBs if you build the 24 channel version:</p>
+<p>The parts lists above also do <b>not</b> include the board-to-board connectors you'll need to 
+interconnect the two PCBs if you build the 24 channel version:</p>
 <ul>
 <li><a target="_blank" href='https://www.digikey.com/short/z8prdt'>Right angle connection header, male</a>. </li>
 <li><a target="_blank" href='https://www.digikey.com/short/zp42fr'>Right angle connection header, female</a>. </li>
 <li>Double all the quantities in the parts list above.</li>
 </ul>
 
-If you're going to build several of these in a batch, here is a handy <a href='https://www.digikey.com/short/zp4253'>part</a>. It can be used with a jig to connected an Arduino Pro Micro to test a partially populated PCB. See the testing instructions <a href='#TestJig'>below</a>.
+If you're going to build several of these in a batch, here is a handy <a href='https://www.digikey.com/short/zp4253'>part</a>. 
+It can be used with a jig (which you'll have to design and build) to jumper any Arduino (of any size)
+ to test a partially 
+populated PCB. See the testing instructions <a href='#TestJig'>below</a>.
 
-Separate enclosure STL files are published for each choice of connectors.
-
-The printed circuit board is a four layer design. It is not commercially available.
+The printed circuit board is a four layer design. You must have them built.
 It was designed with <a target="_blank" href="http://expresspcb.com">expresspcb</a> and the
-file is ASW12V.rrb. Or you may use the gerber
-files in the <a href="gerber">gerber</a> folder. 
+file is ASW12V.rrb. 
 <ol>
 <li>This repository maintains only the most recent PCB revision's documentation in the master branch. Look for tags to find documentation of older revisions.</li>
-<li>Revision 3 and later of the PCB is limited to 3A among its outputs.
-Earlier revisions have lower current limits. Revision 3 and later of the PCB accommodates either of the above interconnects. </li>
-<li>Revision 4 adds pads for SMD <code>1206</code> size resistors while the through-hole positions remain an option. 
-	Install one or the other. </li>
-	<li>Revision 4 and earlier accommodate the SMA4021 12-pin SIP Darlington PNP with built-in flywheel diodes. </li>
-<li>Revision 6 changes the layout to accommodate the pinout of the more readily available STA402 10-pin SIP PNP darlington, and 
+<li>Revision 8 uses Solid State Relay outputs, the QTpy Arduino device, and the MAX7301 i/o extender. Its the
+smallest form factor of all the revisions.</li>
+<li>Revision 6 accommodates the pinout of the more readily available STA402 10-pin SIP PNP darlington, and 
 adds 2 Amp SMD size <code>1206</code> flywheel diodes to accommodate inductive loads (which includes, for example, a relay coil!) The 
 SMA4021 part for earlier PCBs has built-in flywheel diodes.
 <li>Revision 5 is identical to Revision 6, but its gerber file.top has been hand edited to remove a stray trace.
+<li>Revision 4 adds pads for SMD <code>1206</code> size resistors while the through-hole positions remain an option. 
+	Install one or the other. </li>
+	<li>Revision 4 and earlier accommodate the SMA4021 12-pin SIP Darlington PNP with built-in flywheel diodes. </li>
+<li>Revision 3 and later of the PCB is limited to 3A among its outputs.
+Earlier revisions have lower current limits. Revision 3 and later of the PCB accommodates either of the above interconnects. </li>
 </ol>
  
-Program an Arduino Pro Micro with the sketch published in <a href="sketch//ASW12V">sketch/ASW12V/</a>. Both the 5V and 3.3V 
-versions of the Pro Micro work equally well. One oddity about programming the Pro Micro: do <strong>not</strong> use the wrong voltage setting when programming it. The Arduino is then bricked, and it takes <a href='https://learn.sparkfun.com/tutorials/pro-micro--fio-v3-hookup-guide/all#ts-revive'>extra work to recover</a>. If you have put it in the enclosure, and now
-are upgrading the firmware long after you have forgotten whether its a 5V or 3.3V, here is a little trick. Further down that <a href='https://learn.sparkfun.com/tutorials/pro-micro--fio-v3-hookup-guide/all#ts-revive'>same page</a> referenced above, there is a listing of the USB PID that the various boards will report. The Arduino IDE's Tools/Get-Board-Info will report the PID given the Pro Micro's COM port. The 5V reports PID 9205, while the 3.3V part reports PID 9203
+Program the Arduino QTpy with the sketch published in <a href="sketch//ASW12V">sketch/ASW12V/</a>. 
 
 <h3>Construction Recommendations</h3>
-The PCB layout is very tight which does not make for easy maintenance. The
-        tight clearances mean that once all the big parts
-        are installed, it is essentially impossible to
-        service the small ones. If, for example, lightning damages this
-        board, do not expect to service it. Expect to throw it away
-        and build another.
     
-Install <i>only</i> these parts and stop:
+Install <i>only</i> the SMD parts and stop to test:
 <ol type="a">
-    <li>If you have a reflow solder oven, use it! Its only effect on these
-	    instructions is that you pick and place <i>all</i> surface mount parts in the first step. The SMD parts are U1-4, the 24 by 10K resistors, 24 by 3.3K resistors, 2 by .33uF capacitors, and the 12 diodes.</li>
-   <li>
-        Install the four surface mount shift registers at U1, U2, U3, and U4. To hand solder an SMT 16 pin IC, start by
-        soldering two opposite corner pins to their pads. Check that pin 1 is where it belongs. Check alignment.
-        Check alignment again. Then solder all 16 pads.    </li>
-    <li>Install the two .33uF power supply bypass capacitors. The PCB has holes but the parts list
-    specifies an <code>0805</code> sized SMT part. It can be hand soldered across the holed pads. Or substitute a through-hole part.</li>
-     <li>Install the 12 SMT <code>1206</code> sized flywheel diodes. Observe the cathode marks! One of
-	    each set of four is backwards from the others!</li>
-    <li>Install a male header at J1. No header is needed for the first board (the one with the Arduino plugged in) 
-    and a right angle header for all slave channels.</li>
+    <li>You will need reflow solder oven.</li>
+   <li>Place and bake all the SMD parts.</li>
 </ol>
-Also install male headers on your Pro Micro and then use
+There is more than one way to test for solder bridges and/or pins that missed soldering. Choose a way to test
+and verify the SMD components are working before soldering the Input and Output connectors. Its a lot harder to work
+with the board with those connectors in place.
+
+Possible hardware configurations for testing
+
+All the jumpers on the PCB have through holes for a wire jumper, and also have solder pads on both the top
+and the bottom so you can bridge a blob of solder across the jumper. This pad configuration is on all of them: 
+the I to O jumper at J2, the GND
+jumpers and both of the Vcc jumpers.
+<ol>
+<li>Install the QTpy on the PCB (<b>notice it goes on the opposite side of the board from the SMD parts!</b>)<br/>
+OR</li>
+
+<li>Install male headers on your QTpy and then use
 <ol type="a">
-    <li> 7 jumpers to temporarily wire it to the PCB. I used these jumpers from <a href='http://www.sparkfun.com/products/10898'>sparkfun</a>.</li>
-    <li>If this test is for a board that will have the Arduino, and you have no header as in (e) above, then it is highly recommended
-    that you install a sacrificial header now and defer installing the female headers for the Arduino (otherwise, if there is a problem with the SMD parts, you'll have to work around those headers.) A vertical header (straight pins) will work, but if you don't know where you're going to
-    install this board, then install a right angle header. If it ever is to put in an enclosure as the first board,
-    you'll have to cut all the pins off the header for mechanical clearance. But by then they'll not be needed 
-    because you'll have the female headers installed for the Arduino.</li>
+    <li> 6 jumpers to temporarily wire it to the PCB. I used these jumpers from 
+<a href='http://www.sparkfun.com/products/10898'>sparkfun</a>.</li>
+    <li>If this test is for a board that will have the QTpy controller, then 
+    you may install a sacrificial header now at J1.
+A vertical header (straight pins) will work, but if you don't know where you're going to
+    install this board, then install a right angle header as if it will not be the first board (i.e. one without
+a QT py). If it ever is to become the first board,
+    you'll have to cut all the pins off the header for mechanical clearance. But by then they'll not be needed.</li>
     <li>
-        jumper the I pin to the O pin at J2. A wire is used for the last board in the chain. A right angle female header
-	is used for all others. In either case, for initial test, install this jumper. If there is no header, you may twist a bare
-    wire between the two pins to avoid soldering.
+        jumper the I pin to the O pin at J2. A jumper is required for the last board in the chain
+both for testing and for normal operation. A right angle female header
+	is required at J2 for any board that has another beyond it. 
+In either case, for initial test, install this jumper. 
     </li>
-    <li>The jumper list from J1 to the Arduino Pro Micro is:
+    <li>The jumper list from J1 to the Arduino:
     <ol type='1'> 
-        <li>LO to pin D9</li>
+        <li>SS to the slave select pin (named M7301_SELECT) in the Arduino sketch</li>
         <li>G to either pin GND</li>
-        <li>vcc to VCC</li>
-        <li>O to D11</li>
-        <li>I to D16</li>
-        <li>Li to D10</li>
-        <li>C to D15</li>
+        <li>vcc to Vcc. (The MAX7301 is OK up to 5V, but will be run at 3.3 V once the QTpy is installed)</li>
+        <li>O to the SPI MISO pin</li>
+        <li>I to the SPI MOSI pin</li>
+        <li>SC to the SPI SCK pin</li>
     </ol>
     </li>
 </ol>
-<p>Your board might look like this, minus the resistors I have already placed:
-<img src='TestConfiguration.jpg' alt='TestConfiguration.jpg' width='50%' />
-The board in this photo is destined to be board number 1 (it has a vertical header installed at J1 on the right.)
-And it is planned to go in a more-than-12 channel enclosure, so it has a right angle connector installed at J2 on the left.</p>
-<p id='TestJig'>Or if you're building more than one of these at a time. this test jig might come in handy. There is no need to
-commit to a particular set of headers because the spring loaded connector holds well enough to test with jumper leads per these
-photographs. STL files to 3D print the jig are in the <a href='STL'>STL folder</a>.
+</li>
+<ol>
+
+<p id='TestJig'>Or if you're building more than one of these at a time, A test jig might come in handy. 
+There is no need to
+commit to a particular set of headers because the spring loaded connector holds well enough to test with 
+jumper leads per these
+photographs. 
 </p>
 <p align='center'><img src='test-jig-1.jpg' alt='test-jig-1.jpg' width='50%'/></p>
 <p align='center'><img src='test-jig-2.jpg' alt='test-jig-2.jpg' width='50%'/></p>
+<p>The photos above are for REV05 of the PCB. I did not design jigs for the REV08 PCB
+because its easy enough to solder the QTpy directly to the board.</p>
 
 <h3>Shift Register Digital Test</h3>
 You need a serial port terminal program connected to
 the Arduino&#8217;s serial port for the following tests. I recommend
 <a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html">putty.exe</a>.
-Click its "Serial" button in its upper right to put it in serial port terminal mode. You will also need a DVM to accomplish these tests.
+Click its "Serial" button in its upper right to put it in serial port terminal mode. You will also need a DVM to 
+accomplish these tests. The tests are easier to do if you buid the sketch with 
+<pre><code>#define DBG_PRINT 1</code>
+</pre>
 <ol>
     <li>
         Test that the
@@ -119,22 +128,13 @@ Click its "Serial" button in its upper right to put it in serial port terminal m
     </li>
     <li>
         Test the
-        <code>n</code> command. Ignore the results from Sent 1, 2 and 3
-        but confirm that <code>Sent 4 Got 0</code>, <code>Sent 5 Got 1</code> and counting up
-        from there.
+        <code>I</code> command (which is only available with DBG_PRINT set). 
     </li>
 </ol>
-<p>Do <b><i>not</i></b> install any more parts until the above two tests succeed. Only the four ICs are involved in these tests.</p>
+<p>Do <b><i>not</i></b> install any more parts until the above two tests succeed. </p>
 
 <h3>Digital Input Test</h3>
-Install only the 3 banks of 10K resistors on the input
-shift registers. Now your board will match the photo above.
-They are labeled 1, 2, 3, and 4 on each
-of the 3 banks. These are the ones just above the input
-optoisolators. Install the ODD numbered ones first, solder
-and trim the leads. Then install the EVEN numbered ones.
-The circuit board clearances are minimal and installing
-in this order makes it easier to avoid solder bridges.  
+
 Type the <code>i</code> command while using a test lead to, one at a time,
 short these adjacent pins on each of the <i>input</i> optoisolators (also one at a time):
 <ul>
@@ -147,42 +147,28 @@ There are 12 input signals to verify. Do <b><i>not</i></b> install any more part
     
 <h3>Digital Output Test</h3>
    
-Install the 3 banks of 3.3K resistors on the output
-shift registers. They are labeled 1,2,3, and 4, and are
-the ones just below the output optoisolators. Verify that both ends of each 
-has NO contininuity to its GND output pin (labeled
-on the bottom silk screen.) Note that each of the 3 sections has a separate GND pin, and 
-you must test each resistor against it own section's GND pin. 
+
 
 Use the <code>C</code> command to clear the internal test state, and then repeatedly
-use the <code>T</code> command to assert each channel in the daisy change, right most to left
+use the <code>t</code> command to assert each channel in the daisy change, right most to left
 with the board top-up and the silk screen lettering right-side-up.
-The HIGH output is Vcc for the Pro Micro you are using:
-either 3.3V or 5.0 V.
+The HIGH output is Vcc for the Arduino you are using: either 3.3V or 5.0 V.
 
-Populate the parts on the rest of the board <b><i>only</i></b> after you verify each of the outputs.
-After installing the three output PS2502 parts (the three closest to the output edge) go back and
-<i>again</i> verify NO continuity from every PS2502 output in (pins 9 through 16) to the GND output pin. Solder bridges can and will form
-on the opposite side of the board that you solder the PS2502 pins from!
+Add the connectors <b><i>only</i></b> after you verify each of the outputs.
+
 
 <h3>12V output section test</h3>
-This author strongly recommends testing the 12V output section using a current limiting circuit as shown 
-by the 220 ohm series resistor
-in the <a href='ASW12V-circuit3.pdf'>circuit diagram page 3</a>.
-I have twice had to remove an already soldered-in PS2502 to deal with
-a permanent failure caused by applying full 12VDC to an output section that had
-a solder bridge involving one of the 3.3K ohm resistors between the PS2502 and the PNP darlington.
-In one of those cases, the solder bridge formed on the top side of the board when I 
-applied too much solder to the pin from the bottom!
-<p>With the test circuit wired in as shown on the circuit diagram, 
-use a terminal emulator connected to the Pro Micro's serial port
-to alternately send these two commands, which, on a properly wired
-output section, give, respectively, 0V and VCC on the corresponding output pin.</p>
+The SSR outputs respond to a DVM ohmmeter set to beep on low resistance. Verify that
+ONLY the one SSR output shows continuity between its output pin and its Vcc pin.
 <ul>
-<li><code>m 1 L0F</code>
-<li><code>m 1 LFF</code>
+<li><code>m 1 L0F</code> <i>turns OFF all the L outputs</i>
+<li><code>m 1 L1F</code> <i>turns ON only the L 1 output</i>
+<li><code>m 1 L2F</code> <i>turns ON only the L 2 output</i>
+<li><code>m 1 L4F</code> <i>turns ON only the L 3 output</i>
+<li><code>m 1 L8F</code> <i>turns ON only the L 4 output</i>
 </ul>
-<p>For the <code>L</code>, substitute <code>M</code> when testing the middle section and <code>R</code> when testing the right section.</p>
+<p>For the <code>L</code>, substitute <code>M</code> when 
+testing the middle section and <code>R</code> when testing the right section.</p>
 
 <p>The GND and VCC jumpers on the PCB, if needed, are most easily installed on the <a href='ASW12V-bottom.pdf'>bottom</a>. There is a discussion about why you would or would not install the jumpers in the main <a href='README.md'>README</a>.</p>
 

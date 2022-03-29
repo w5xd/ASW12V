@@ -2,6 +2,7 @@
 #include <Adafruit_NeoPixel.h>
 #define DIM(x) (sizeof(x) / sizeof((x)[0]))
 #define DBG_PRINT 0
+#define SUPPORT_NEOPIXEL_STATUS 1 // turn this off to test on an arduino with no NeoPixel
 
 /* Arduino sketch for the ASW12V remote control switch box
 ** The hardware is an array of input screw terminals and 
@@ -543,16 +544,19 @@ namespace {
             SPI.endTransaction();
         }  
     }
-    
+#if SUPPORT_NEOPIXEL_STATUS   
     // create a pixel strand with 1 pixel on PIN_NEOPIXEL
     Adafruit_NeoPixel pixels(1, PIN_NEOPIXEL);
+#endif
 }
 
 void setup()
 {
+#if SUPPORT_NEOPIXEL_STATUS   
     pixels.begin();  // initialize the pixel
     pixels.setPixelColor(0, pixels.Color(255, 0, 0));
     pixels.show();
+#endif
     digitalWrite(M7301_SELECT, HIGH);    // SS pin we are using for SPI
     pinMode(M7301_SELECT, OUTPUT);
 
@@ -591,20 +595,36 @@ int fromHex(int incoming)
 }
 static unsigned char channelToWrite;
 
-static int processCopyMode()
+static void processCopyMode()
 {
+    int ledStatus = 0;
     switch (OperatingMode)
     {
     case MODE_DEFAULT:
-        return DoCopyMode(false); // copy inputs to outputs
-
+        ledStatus = DoCopyMode(false); // copy inputs to outputs
+        break;
     case MODE_OPERATE:
-        return DoCopyMode(true); // copy, but override with masks
+        ledStatus = DoCopyMode(true); // copy, but override with masks
+        break;
 
     case MODE_MANUAL:
         break;
     }
-    return 0;
+
+    static int prevPixel = -1;
+#if SUPPORT_NEOPIXEL_STATUS   
+    if (ledStatus != prevPixel)
+    {
+        if (ledStatus == -1)
+            pixels.setPixelColor(0, pixels.Color(255, 0, 0)); // Red
+        else if (ledStatus == 0)
+            pixels.setPixelColor(0, pixels.Color(0, 0, 10));
+        else
+            pixels.setPixelColor(0, pixels.Color(10, (ledStatus >> 8) & 0xFF, ledStatus & 0xFF));
+        pixels.show();
+        prevPixel = ledStatus;
+    }
+#endif
 }
 
 void loop()
@@ -910,20 +930,6 @@ void loop()
     }
 
 #if DBG_PRINT == 0
-    static int prevPixel = -1;
-    auto ledStatus = processCopyMode();
-#if 1
-    if (ledStatus != prevPixel)
-    {
-        if (ledStatus == -1)
-            pixels.setPixelColor(0, pixels.Color(255, 0, 0)); // Red
-        else if (ledStatus == 0)
-            pixels.setPixelColor(0, pixels.Color(0, 0, 10));
-        else
-            pixels.setPixelColor(0, pixels.Color(10, (ledStatus >> 8) & 0xFF, ledStatus & 0xFF));
-        pixels.show();
-        prevPixel = ledStatus;
-    }
-#endif
+    processCopyMode();
 #endif
 }

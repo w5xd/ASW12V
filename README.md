@@ -10,7 +10,8 @@ I am sitting at the operating position, they are
  controlled by rotary switches there. 
 When connected to the station remotely using WriteLog, I need a way to 
 control the switches from the shack PC. This device is a USB controlled
-solid state multi-channel AC/DC switch. While its named "12V" it can
+solid state multi-channel AC/DC switch. While its named "12V" the solid state
+relay (SSR) outputs can
 safely switch up to a maximum of 60V AC or DC, and at up to about 3A. The remainder of
 this document uses "12V" to describe the power supply, even though the PCB
 is more capable.
@@ -27,7 +28,7 @@ but a WriteLog plugin is posted <a href='W5XD-antennas'>here</a> showing
 how to embed
 antenna switching commands for this hardware
 within WriteLog. The example has on-screen controls corresponding
-to the antennas at W5XD. Full source code is published.</p>
+to the antennas at W5XD. Source code is published.</p>
 
 <p>The power and ground are optically isolated on both input and output side, and separately,
 into groups of four channels. Each group of four has its own power and ground terminals.
@@ -35,8 +36,12 @@ All the input and output power and ground circuits are optically isolated
 from the USB power and ground as used by the Arduino controller on the PCB.</p>
 <p>
 
+Revision 8
+
 <p> This documentation is for Revision 8 of the ASW12V. Previous revisions of this design used 
-PNP darlington output devices that are out of production.
+PNP darlington output devices. This SSR design reduces the parts count, and enables both sensing
+and controlling AC as well as DC circuits. See the git tag "REV05" for the documentation for the
+version using the STA402 PNP darlington outputs.
 </p>
 Here is the 24 channel version built with screw terminals:</p>
 <p align='center'><img height="50%" width='50%' src='Picture24Channel.jpg' alt='Picture24Channel.jpg'/></p>

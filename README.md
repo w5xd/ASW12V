@@ -1,7 +1,7 @@
 ASW12V
 
 <p>
-Remote controllable multi-channel DC switch<br/>
+Remote controllable multi-channel AC/DC switch<br/>
 ASW12V: antenna switch for 12V
 </p>
 
@@ -10,42 +10,50 @@ I am sitting at the operating position, they are
  controlled by rotary switches there. 
 When connected to the station remotely using WriteLog, I need a way to 
 control the switches from the shack PC. This device is a USB controlled
-solid state multi-channel DC switch. While its named "12V" it can
-safely switch up to about 40V AC or DC, and at up to about 3A. The remainder of
+solid state multi-channel AC/DC switch. While its named "12V" it can
+safely switch up to a maximum of 60V AC or DC, and at up to about 3A. The remainder of
 this document uses "12V" to describe the power supply, even though the PCB
 is more capable.
 
 In the absence of 
-control commands over its USB input,
-its output channels follow its input channels. 5VDC on the micro
-USB plug is required to power the embedded microprocessor for it to
+control commands over its USB serial port input,
+its output channels follow its input channels. USB power on the 
+USB-C plug is required to power the embedded microprocessor for it to
 follow its inputs.
 
 <p>This device is controlled by ASCII command strings sent over
-its USB virtual serial port. WriteLog is not required to operate it,
-although a WriteLog plugin is posted <a href='W5XD-antennas'>here</a> showing 
+its USB serial port. WriteLog is not required to operate it,
+but a WriteLog plugin is posted <a href='W5XD-antennas'>here</a> showing 
 how to embed
-antenna switching commands destined for this hardware
+antenna switching commands for this hardware
 within WriteLog. The example has on-screen controls corresponding
-to the antennas at W5XD. Full source code is posted.</p>
+to the antennas at W5XD. Full source code is published.</p>
 
-<p>The power and ground are optically isolated on both input and output side
-in groups of four channels. Each group of four has its own power and ground.
+<p>The power and ground are optically isolated on both input and output side, and separately,
+into groups of four channels. Each group of four has its own power and ground terminals.
 All the input and output power and ground circuits are optically isolated
-from the USB power and ground, which is isolated to the controller.</p>
+from the USB power and ground as used by the Arduino controller on the PCB.</p>
 <p>
+
+<p> This documentation is for Revision 8 of the ASW12V. Previous revisions of this design used 
+PNP darlington output devices that are out of production.
+</p>
 Here is the 24 channel version built with screw terminals:</p>
 <p align='center'><img height="50%" width='50%' src='Picture24Channel.jpg' alt='Picture24Channel.jpg'/></p>
 The longest dimension is about 8in (21cm). The short dimension is about 4in (10cm). The other 
 12 channel enclosure is half as wide (4" x 4" or 10cm x 10cm). 
-Here is an assembled PCB using connectors instead of screw terminals.
-<p align='center'><img src='PCBassembledConnectors.jpg' alt='PCBassembledConnectors.jpg'/></p>
+Here is a populated PCB before connectors are installed. the SMD components are all on the "bottom" of the PCB
+and the connectors and QTpy controller (which are through-hole) are installed on the "top".
+<p align='center'><img height="50%" width='50%' src='PCBtop.jpg' alt='PCBtop.jpg'/></p>
+<p align='center'><img height="50%" width='50%' src='PCBbottom.jpg' alt='PCBbottom.jpg'/></p>
+<p>Top and bottom are in quotes because when the SMD components are installed, they must be on  the
+top of the PCB in the oven. But when the full device is assembled and in operation, the SMDs are on the bottom.</p>
 <br/>
 <p>Power and Ground</p>
 
 <p>The PCB layout has three sections each with four input/output channels and with grounds and
-VCC isolated to that section. In the photo above, all the G and 12V connections are, by default,
- isolated from each other. The PCB has solder jumpers to enable interconnects among them. See below.
+VCC isolated to that section. In the photo above, all the G and 12V connections are, without installing any jumpers,
+ isolated from each other. Solder jumpers on the PCB enable interconnects among them. See below.
  The power and ground circuit is this:
 <a href='ASW12V-circuit3.pdf'>ASW12V-circuit3.pdf</a>. 
 Many different power supply options are supported by jumper options on the PCB for exactly what Ground and 
@@ -74,12 +82,20 @@ The PCB has jumpers that can internally connect:</p>
  
 Construction
 
-<p>A parts list, construction details, and a PCB layout are published <a href='construction.md'>here</a>.</p>
+<p>A parts list, construction details, and a PCB layout are published <a href='construction.md'>here</a>.</p> 
+
+Inductive Loads
+
+The solid state relays do not have built-in protection from any inductive voltage spike that happens as
+an inductive load is turned off. The PCB has 12 positions for diodes to be installed, labeled D11 up through D44.
+Installing these diodes is optional. They are not needed for non inductive loads, nor for inductive loads that have
+their own flyback diodes installed (e.g. the Array Solutions 6-Pak in my shack.)
 
 Controlling the ASW12V
 
-A USB connection to the USB-C connector is required for operation of the microcontroller such that it
-operates in a pass through mode in the absence of any incoming USB commands. That is, the firmware transfers the INPUT
+A USB connection to the USB-C connector is required for operation of the microcontroller. Without USB power, all outputs are
+off. The sketch on the Arduino powers up
+in a pass through mode. That is, the firmware transfers the INPUT
 side as a pass through to the OUTPUT&mdash;a signal on an INPUT pin results in Vcc applied to corresponding OUTPUT pin on
 the opposite side of the box.
 <p>When plugged in to a computer, the drivers for its USB port automatically are installed (on most
@@ -92,13 +108,11 @@ is specific to the antennas to be controlled at W5XD. It doesn't put much on the
 <p>All the buttons on the two windows above can be programmed as keyboard shortcuts in WriteLog.</p>
 Enclosures
 
-<p>This repository publishes designs for enclosures for each of these variations: a 12 channel device (with 1 PCB) or a 24 channel 
-device (with 2 PCBs) and for either screw binding posts or connectors on the PCB. The 3D designs were done with <a href='solidworks.com'>SolidWorks</a>. 
+<p>This repository publishes a design for an enclosure a 24 channel device (with 2 PCBs) with connectors installed on the PCB.
+ The 3D designs were done with <a href='solidedge.com'>Solid Edge</a>. 
 The PCB hole pattern accommodates either the screw terminals or the connector. The
-Soldworks models are in the CAD folder. The 3D printable parts are published in the <a href="STL/">STL</a> directory. Unfamiliar with 3D design 
+Solid Edge models are in the CAD folder. The 3D printable parts are published in the <a href="STL/">STL</a> directory. Unfamiliar with 3D design 
 and printing? Don't be bashful about clicking the <a href="STL/">STL</a> link and the enclosure models. </p>
 
-<p>The orientation of the STL models should not be taken as a recommendation for
-the printed orientation on any particular 3D printer. I use a <a href='http://prusa3d.com'>prusa3d</a> printer and rotate the
-lettering down for the enclosure tops, and, for the bottoms, the flat side down.</p>
+I use a <a href='http://prusa3d.com'>prusa3d</a> printer.
  

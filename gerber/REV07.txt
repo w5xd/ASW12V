@@ -1,3 +1,6 @@
+DO NOT BUILD REV07 PCBs...
+Its most serious deficiency is the 14 holes for the QTpy are too small to pass its header pins.
+
 The Gerber files are formatted as RS-274X, the industry standard. The drill file is an Excellon format, that includes embedded hole size definitions. Please note, the hole diameters listed refer to the finished hole sizes after plating, not the hole size to be drilled by manufacturing.
 
 Each file can be identify by its extension:

@@ -43,7 +43,7 @@ PNP darlington output devices. This SSR design reduces the parts count, and enab
 and controlling AC as well as DC circuits. See the git tag "REV05" for the documentation for the
 version using the STA402 PNP darlington outputs.
 </p>
-Here is the 24 channel version built with screw terminals:</p>
+Here is the 24 channel version built with wired connectors:</p>
 <p align='center'><img height="50%" width='50%' src='Picture24Channel.jpg' alt='Picture24Channel.jpg'/></p>
 The longest dimension is about 8in (21cm). The short dimension is about 4in (10cm). The other 
 12 channel enclosure is half as wide (4" x 4" or 10cm x 10cm). 

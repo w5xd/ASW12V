@@ -238,7 +238,7 @@ namespace W5XD_antennas
                 PrimaryIndex = whButton.TabIndex;
                 IfSecondaryMatches(false);
                 if (!checkBoxManual.Checked)
-                    m_Setup.Command(commandTable[SecondaryIndex][PrimaryIndex] + "\r");
+                    m_Setup.Command("port=0 " + commandTable[SecondaryIndex][PrimaryIndex] + "\r");
             }
         }
 
@@ -252,7 +252,7 @@ namespace W5XD_antennas
                 SecondaryIndex = whButton.TabIndex;
                 IfSecondaryMatches(true);
                 if (!checkBoxManual.Checked)
-                    m_Setup.Command(commandTable[SecondaryIndex][PrimaryIndex] + "\r");
+                    m_Setup.Command("port=0 " + commandTable[SecondaryIndex][PrimaryIndex] + "\r");
             }
         }
 
@@ -261,9 +261,9 @@ namespace W5XD_antennas
         private void checkBoxManual_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBoxManual.Checked)
-                m_Setup.Command("c");
+                m_Setup.Command("port=0 " + "c");
             else
-                m_Setup.Command(commandTable[SecondaryIndex][PrimaryIndex] + "\r");
+                m_Setup.Command("port=0 " + commandTable[SecondaryIndex][PrimaryIndex] + "\r");
             EnableDisableRadios(!checkBoxManual.Checked);
             if (m_ratPakForm != null && !m_ratPakForm.IsDisposed)
                 m_ratPakForm.ManualControl = ManualControl;
@@ -280,7 +280,8 @@ namespace W5XD_antennas
         private void W5XD_antennas_FormClosed(object sender, FormClosedEventArgs e)
         {
             // go back to full manual
-            m_Setup.Command("c");
+            m_Setup.Command("port=0 " + "c");
+            m_Setup.Command("port=1 " + "c");
             m_Setup.Dispose();
             Properties.ASW12V.Default.Save();
         }
@@ -296,7 +297,7 @@ namespace W5XD_antennas
             // because the W5XD shack has no switch within reach of the operator.
             String s = checkBoxLoopTunerPower.Checked ?
                 "m 1 L22\r" : "m 1 L02\r";
-            m_Setup.Command(s);
+            m_Setup.Command("port=0 " + s);
         }
 
         private void checkBoxVerticalPower_CheckedChanged(object sender, EventArgs e)
@@ -304,7 +305,7 @@ namespace W5XD_antennas
             // The W5XD station has another MFJ-998RT tuner. 
             String s = checkBoxVerticalPower.Checked ?
                 "m 1 L44\r" : "m 1 L04\r";
-            m_Setup.Command(s);
+            m_Setup.Command("port=0 " + s);
         }
 
         private void buttonRatpak_Click(object sender, EventArgs e)
@@ -322,5 +323,39 @@ namespace W5XD_antennas
         private TwoByRatPak m_ratPakForm;
         public TwoByRatPak ratPakForm { set { m_ratPakForm = value; } }
 
+        private void cbVerticalFilter_CheckedChanged(object sender, EventArgs e)
+        {
+            String s = cbVerticalFilter.Checked ?
+                "m 1 M11\r" : "m 1 M01\r";
+            Command("port=1 " + s);
+        }
+
+        private void cbLoopFilter_CheckedChanged(object sender, EventArgs e)
+        {
+            String s = cbLoopFilter.Checked ?
+                "m 1 M22\r" : "m 1 M02\r";
+            Command("port=1 " + s);
+        }
+
+        private void rbFiltersReverse_CheckedChanged(object sender, EventArgs e)
+        {
+            String s = rbFiltersReverse.Checked ?
+                "m 1 M44\r" : "m 1 M04\r";
+            Command("port=1 " + s);
+        }
+
+        private void cbFansHighBands_CheckedChanged(object sender, EventArgs e)
+        {
+            String s = cbFansHighBands.Checked ?
+                "m 1 R11\r" : "m 1 R01\r";
+            Command("port=1 " + s);
+        }
+
+        private void cbFansLowBands_CheckedChanged(object sender, EventArgs e)
+        {
+            String s = cbFansLowBands.Checked ?
+                "m 1 R22\r" : "m 1 R02\r";
+            Command("port=1 " + s);
+        }
     }
 }

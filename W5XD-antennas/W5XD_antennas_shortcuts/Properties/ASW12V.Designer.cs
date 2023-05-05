@@ -12,7 +12,7 @@ namespace W5XD_antennas.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.9.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.10.0.0")]
     internal sealed partial class ASW12V : global::System.Configuration.ApplicationSettingsBase {
         
         private static ASW12V defaultInstance = ((ASW12V)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new ASW12V())));
@@ -25,7 +25,7 @@ namespace W5XD_antennas.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string CommPort {
             get {
                 return ((string)(this["CommPort"]));
@@ -44,6 +44,18 @@ namespace W5XD_antennas.Properties {
             }
             set {
                 this["SavedVersion"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CommPort2 {
+            get {
+                return ((string)(this["CommPort2"]));
+            }
+            set {
+                this["CommPort2"] = value;
             }
         }
     }

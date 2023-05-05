@@ -9,7 +9,7 @@ and remote-site.
 My station has these items to control:
 <ul>
 <li>Four beverage antennas (receive only) that each can be switched into the RX antenna port of either of two rigs. The
- rigs are called "primary" and "secondary" because my relay circuit.</li>
+ rigs are called "primary" and "secondary" because my relay circuit
 only routes each beverage to one rig at a time, and the primary radio always wins when both controls are switched 
     to the same direction.</li>
 <li>A 12VDC supply for remote tuner (MFJ-998RT). That tuner can be commanded to find a better match by cycling its power off then back on.</li>
@@ -20,7 +20,7 @@ only routes each beverage to one rig at a time, and the primary radio always win
 Also at W5XD, the operator tends to run WriteLog for his logging software (funny thing
 about that.) Beverages really need to be switched from within the contest logging program
 with just a keystroke. This is important when trying to pull a weak signal out of the noise at the same time as typing the CALL.
-(For this particular function, its really not an effective computer/user interface to
+(For this particular function, its not an effective computer/user interface to
 change the keyboard focus outside the logging program and then back.)
 
 

@@ -40,7 +40,7 @@ Revision 8
 
 <p> This documentation is for Revision 8 of the ASW12V. Previous revisions of this design used 
 PNP darlington output devices. This SSR design reduces the parts count, and enables both sensing
-and controlling AC as well as DC circuits. See the git tag "REV05" for the documentation for the
+and controlling AC as well as DC circuits. See the git tag "PCB-REV05" for the documentation for the
 version using the STA402 PNP darlington outputs.
 </p>
 Here is the 24 channel version built with wired connectors:</p>

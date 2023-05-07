@@ -326,35 +326,42 @@ namespace W5XD_antennas
         private void cbVerticalFilter_CheckedChanged(object sender, EventArgs e)
         {
             String s = cbVerticalFilter.Checked ?
-                "m 1 M11\r" : "m 1 M01\r";
+                "m 1 R22\r" : "m 1 R02\r";
             Command("port=1 " + s);
         }
 
         private void cbLoopFilter_CheckedChanged(object sender, EventArgs e)
         {
             String s = cbLoopFilter.Checked ?
-                "m 1 M22\r" : "m 1 M02\r";
+                "m 1 R44\r" : "m 1 R04\r";
             Command("port=1 " + s);
         }
 
         private void rbFiltersReverse_CheckedChanged(object sender, EventArgs e)
         {
             String s = rbFiltersReverse.Checked ?
-                "m 1 M44\r" : "m 1 M04\r";
+                "m 1 R11\r" : "m 1 R01\r";
             Command("port=1 " + s);
         }
 
         private void cbFansHighBands_CheckedChanged(object sender, EventArgs e)
         {
             String s = cbFansHighBands.Checked ?
-                "m 1 R11\r" : "m 1 R01\r";
+                "m 1 M44\r" : "m 1 M04\r";
             Command("port=1 " + s);
         }
 
         private void cbFansLowBands_CheckedChanged(object sender, EventArgs e)
         {
             String s = cbFansLowBands.Checked ?
-                "m 1 R22\r" : "m 1 R02\r";
+                "m 1 M11\r" : "m 1 M01\r";
+            Command("port=1 " + s);
+        }
+
+        private void cb40Fan_CheckedChanged(object sender, EventArgs e)
+        {
+            String s = cb40Fan.Checked ?
+                "m 1 M22\r" : "m 1 M02\r";
             Command("port=1 " + s);
         }
     }

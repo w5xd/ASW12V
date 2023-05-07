@@ -326,14 +326,14 @@ namespace W5XD_antennas
         private void cbVerticalFilter_CheckedChanged(object sender, EventArgs e)
         {
             String s = cbVerticalFilter.Checked ?
-                "m 1 R22\r" : "m 1 R02\r";
+                "m 1 R44\r" : "m 1 R04\r";
             Command("port=1 " + s);
         }
 
         private void cbLoopFilter_CheckedChanged(object sender, EventArgs e)
         {
             String s = cbLoopFilter.Checked ?
-                "m 1 R44\r" : "m 1 R04\r";
+                "m 1 R22\r" : "m 1 R02\r";
             Command("port=1 " + s);
         }
 

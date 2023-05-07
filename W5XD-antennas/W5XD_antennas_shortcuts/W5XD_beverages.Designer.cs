@@ -302,7 +302,7 @@
             this.rbFiltersReverse.Name = "rbFiltersReverse";
             this.rbFiltersReverse.Size = new System.Drawing.Size(105, 17);
             this.rbFiltersReverse.TabIndex = 3;
-            this.rbFiltersReverse.Text = "loop 80, vert 160";
+            this.rbFiltersReverse.Text = "loop 160, vert 80";
             this.rbFiltersReverse.UseVisualStyleBackColor = true;
             this.rbFiltersReverse.CheckedChanged += new System.EventHandler(this.rbFiltersReverse_CheckedChanged);
             // 
@@ -315,7 +315,7 @@
             this.rbFiltersNormal.Size = new System.Drawing.Size(105, 17);
             this.rbFiltersNormal.TabIndex = 2;
             this.rbFiltersNormal.TabStop = true;
-            this.rbFiltersNormal.Text = "loop 160, vert 80";
+            this.rbFiltersNormal.Text = "loop 80, vert 160";
             this.rbFiltersNormal.UseVisualStyleBackColor = true;
             // 
             // cb40Fan

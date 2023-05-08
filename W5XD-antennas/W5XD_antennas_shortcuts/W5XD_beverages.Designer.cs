@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(W5XD_beverages));
             this.radioButtonL_NW = new System.Windows.Forms.RadioButton();
             this.radioButtonL_NE = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -298,11 +299,11 @@
             // rbFiltersReverse
             // 
             this.rbFiltersReverse.AutoSize = true;
-            this.rbFiltersReverse.Location = new System.Drawing.Point(113, 43);
+            this.rbFiltersReverse.Location = new System.Drawing.Point(100, 42);
             this.rbFiltersReverse.Name = "rbFiltersReverse";
-            this.rbFiltersReverse.Size = new System.Drawing.Size(105, 17);
+            this.rbFiltersReverse.Size = new System.Drawing.Size(111, 17);
             this.rbFiltersReverse.TabIndex = 3;
-            this.rbFiltersReverse.Text = "loop 160, vert 80";
+            this.rbFiltersReverse.Text = "vert 80 && loop 160";
             this.rbFiltersReverse.UseVisualStyleBackColor = true;
             this.rbFiltersReverse.CheckedChanged += new System.EventHandler(this.rbFiltersReverse_CheckedChanged);
             // 
@@ -310,12 +311,12 @@
             // 
             this.rbFiltersNormal.AutoSize = true;
             this.rbFiltersNormal.Checked = true;
-            this.rbFiltersNormal.Location = new System.Drawing.Point(113, 18);
+            this.rbFiltersNormal.Location = new System.Drawing.Point(100, 17);
             this.rbFiltersNormal.Name = "rbFiltersNormal";
-            this.rbFiltersNormal.Size = new System.Drawing.Size(105, 17);
+            this.rbFiltersNormal.Size = new System.Drawing.Size(111, 17);
             this.rbFiltersNormal.TabIndex = 2;
             this.rbFiltersNormal.TabStop = true;
-            this.rbFiltersNormal.Text = "loop 80, vert 160";
+            this.rbFiltersNormal.Text = "vert 160 && loop 80";
             this.rbFiltersNormal.UseVisualStyleBackColor = true;
             // 
             // cb40Fan
@@ -346,6 +347,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "W5XD_beverages";
             this.Text = "W5XD Beverages";

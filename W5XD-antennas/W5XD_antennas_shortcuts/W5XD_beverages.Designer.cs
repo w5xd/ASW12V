@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(W5XD_beverages));
             this.radioButtonL_NW = new System.Windows.Forms.RadioButton();
             this.radioButtonL_NE = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -43,8 +44,17 @@
             this.checkBoxLoopTunerPower = new System.Windows.Forms.CheckBox();
             this.buttonRatpak = new System.Windows.Forms.Button();
             this.checkBoxVerticalPower = new System.Windows.Forms.CheckBox();
+            this.cbFansHighBands = new System.Windows.Forms.CheckBox();
+            this.cbFansLowBands = new System.Windows.Forms.CheckBox();
+            this.cbVerticalFilter = new System.Windows.Forms.CheckBox();
+            this.cbLoopFilter = new System.Windows.Forms.CheckBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.rbFiltersReverse = new System.Windows.Forms.RadioButton();
+            this.rbFiltersNormal = new System.Windows.Forms.RadioButton();
+            this.cb40Fan = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // radioButtonL_NW
@@ -143,7 +153,7 @@
             this.groupBox2.Controls.Add(this.radioButtonR_NE);
             this.groupBox2.Controls.Add(this.radioButtonR_SW);
             this.groupBox2.Controls.Add(this.radioButtonR_NW);
-            this.groupBox2.Location = new System.Drawing.Point(150, 0);
+            this.groupBox2.Location = new System.Drawing.Point(134, 0);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(127, 97);
             this.groupBox2.TabIndex = 1;
@@ -180,7 +190,7 @@
             this.buttonSetup.Location = new System.Drawing.Point(1, 123);
             this.buttonSetup.Name = "buttonSetup";
             this.buttonSetup.Size = new System.Drawing.Size(59, 23);
-            this.buttonSetup.TabIndex = 2;
+            this.buttonSetup.TabIndex = 0;
             this.buttonSetup.Text = "Setup...";
             this.buttonSetup.UseVisualStyleBackColor = true;
             this.buttonSetup.Click += new System.EventHandler(this.buttonSetup_Click);
@@ -193,7 +203,7 @@
             this.checkBoxManual.Location = new System.Drawing.Point(123, 126);
             this.checkBoxManual.Name = "checkBoxManual";
             this.checkBoxManual.Size = new System.Drawing.Size(61, 17);
-            this.checkBoxManual.TabIndex = 4;
+            this.checkBoxManual.TabIndex = 2;
             this.checkBoxManual.Text = "Manual";
             this.checkBoxManual.UseVisualStyleBackColor = true;
             this.checkBoxManual.CheckedChanged += new System.EventHandler(this.checkBoxManual_CheckedChanged);
@@ -201,10 +211,10 @@
             // checkBoxLoopTunerPower
             // 
             this.checkBoxLoopTunerPower.AutoSize = true;
-            this.checkBoxLoopTunerPower.Location = new System.Drawing.Point(189, 105);
+            this.checkBoxLoopTunerPower.Location = new System.Drawing.Point(280, 103);
             this.checkBoxLoopTunerPower.Name = "checkBoxLoopTunerPower";
             this.checkBoxLoopTunerPower.Size = new System.Drawing.Size(97, 17);
-            this.checkBoxLoopTunerPower.TabIndex = 5;
+            this.checkBoxLoopTunerPower.TabIndex = 4;
             this.checkBoxLoopTunerPower.Text = "Loop tuner pwr";
             this.checkBoxLoopTunerPower.UseVisualStyleBackColor = true;
             this.checkBoxLoopTunerPower.CheckedChanged += new System.EventHandler(this.checkBoxLoopTunerPower_CheckedChanged);
@@ -214,7 +224,7 @@
             this.buttonRatpak.Location = new System.Drawing.Point(64, 123);
             this.buttonRatpak.Name = "buttonRatpak";
             this.buttonRatpak.Size = new System.Drawing.Size(53, 23);
-            this.buttonRatpak.TabIndex = 3;
+            this.buttonRatpak.TabIndex = 1;
             this.buttonRatpak.Text = "RatPak";
             this.buttonRatpak.UseVisualStyleBackColor = true;
             this.buttonRatpak.Click += new System.EventHandler(this.buttonRatpak_Click);
@@ -222,19 +232,113 @@
             // checkBoxVerticalPower
             // 
             this.checkBoxVerticalPower.AutoSize = true;
-            this.checkBoxVerticalPower.Location = new System.Drawing.Point(189, 131);
+            this.checkBoxVerticalPower.Location = new System.Drawing.Point(280, 128);
             this.checkBoxVerticalPower.Name = "checkBoxVerticalPower";
             this.checkBoxVerticalPower.Size = new System.Drawing.Size(108, 17);
-            this.checkBoxVerticalPower.TabIndex = 6;
+            this.checkBoxVerticalPower.TabIndex = 3;
             this.checkBoxVerticalPower.Text = "Vertical tuner pwr";
             this.checkBoxVerticalPower.UseVisualStyleBackColor = true;
             this.checkBoxVerticalPower.CheckedChanged += new System.EventHandler(this.checkBoxVerticalPower_CheckedChanged);
+            // 
+            // cbFansHighBands
+            // 
+            this.cbFansHighBands.AutoSize = true;
+            this.cbFansHighBands.Location = new System.Drawing.Point(394, 77);
+            this.cbFansHighBands.Name = "cbFansHighBands";
+            this.cbFansHighBands.Size = new System.Drawing.Size(95, 17);
+            this.cbFansHighBands.TabIndex = 5;
+            this.cbFansHighBands.Text = "10/15/20 fans";
+            this.cbFansHighBands.UseVisualStyleBackColor = true;
+            this.cbFansHighBands.CheckedChanged += new System.EventHandler(this.cbFansHighBands_CheckedChanged);
+            // 
+            // cbFansLowBands
+            // 
+            this.cbFansLowBands.AutoSize = true;
+            this.cbFansLowBands.Location = new System.Drawing.Point(394, 129);
+            this.cbFansLowBands.Name = "cbFansLowBands";
+            this.cbFansLowBands.Size = new System.Drawing.Size(84, 17);
+            this.cbFansLowBands.TabIndex = 7;
+            this.cbFansLowBands.Text = "80/160 fans";
+            this.cbFansLowBands.UseVisualStyleBackColor = true;
+            this.cbFansLowBands.CheckedChanged += new System.EventHandler(this.cbFansLowBands_CheckedChanged);
+            // 
+            // cbVerticalFilter
+            // 
+            this.cbVerticalFilter.AutoSize = true;
+            this.cbVerticalFilter.Location = new System.Drawing.Point(13, 18);
+            this.cbVerticalFilter.Name = "cbVerticalFilter";
+            this.cbVerticalFilter.Size = new System.Drawing.Size(82, 17);
+            this.cbVerticalFilter.TabIndex = 1;
+            this.cbVerticalFilter.Text = "vertical filter";
+            this.cbVerticalFilter.UseVisualStyleBackColor = true;
+            this.cbVerticalFilter.CheckedChanged += new System.EventHandler(this.cbVerticalFilter_CheckedChanged);
+            // 
+            // cbLoopFilter
+            // 
+            this.cbLoopFilter.AutoSize = true;
+            this.cbLoopFilter.Location = new System.Drawing.Point(13, 43);
+            this.cbLoopFilter.Name = "cbLoopFilter";
+            this.cbLoopFilter.Size = new System.Drawing.Size(68, 17);
+            this.cbLoopFilter.TabIndex = 0;
+            this.cbLoopFilter.Text = "loop filter";
+            this.cbLoopFilter.UseVisualStyleBackColor = true;
+            this.cbLoopFilter.CheckedChanged += new System.EventHandler(this.cbLoopFilter_CheckedChanged);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.rbFiltersReverse);
+            this.groupBox3.Controls.Add(this.cbVerticalFilter);
+            this.groupBox3.Controls.Add(this.cbLoopFilter);
+            this.groupBox3.Controls.Add(this.rbFiltersNormal);
+            this.groupBox3.Location = new System.Drawing.Point(267, 0);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(222, 68);
+            this.groupBox3.TabIndex = 11;
+            this.groupBox3.TabStop = false;
+            // 
+            // rbFiltersReverse
+            // 
+            this.rbFiltersReverse.AutoSize = true;
+            this.rbFiltersReverse.Location = new System.Drawing.Point(100, 42);
+            this.rbFiltersReverse.Name = "rbFiltersReverse";
+            this.rbFiltersReverse.Size = new System.Drawing.Size(111, 17);
+            this.rbFiltersReverse.TabIndex = 3;
+            this.rbFiltersReverse.Text = "vert 80 && loop 160";
+            this.rbFiltersReverse.UseVisualStyleBackColor = true;
+            this.rbFiltersReverse.CheckedChanged += new System.EventHandler(this.rbFiltersReverse_CheckedChanged);
+            // 
+            // rbFiltersNormal
+            // 
+            this.rbFiltersNormal.AutoSize = true;
+            this.rbFiltersNormal.Checked = true;
+            this.rbFiltersNormal.Location = new System.Drawing.Point(100, 17);
+            this.rbFiltersNormal.Name = "rbFiltersNormal";
+            this.rbFiltersNormal.Size = new System.Drawing.Size(111, 17);
+            this.rbFiltersNormal.TabIndex = 2;
+            this.rbFiltersNormal.TabStop = true;
+            this.rbFiltersNormal.Text = "vert 160 && loop 80";
+            this.rbFiltersNormal.UseVisualStyleBackColor = true;
+            // 
+            // cb40Fan
+            // 
+            this.cb40Fan.AutoSize = true;
+            this.cb40Fan.Location = new System.Drawing.Point(394, 103);
+            this.cb40Fan.Name = "cb40Fan";
+            this.cb40Fan.Size = new System.Drawing.Size(56, 17);
+            this.cb40Fan.TabIndex = 6;
+            this.cb40Fan.Text = "40 fan";
+            this.cb40Fan.UseVisualStyleBackColor = true;
+            this.cb40Fan.CheckedChanged += new System.EventHandler(this.cb40Fan_CheckedChanged);
             // 
             // W5XD_beverages
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(300, 151);
+            this.ClientSize = new System.Drawing.Size(497, 151);
+            this.Controls.Add(this.cb40Fan);
+            this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.cbFansLowBands);
+            this.Controls.Add(this.cbFansHighBands);
             this.Controls.Add(this.checkBoxVerticalPower);
             this.Controls.Add(this.buttonRatpak);
             this.Controls.Add(this.checkBoxLoopTunerPower);
@@ -243,6 +347,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "W5XD_beverages";
             this.Text = "W5XD Beverages";
@@ -252,6 +357,8 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -273,5 +380,13 @@
         private System.Windows.Forms.CheckBox checkBoxLoopTunerPower;
         private System.Windows.Forms.Button buttonRatpak;
         private System.Windows.Forms.CheckBox checkBoxVerticalPower;
+        private System.Windows.Forms.CheckBox cbFansHighBands;
+        private System.Windows.Forms.CheckBox cbFansLowBands;
+        private System.Windows.Forms.CheckBox cbVerticalFilter;
+        private System.Windows.Forms.CheckBox cbLoopFilter;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.RadioButton rbFiltersReverse;
+        private System.Windows.Forms.RadioButton rbFiltersNormal;
+        private System.Windows.Forms.CheckBox cb40Fan;
     }
 }

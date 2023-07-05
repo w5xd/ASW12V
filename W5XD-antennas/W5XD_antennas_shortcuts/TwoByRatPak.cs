@@ -69,7 +69,7 @@ namespace W5XD_antennas
             {
                 int idx = whButton.TabIndex;
                 if ((idx >= 0) && (idx < commandTableLRig.Length))
-                    m_Setup.Command(commandTableLRig[idx] + "\r");
+                    m_Setup.Command("port=0 " + commandTableLRig[idx] + "\r");
             }
         }
 
@@ -80,7 +80,7 @@ namespace W5XD_antennas
             {
                 int idx = whButton.TabIndex;
                 if ((idx >= 0) && (idx < commandTableRRig.Length))
-                    m_Setup.Command(commandTableRRig[idx] + "\r");
+                    m_Setup.Command("port=0 " + commandTableRRig[idx] + "\r");
             }
         }
 

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TwoByRatPak));
             this.groupLeft = new System.Windows.Forms.GroupBox();
             this.buttonL80_15m = new System.Windows.Forms.RadioButton();
             this.buttonL80_160m = new System.Windows.Forms.RadioButton();
@@ -216,6 +217,7 @@
             this.Controls.Add(this.groupBoxR);
             this.Controls.Add(this.groupLeft);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "TwoByRatPak";
             this.Text = "W5XD RatPak";
